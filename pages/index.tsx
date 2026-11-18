@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowRight,
   Download,
-  Apple,
   Sparkles,
   Terminal,
   Activity,
@@ -39,6 +38,7 @@ import Footer from '../components/Footer';
 import FAQAccordion from '../components/FAQAccordion';
 import MacWindowButtons from '../components/MacWindowButtons';
 import PricingCard from '../components/PricingCard';
+import AppleLogo from '../components/AppleLogo';
 import { useLanguage } from '../context/LanguageContext';
 import { useCurrency } from '../context/CurrencyContext';
 
@@ -360,7 +360,7 @@ export default function Home() {
                     href="#pricing"
                     className="btn-primary group"
                   >
-                    <Apple size={18} className="fill-current -mt-0.5" />
+                    <AppleLogo size={18} className="fill-current -mt-0.5" />
                     <span>{buttonLabel}</span>
                     <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
                   </a>
@@ -385,7 +385,7 @@ export default function Home() {
                     {t.hero.silicon}
                   </span>
                   <span className="flex items-center gap-2">
-                    <Apple size={14} className="text-emerald-500 dark:text-emerald-400" />
+                    <AppleLogo size={14} className="text-emerald-500 dark:text-emerald-400" />
                     {t.hero.os}
                   </span>
                   <span className="flex items-center gap-2">
@@ -445,7 +445,7 @@ export default function Home() {
                             <div className="relative z-30 h-5 sm:h-6 w-full flex items-center justify-between px-3 text-[11px] text-zinc-300 font-medium bg-black/40 backdrop-blur-md border-b border-white/5">
                               {/* Left Menu Items (Stays strictly left of notch) */}
                               <div className="flex items-center gap-2.5 overflow-hidden max-w-[calc(50%-48px)]">
-                                <Apple size={11} className="fill-current -mt-0.5 text-zinc-200 shrink-0" />
+                                <AppleLogo size={11} className="fill-current -mt-0.5 text-zinc-200 shrink-0" />
                                 <span className="font-semibold text-white truncate">lidZen</span>
                                 <span className="hidden sm:inline text-zinc-400 text-[11px] truncate">Continuity</span>
                               </div>
@@ -517,7 +517,7 @@ export default function Home() {
                               <div className="mt-auto pt-2 z-20">
                                 <div className="inline-flex items-center gap-2 rounded-xl bg-white/10 dark:bg-black/40 border border-white/15 px-2.5 py-1 backdrop-blur-xl shadow-lg">
                                   <div className="h-4 w-4 rounded-md bg-blue-500/80 flex items-center justify-center">
-                                    <Apple size={9} className="text-white fill-current" />
+                                    <AppleLogo size={9} className="text-white fill-current" />
                                   </div>
                                   <div className="h-4 w-4 rounded-md bg-zinc-900 border border-emerald-400/50 flex items-center justify-center relative">
                                     <span className="h-2 w-2 rounded-sm bg-emerald-400" />
@@ -564,14 +564,11 @@ export default function Home() {
                             {/* Diffuse emerald continuity radial light on the metal lid */}
                             <div className="absolute h-28 w-28 rounded-full bg-emerald-400/25 blur-2xl animate-pulse" />
                             <div className="relative z-10 flex flex-col items-center">
-                              {/* Laser-etched metallic emblem */}
+                              {/* Laser-etched metallic Apple emblem */}
                               <div className="relative h-12 w-12 flex items-center justify-center">
-                                <Image
-                                  src="/logo.png"
-                                  alt="lidZen clamshell emblem"
-                                  width={40}
-                                  height={40}
-                                  className="object-contain drop-shadow-[0_0_14px_rgba(45,212,191,0.7)] filter"
+                                <AppleLogo
+                                  size={44}
+                                  className="text-slate-900 dark:text-white drop-shadow-[0_0_16px_rgba(45,212,191,0.85)] fill-current"
                                 />
                               </div>
                               <div className="mt-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/15 backdrop-blur-md shadow-sm">
@@ -1301,14 +1298,11 @@ export default function Home() {
                           {/* Diffuse radial light on the metal lid */}
                           <div className="absolute h-24 w-24 rounded-full bg-emerald-400/20 blur-xl animate-pulse" />
                           <div className="relative z-10 flex flex-col items-center">
-                            {/* Laser-etched metallic emblem */}
+                            {/* Laser-etched metallic Apple emblem */}
                             <div className="relative h-11 w-11 flex items-center justify-center">
-                              <Image
-                                src="/logo.png"
-                                alt="lidZen clamshell emblem"
-                                width={36}
-                                height={36}
-                                className="object-contain drop-shadow-[0_0_12px_rgba(45,212,191,0.65)] filter"
+                              <AppleLogo
+                                size={38}
+                                className="text-slate-900 dark:text-white drop-shadow-[0_0_14px_rgba(45,212,191,0.75)] fill-current"
                               />
                             </div>
                             <div className="mt-2 flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 backdrop-blur-sm">
@@ -1511,7 +1505,7 @@ export default function Home() {
 
               <div className="relative">
                 <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 font-mono">
-                  <Apple size={14} className="fill-current" />
+                  <AppleLogo size={14} className="fill-current" />
                   {t.download.version}
                 </span>
 
@@ -1527,7 +1521,7 @@ export default function Home() {
                     href="#pricing"
                     className="btn-primary group"
                   >
-                    <Apple size={18} className="fill-current -mt-0.5" />
+                    <AppleLogo size={18} className="fill-current -mt-0.5" />
                     <span>{buttonLabel}</span>
                     <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
                   </a>
@@ -1547,7 +1541,7 @@ export default function Home() {
                     <Zap size={14} className="text-emerald-500 dark:text-emerald-400" /> {t.download.size}
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <Apple size={14} className="text-emerald-500 dark:text-emerald-400" /> {t.download.sequoia}
+                    <AppleLogo size={14} className="text-emerald-500 dark:text-emerald-400" /> {t.download.sequoia}
                   </span>
                 </div>
               </div>

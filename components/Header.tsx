@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X, Apple } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import AppleLogo from './AppleLogo';
 import ThemeToggle from './ThemeToggle';
 import LanguageSelector from './LanguageSelector';
 import { useLanguage } from '../context/LanguageContext';
@@ -45,15 +46,8 @@ export default function Header() {
         <div className="flex items-center gap-7 lg:gap-10 shrink-0">
           {/* Brand */}
           <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="relative h-7 w-7 overflow-hidden rounded-lg group-hover:scale-105 transition-transform">
-              <Image
-                src="/logo.png"
-                alt="lidZen logo"
-                width={28}
-                height={28}
-                className="object-cover"
-                priority
-              />
+            <div className="relative h-7 w-7 rounded-lg bg-slate-900 dark:bg-white flex items-center justify-center group-hover:scale-105 transition-transform shadow-sm">
+              <AppleLogo size={16} className="text-white dark:text-slate-950 fill-current" />
             </div>
             <span className="text-base font-semibold tracking-tight text-slate-900 dark:text-white transition-colors">
               lidZen
@@ -82,7 +76,7 @@ export default function Header() {
             href="/#pricing"
             className="group relative inline-flex items-center gap-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 px-4 py-2 text-xs font-semibold shadow-sm transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
           >
-            <Apple size={14} className="fill-current -mt-0.5" />
+            <AppleLogo size={14} className="fill-current -mt-0.5" />
             <span>{buttonLabel}</span>
           </Link>
         </div>
@@ -120,7 +114,7 @@ export default function Header() {
               onClick={() => setMobileOpen(false)}
               className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 px-4 py-2.5 text-xs font-semibold shadow-md transition-all"
             >
-              <Apple size={14} className="fill-current -mt-0.5" />
+              <AppleLogo size={14} className="fill-current -mt-0.5" />
               <span>{buttonLabel}</span>
             </Link>
           </nav>

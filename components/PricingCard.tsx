@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Apple, ArrowRight, RefreshCw, Laptop, Shield, Zap } from 'lucide-react';
+import { ArrowRight, RefreshCw, Laptop, Shield, Zap } from 'lucide-react';
+import AppleLogo from './AppleLogo';
 import { useCurrency } from '../context/CurrencyContext';
 
 export default function PricingCard() {
@@ -95,17 +96,11 @@ export default function PricingCard() {
 
           {/* Right Column: Shoji Style Price Card */}
           <div className="relative rounded-3xl border border-black/10 dark:border-white/10 bg-gradient-to-b from-slate-50/80 via-white to-slate-50/80 dark:from-[#131722]/80 dark:via-[#0c0f18] dark:to-[#090b12]/90 p-7 sm:p-9 text-center shadow-lg">
-            {/* App Icon Glow */}
+            {/* App Icon Glow with Official Apple Mark */}
             <div className="relative mx-auto h-16 w-16 mb-5">
               <div className="absolute -inset-2 rounded-2xl bg-emerald-400/25 blur-lg" />
-              <div className="relative h-16 w-16 overflow-hidden rounded-2xl border border-black/10 dark:border-white/15 shadow-xl bg-slate-900">
-                <Image
-                  src="/logo.png"
-                  alt="lidZen app icon"
-                  width={64}
-                  height={64}
-                  className="object-cover"
-                />
+              <div className="relative h-16 w-16 overflow-hidden rounded-2xl border border-black/10 dark:border-white/15 shadow-xl bg-slate-900 flex items-center justify-center">
+                <AppleLogo size={36} className="text-white fill-current drop-shadow-[0_0_12px_rgba(45,212,191,0.5)]" />
               </div>
             </div>
 
@@ -150,7 +145,7 @@ export default function PricingCard() {
               href="#checkout"
               className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 py-3.5 text-sm font-semibold shadow-md dark:shadow-[0_0_25px_rgba(255,255,255,0.22)] transition-all duration-200 hover:scale-[1.01] active:scale-[0.98]"
             >
-              <Apple size={16} className="fill-current -mt-0.5" />
+              <AppleLogo size={16} className="fill-current -mt-0.5" />
               <span>Get lidZen · {activePrice}</span>
               <ArrowRight size={15} />
             </a>
@@ -166,7 +161,7 @@ export default function PricingCard() {
             <Zap size={14} className="text-emerald-500 dark:text-emerald-400" /> 18 MB download
           </span>
           <span className="flex items-center gap-1.5">
-            <Apple size={14} className="text-emerald-500 dark:text-emerald-400" /> macOS 15+ Sequoia or later
+            <AppleLogo size={14} className="text-emerald-500 dark:text-emerald-400" /> macOS 15+ Sequoia or later
           </span>
         </div>
       </div>

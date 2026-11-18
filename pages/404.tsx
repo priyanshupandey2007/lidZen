@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Home, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/router';
+import AppleLogo from '../components/AppleLogo';
 
 export default function NotFound() {
   const router = useRouter();
@@ -72,13 +73,7 @@ export default function NotFound() {
                 <div className="h-16 w-16 rounded-full bg-emerald-400/20 blur-xl animate-pulse" />
               </div>
               <Link href="/" className="relative z-10 inline-flex items-center justify-center h-14 w-14 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0e14] shadow-lg mx-auto hover:scale-105 transition-transform">
-                <Image
-                  src="/logo.png"
-                  alt="lidZen logo"
-                  width={36}
-                  height={36}
-                  className="object-cover drop-shadow-[0_0_8px_rgba(45,212,191,0.4)]"
-                />
+                <AppleLogo size={30} className="text-slate-900 dark:text-white fill-current drop-shadow-[0_0_10px_rgba(45,212,191,0.5)]" />
               </Link>
             </motion.div>
 

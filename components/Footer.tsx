@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Apple, Cpu, ShieldCheck, Zap } from 'lucide-react';
+import { Cpu, ShieldCheck, Zap } from 'lucide-react';
+import AppleLogo from './AppleLogo';
 import LanguageSelector from './LanguageSelector';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -45,14 +46,8 @@ export default function Footer() {
           {/* Brand info */}
           <div>
             <Link href="/" className="inline-flex items-center gap-2.5">
-              <div className="relative h-8 w-8 overflow-hidden rounded-xl border border-black/10 dark:border-white/10 shadow-sm bg-white dark:bg-[#0c0e14]">
-                <Image
-                  src="/logo.png"
-                  alt="lidZen logo"
-                  width={32}
-                  height={32}
-                  className="object-cover"
-                />
+              <div className="relative h-8 w-8 rounded-xl bg-slate-900 dark:bg-white flex items-center justify-center shadow-sm">
+                <AppleLogo size={18} className="text-white dark:text-slate-950 fill-current" />
               </div>
               <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">lidZen</span>
             </Link>
@@ -60,7 +55,7 @@ export default function Footer() {
               Clamshell continuity and deep path diagnostics for Mac power users. Keep AI agents, workflows, and music alive with the lid shut.
             </p>
             <div className="mt-5 inline-flex items-center gap-2 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] px-3 py-1.5 text-xs text-slate-700 dark:text-zinc-300 font-mono">
-              <Apple size={14} className="text-emerald-600 dark:text-emerald-400" />
+              <AppleLogo size={14} className="text-emerald-600 dark:text-emerald-400" />
               <span>macOS 15+ (Sequoia) · Apple Silicon & Intel</span>
             </div>
           </div>
