@@ -1160,7 +1160,7 @@ export default function Home() {
                   {pausedIds.size > 0 && (
                     <button
                       onClick={handleResumeAll}
-                      className="btn-action border-emerald-500/30 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/25"
+                      className="btn-action border-emerald-500/40 bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 font-bold hover:bg-emerald-500/25"
                       title="Resume all suspended background tasks (SIGCONT)"
                     >
                       <Play size={12} className="fill-current" />
@@ -1170,7 +1170,7 @@ export default function Home() {
                   {activeCulprits.length > 0 && (
                     <button
                       onClick={handlePauseAll}
-                      className="btn-action border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20"
+                      className="btn-action border-amber-500/40 bg-amber-500/15 text-amber-900 dark:text-amber-300 font-bold hover:bg-amber-500/25"
                       title="Pause all runaway tasks (SIGSTOP)"
                     >
                       <Pause size={11} />
@@ -1275,8 +1275,8 @@ export default function Home() {
                                   }}
                                   className={`btn-action p-1.5 ${
                                     isPaused
-                                      ? 'text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 bg-emerald-500/10 border-emerald-500/30'
-                                      : 'text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 bg-amber-500/10 border-amber-500/30'
+                                      ? 'text-emerald-800 dark:text-emerald-300 hover:bg-emerald-500/20 bg-emerald-500/10 border-emerald-500/30'
+                                      : 'text-amber-900 dark:text-amber-300 hover:bg-amber-500/20 bg-amber-500/10 border-amber-500/30'
                                   }`}
                                   title={isPaused ? 'Resume process (SIGCONT)' : 'Pause process (SIGSTOP)'}
                                   aria-label={isPaused ? `Resume ${item.name}` : `Pause ${item.name}`}
@@ -1382,10 +1382,10 @@ export default function Home() {
                         <button
                           type="button"
                           onClick={() => handleTogglePause(selectedCulprit.id)}
-                          className={`btn-action px-5 py-2.5 ${
+                          className={`btn-action px-5 py-2.5 font-bold ${
                             isSelectedPaused
-                              ? 'border-emerald-500/40 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/30'
-                              : 'border-amber-500/40 bg-amber-500/15 text-amber-600 dark:text-amber-400 hover:bg-amber-500/25'
+                              ? 'border-emerald-500/40 bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-500/30'
+                              : 'border-amber-500/40 bg-amber-500/15 text-amber-900 dark:text-amber-300 hover:bg-amber-500/25'
                           }`}
                         >
                           {isSelectedPaused ? (
