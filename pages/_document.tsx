@@ -7,6 +7,21 @@ export default function Document() {
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){
+              // Intercept third-party extension crashes (e.g. Floto / Design QA M_ID error) before Next.js dev overlay captures them
+              function swallowExtensionError(e) {
+                try {
+                  var msg = String((e && (e.message || (e.reason && e.reason.message))) || '');
+                  var stack = String((e && (e.filename || (e.error && e.error.stack) || (e.reason && e.reason.stack))) || '');
+                  if (msg.indexOf('M_ID') !== -1 || stack.indexOf('chrome-extension://') !== -1 || msg.indexOf('eppiocemhmnlbhjplcgkofciiegomcon') !== -1) {
+                    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+                    if (e.preventDefault) e.preventDefault();
+                    return true;
+                  }
+                } catch(err) {}
+              }
+              window.addEventListener('error', swallowExtensionError, true);
+              window.addEventListener('unhandledrejection', swallowExtensionError, true);
+
               try {
                 var stored = localStorage.getItem('theme');
                 if (stored === 'dark') {

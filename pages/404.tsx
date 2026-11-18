@@ -103,7 +103,7 @@ export default function NotFound() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mb-4"
             >
-              <span className="text-7xl sm:text-8xl font-extrabold tracking-tighter bg-gradient-to-b from-slate-900 via-slate-700 to-slate-400 dark:from-white dark:via-zinc-300 dark:to-zinc-600 bg-clip-text text-transparent select-none leading-none">
+              <span className="text-7xl sm:text-8xl font-extrabold tracking-tighter text-slate-900 dark:text-white select-none leading-none">
                 404
               </span>
             </motion.div>

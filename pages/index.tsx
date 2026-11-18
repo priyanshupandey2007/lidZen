@@ -144,16 +144,23 @@ export default function Home() {
 
   // Automated live demonstration loop: smoothly alternates between Lid Open and Lid Closed
   // proving that tasks (AI agents, compiling, audio streaming) keep working uninterrupted in both states
+  const [autoCyclePaused, setAutoCyclePaused] = useState(false);
+
   useEffect(() => {
+    if (autoCyclePaused) {
+      const resumeTimer = setTimeout(() => setAutoCyclePaused(false), 12000);
+      return () => clearTimeout(resumeTimer);
+    }
     const interval = setInterval(() => {
       setIsLidClosed((prev) => !prev);
-    }, 5500);
+    }, 6000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [autoCyclePaused]);
 
   const toggleLid = () => {
     setIsLidClosed((prev) => !prev);
+    setAutoCyclePaused(true); // pause auto-cycle for 12s when user interacts
   };
 
   useEffect(() => {
@@ -247,7 +254,41 @@ export default function Home() {
           name="description"
           content="lidZen bypasses macOS clamshell limits so AI agents, automated workflows, and music keep running with the lid closed — while deep path diagnostics pinpoint what's making your Mac hot and drained."
         />
+        <meta property="og:title" content="lidZen — Keep your Mac alive with the lid closed" />
+        <meta
+          property="og:description"
+          content="Run AI coding agents, builds, and music overnight with the lid closed. Zero kexts, user-space Mach continuity engine."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://lidzenmac.com" />
+        <meta property="og:image" content="https://lidzenmac.com/logo.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="lidZen — Keep your Mac alive with the lid closed" />
+        <meta
+          name="twitter:description"
+          content="Run AI coding agents, builds, and music overnight with the lid closed. Zero kexts, user-space Mach continuity engine."
+        />
+        <meta name="twitter:image" content="https://lidzenmac.com/logo.png" />
         <link rel="icon" href="/logo.png" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'SoftwareApplication',
+              name: 'lidZen',
+              operatingSystem: 'macOS 15+',
+              applicationCategory: 'UtilitiesApplication',
+              offers: {
+                '@type': 'Offer',
+                price: '6.99',
+                priceCurrency: 'USD',
+              },
+              description:
+                'Native macOS utility allowing continuous task execution with the lid shut and granular process thermal diagnostics.',
+            }),
+          }}
+        />
       </Head>
 
       <Header />
@@ -354,7 +395,7 @@ export default function Home() {
                 </motion.div>
               </div>
 
-              {/* Right Column: Authentic MacBook Pro Hardware Showcase matching Shoji (media_1795007445005_e4de613d.jpg) */}
+              {/* Right Column: Authentic MacBook Pro Hardware Showcase matching Shoji */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -369,34 +410,29 @@ export default function Home() {
                   
                   {/* 3D PERSPECTIVE WRAPPER */}
                   <div style={{ perspective: 1200 }} className="relative w-full flex flex-col items-center">
-                    {/* DISPLAY LID ASSEMBLY: Physically hinges down when closing, hinges up when opening */}
-                    <motion.div
-                      animate={{
-                        rotateX: isLidClosed ? -78 : 0,
-                        y: isLidClosed ? 14 : 0,
-                        scale: isLidClosed ? 0.95 : 1,
-                        boxShadow: isLidClosed
-                          ? '0 10px 25px -5px rgba(0,0,0,0.45)'
-                          : '0 25px 60px -15px rgba(0,0,0,0.5)',
-                      }}
-                      transition={{
-                        duration: 0.75,
-                        ease: [0.16, 1, 0.3, 1],
-                      }}
-                      style={{
-                        transformOrigin: 'bottom center',
-                        transformStyle: 'preserve-3d',
-                      }}
-                      onClick={toggleLid}
-                      title={isLidClosed ? "Click MacBook to open lid" : "Click MacBook to close lid and test clamshell continuity"}
-                      className="relative w-full rounded-t-[20px] sm:rounded-t-[24px] rounded-b-[2px] border-[2px] border-[#9ba2b0] dark:border-[#383d4c] bg-[#0c0d12] p-[6px] sm:p-[8px] pb-[8px] cursor-pointer group select-none transition-shadow z-20"
-                    >
-                      {/* Inner Retina Glass Display Screen / Closed Unibody Lid */}
-                      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-t-[14px] sm:rounded-t-[16px] rounded-b-[2px] bg-gradient-to-b from-[#181c2b] via-[#101420] to-[#0a0c14] border border-white/5 flex flex-col justify-between">
-                        
-                        {!isLidClosed ? (
-                          /* ================= STATE 1: PHYSICAL LID OPEN ================= */
-                          <div className="relative h-full w-full flex flex-col justify-between animate-fadeIn">
+                    <AnimatePresence mode="wait">
+                      {!isLidClosed ? (
+                        /* ================= STATE 1: PHYSICAL DISPLAY LID OPEN ================= */
+                        <motion.div
+                          key="macbook-open"
+                          initial={{ rotateX: -45, opacity: 0, scale: 0.97 }}
+                          animate={{ rotateX: 0, opacity: 1, scale: 1 }}
+                          exit={{ rotateX: -65, opacity: 0, scale: 0.95 }}
+                          transition={{
+                            duration: 0.55,
+                            ease: [0.16, 1, 0.3, 1],
+                          }}
+                          style={{
+                            transformOrigin: 'bottom center',
+                            transformStyle: 'preserve-3d',
+                          }}
+                          onClick={toggleLid}
+                          title="Click MacBook to close lid and test clamshell continuity"
+                          className="relative w-full rounded-t-[20px] sm:rounded-t-[24px] rounded-b-[2px] border-[2px] border-[#9ba2b0] dark:border-[#383d4c] bg-[#0c0d12] p-[6px] sm:p-[8px] pb-[8px] cursor-pointer group select-none shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] z-20"
+                        >
+                          {/* Inner Retina Glass Display Screen */}
+                          <div className="relative aspect-[16/10] w-full overflow-hidden rounded-t-[14px] sm:rounded-t-[16px] rounded-b-[2px] bg-gradient-to-b from-[#181c2b] via-[#101420] to-[#0a0c14] border border-white/5 flex flex-col justify-between">
+                            
                             {/* Authentic MacBook Pro Camera Notch */}
                             <div className="absolute left-1/2 top-0 -translate-x-1/2 z-40 h-3.5 sm:h-4 w-20 sm:w-24 rounded-b-lg bg-[#0c0d12] flex items-center justify-center gap-1.5 shadow-sm">
                               {/* Camera Lens with anti-reflective optical reflection */}
@@ -405,25 +441,29 @@ export default function Home() {
                               <div className="h-1 w-1 rounded-full bg-emerald-400 animate-pulse" />
                             </div>
 
-                            {/* macOS Top Menu Bar */}
-                            <div className="relative z-30 h-5 sm:h-6 w-full flex items-center justify-between px-3 text-[9px] sm:text-[10px] text-zinc-300 font-medium bg-black/40 backdrop-blur-md border-b border-white/5">
-                              <div className="flex items-center gap-2.5">
-                                <Apple size={10} className="fill-current -mt-0.5 text-zinc-200" />
-                                <span className="font-semibold text-white">lidZen</span>
-                                <span className="hidden sm:inline text-zinc-400">Continuity</span>
-                                <span className="hidden sm:inline text-zinc-400">Diagnostics</span>
-                                <span className="hidden sm:inline text-zinc-400">Window</span>
+                            {/* macOS Top Menu Bar with Guaranteed Center Notch Clearance */}
+                            <div className="relative z-30 h-5 sm:h-6 w-full flex items-center justify-between px-3 text-[11px] text-zinc-300 font-medium bg-black/40 backdrop-blur-md border-b border-white/5">
+                              {/* Left Menu Items (Stays strictly left of notch) */}
+                              <div className="flex items-center gap-2.5 overflow-hidden max-w-[calc(50%-48px)]">
+                                <Apple size={11} className="fill-current -mt-0.5 text-zinc-200 shrink-0" />
+                                <span className="font-semibold text-white truncate">lidZen</span>
+                                <span className="hidden sm:inline text-zinc-400 text-[11px] truncate">Continuity</span>
                               </div>
-                              <div className="flex items-center gap-2 text-zinc-300 font-mono text-[9px]">
-                                <span className="inline-flex items-center gap-1">
+
+                              {/* Center Notch Clearance Spacer */}
+                              <div className="w-24 sm:w-28 shrink-0 pointer-events-none" />
+
+                              {/* Right Menu Items (Stays strictly right of notch) */}
+                              <div className="flex items-center gap-2 text-zinc-300 font-mono text-[11px] justify-end max-w-[calc(50%-48px)]">
+                                <span className="inline-flex items-center gap-1 shrink-0">
                                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                                  <span className="text-emerald-400 font-sans font-medium text-[8px] sm:text-[9px]">
-                                    Lid Open · Tasks Running
+                                  <span className="text-emerald-400 font-sans font-medium text-[11px] hidden sm:inline">
+                                    Tasks Active
                                   </span>
                                 </span>
-                                <Wifi size={10} className="text-zinc-400" />
-                                <span className="text-[8px] sm:text-[9px]">100%</span>
-                                <span>10:24 AM</span>
+                                <Wifi size={11} className="text-zinc-400 shrink-0" />
+                                <span className="text-[11px] shrink-0">100%</span>
+                                <span className="text-[11px] shrink-0">10:24 AM</span>
                               </div>
                             </div>
 
@@ -432,7 +472,7 @@ export default function Home() {
                               {/* Subtle atmospheric desktop wallpaper gradient glow */}
                               <div className="absolute inset-0 bg-gradient-to-tr from-emerald-950/20 via-slate-900/30 to-sky-950/20 pointer-events-none" />
 
-                              {/* Floating lidZen Terminal Window (matching Shoji window design) */}
+                              {/* Floating lidZen Terminal Window */}
                               <div className="relative z-20 w-full max-w-[360px] sm:max-w-[400px] rounded-xl border border-white/15 bg-black/85 backdrop-blur-xl shadow-2xl p-3 sm:p-3.5 transition-all">
                                 {/* Window Header */}
                                 <div className="flex items-center justify-between pb-2 border-b border-white/10">
@@ -440,35 +480,35 @@ export default function Home() {
                                     <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
                                     <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
                                     <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
-                                    <span className="ml-2 font-mono text-[10px] sm:text-[11px] text-zinc-300 font-medium truncate">
+                                    <span className="ml-2 font-mono text-[11px] text-zinc-300 font-medium truncate">
                                       Terminal — lidzen dispatch
                                     </span>
                                   </div>
-                                  <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                                  <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
                                     <span>Lid Open</span>
                                   </span>
                                 </div>
 
-                                {/* Terminal Output */}
-                                <div className="mt-2.5 space-y-1.5 font-mono text-[10px] sm:text-[11px] leading-relaxed">
+                                {/* Terminal Output showing live uninterrupted execution */}
+                                <div className="mt-2.5 space-y-1.5 font-mono text-[11px] leading-relaxed">
                                   <div className="flex items-center gap-1.5 text-zinc-100">
                                     <span className="text-emerald-400 font-bold">$</span>
                                     <span>lidzen dispatch --tasks "agent + audio"</span>
                                   </div>
-                                  <div className="flex items-center justify-between text-zinc-400 text-[9px] sm:text-[10px]">
-                                    <span>✔ Worker thread: <span className="text-emerald-400">Agent refactor-auth</span></span>
-                                    <span className="text-emerald-400 font-medium">Running</span>
+                                  <div className="flex items-center justify-between text-zinc-400 text-[11px]">
+                                    <span className="truncate">✔ Worker: <span className="text-emerald-400">Agent refactor-auth</span></span>
+                                    <span className="text-emerald-400 font-medium shrink-0">Running</span>
                                   </div>
-                                  <div className="flex items-center justify-between text-zinc-400 text-[9px] sm:text-[10px]">
-                                    <span>✔ Audio route: <span className="text-sky-400">AirPlay (M83)</span></span>
-                                    <span className="text-sky-400 font-medium">Playing</span>
+                                  <div className="flex items-center justify-between text-zinc-400 text-[11px]">
+                                    <span className="truncate">✔ Audio: <span className="text-sky-400">AirPlay (M83)</span></span>
+                                    <span className="text-sky-400 font-medium shrink-0">Playing</span>
                                   </div>
-                                  <div className="pt-1 flex items-center justify-between border-t border-white/5 text-[9px] sm:text-[10px]">
-                                    <span className="text-emerald-400 font-semibold flex items-center gap-1">
-                                      <Check size={11} /> Ready: Closing lid will not interrupt tasks
+                                  <div className="pt-1 flex items-center justify-between border-t border-white/5 text-[11px]">
+                                    <span className="text-emerald-400 font-semibold flex items-center gap-1 truncate">
+                                      <Check size={12} className="shrink-0" /> Continuity Armed
                                     </span>
-                                    <span className="text-zinc-500 font-mono">0.0% leak</span>
+                                    <span className="text-zinc-500 font-mono text-[11px] shrink-0">0.0% leak</span>
                                   </div>
                                 </div>
                               </div>
@@ -476,57 +516,99 @@ export default function Home() {
                               {/* Floating macOS Dock */}
                               <div className="mt-auto pt-2 z-20">
                                 <div className="inline-flex items-center gap-2 rounded-xl bg-white/10 dark:bg-black/40 border border-white/15 px-2.5 py-1 backdrop-blur-xl shadow-lg">
-                                  <div className="h-4 w-4 rounded-md bg-blue-500/80 flex items-center justify-center text-[7px] text-white font-bold"></div>
+                                  <div className="h-4 w-4 rounded-md bg-blue-500/80 flex items-center justify-center">
+                                    <Apple size={9} className="text-white fill-current" />
+                                  </div>
                                   <div className="h-4 w-4 rounded-md bg-zinc-900 border border-emerald-400/50 flex items-center justify-center relative">
                                     <span className="h-2 w-2 rounded-sm bg-emerald-400" />
                                     <span className="absolute -bottom-1 h-0.5 w-0.5 rounded-full bg-white" />
                                   </div>
-                                  <div className="h-4 w-4 rounded-md bg-zinc-800 flex items-center justify-center text-[7px] text-emerald-400 font-mono">&gt;_</div>
-                                  <div className="h-4 w-4 rounded-md bg-rose-500/80 flex items-center justify-center text-[7px] text-white">♫</div>
-                                  <div className="h-4 w-4 rounded-md bg-sky-500/80 flex items-center justify-center text-[7px] text-white">🧭</div>
+                                  <div className="h-4 w-4 rounded-md bg-zinc-800 flex items-center justify-center">
+                                    <Terminal size={9} className="text-emerald-400" />
+                                  </div>
+                                  <div className="h-4 w-4 rounded-md bg-rose-500/80 flex items-center justify-center">
+                                    <Music size={9} className="text-white" />
+                                  </div>
+                                  <div className="h-4 w-4 rounded-md bg-sky-500/80 flex items-center justify-center">
+                                    <Monitor size={9} className="text-white" />
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        ) : (
-                          /* ================= STATE 2: PHYSICAL LID CLOSED (CLAMSHELL) ================= */
-                          <div className="relative h-full w-full rounded-t-[14px] sm:rounded-t-[16px] bg-gradient-to-b from-slate-200 via-slate-300 to-slate-400 dark:from-[#1b202c] dark:via-[#131622] dark:to-[#0a0d14] flex flex-col items-center justify-between p-4 transition-all duration-300 animate-fadeIn">
-                            {/* Rear Composite Hinge */}
-                            <div className="mx-auto h-1.5 w-36 sm:w-44 rounded-b-[2px] bg-zinc-900 dark:bg-black border-x border-zinc-700/60 shadow-inner" />
+                        </motion.div>
+                      ) : (
+                        /* ================= STATE 2: PHYSICAL DISPLAY LID CLOSED (AUTHENTIC CLAMSHELL) ================= */
+                        <motion.div
+                          key="macbook-closed"
+                          initial={{ rotateX: 65, opacity: 0, scale: 0.96 }}
+                          animate={{ rotateX: 0, opacity: 1, scale: 1 }}
+                          exit={{ rotateX: 45, opacity: 0, scale: 0.98 }}
+                          transition={{
+                            duration: 0.55,
+                            ease: [0.16, 1, 0.3, 1],
+                          }}
+                          style={{
+                            transformOrigin: 'bottom center',
+                            transformStyle: 'preserve-3d',
+                          }}
+                          onClick={toggleLid}
+                          title="Click MacBook to open lid"
+                          className="relative w-full aspect-[16/10] rounded-t-[20px] sm:rounded-t-[24px] rounded-b-[2px] border border-black/15 dark:border-white/15 bg-gradient-to-b from-slate-200 via-slate-300 to-slate-400 dark:from-[#252a38] dark:via-[#1a1e2b] dark:to-[#0f121a] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.35)] dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] flex flex-col justify-between p-4 cursor-pointer select-none z-20 overflow-hidden"
+                        >
+                          {/* Rear Precision Anodized Hinge Bar */}
+                          <div className="mx-auto h-1.5 w-36 sm:w-44 rounded-b-[2px] bg-zinc-900 dark:bg-black border-x border-zinc-700/60 shadow-inner" />
 
-                            {/* Center Luminous Apple/lidZen Laser-Cut Emblem */}
-                            <div className="relative flex flex-col items-center my-auto">
-                              <div className="absolute h-20 w-20 rounded-full bg-emerald-400/25 blur-xl animate-pulse" />
-                              <div className="relative z-10 flex flex-col items-center">
+                          {/* Top Unibody Surface with Laser-Etched Emblem & Soft Breathing Glow */}
+                          <div className="relative flex-1 flex flex-col items-center justify-center my-auto">
+                            {/* Diffuse emerald continuity radial light on the metal lid */}
+                            <div className="absolute h-28 w-28 rounded-full bg-emerald-400/25 blur-2xl animate-pulse" />
+                            <div className="relative z-10 flex flex-col items-center">
+                              {/* Laser-etched metallic emblem */}
+                              <div className="relative h-12 w-12 flex items-center justify-center">
                                 <Image
                                   src="/logo.png"
                                   alt="lidZen clamshell emblem"
-                                  width={38}
-                                  height={38}
-                                  className="object-contain drop-shadow-[0_0_12px_rgba(45,212,191,0.65)] filter"
+                                  width={40}
+                                  height={40}
+                                  className="object-contain drop-shadow-[0_0_14px_rgba(45,212,191,0.7)] filter"
                                 />
-                                <div className="mt-2.5 flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 backdrop-blur-sm">
-                                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                                  <span className="font-mono text-[10px] font-semibold text-slate-800 dark:text-zinc-200 uppercase tracking-widest">
-                                    Clamshell Continuity Active
-                                  </span>
-                                </div>
+                              </div>
+                              <div className="mt-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/15 backdrop-blur-md shadow-sm">
+                                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                                <span className="font-mono text-[11px] font-semibold text-slate-900 dark:text-zinc-100 uppercase tracking-widest">
+                                  Clamshell Continuity Active
+                                </span>
                               </div>
                             </div>
-
-                            {/* Front notch alignment */}
-                            <div className="mx-auto h-1 w-16 rounded-t-sm bg-zinc-400 dark:bg-black/90 shadow-inner" />
                           </div>
-                        )}
-                      </div>
-                    </motion.div>
+
+                          {/* Left Edge: MagSafe 3 Port with Glowing Status LED */}
+                          <div className="absolute left-3 top-4 flex items-center gap-1.5" title="MagSafe 3: Continuous power delivery">
+                            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+                            <span className="font-mono text-[11px] font-medium text-slate-700 dark:text-zinc-300 uppercase tracking-tight hidden sm:inline">
+                              PWR
+                            </span>
+                          </div>
+
+                          {/* Right Edge: Dual Thunderbolt 4 / USB-C Ports */}
+                          <div className="absolute right-3 top-4 flex items-center gap-1 opacity-50">
+                            <span className="h-1.5 w-3 rounded-full bg-zinc-400 dark:bg-zinc-600" />
+                            <span className="h-1.5 w-3 rounded-full bg-zinc-400 dark:bg-zinc-600" />
+                          </div>
+
+                          {/* Front Display Thumb Scoop Alignment */}
+                          <div className="mx-auto h-1.5 w-16 sm:w-20 rounded-t-sm bg-zinc-400/90 dark:bg-black/90 shadow-inner" />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
 
                   {/* Authentic MacBook Hinge Bar */}
                   <div className="mx-auto h-[5px] w-44 sm:w-56 rounded-t-[1px] bg-[#14161a] border-x border-zinc-700/60 shadow-inner" />
 
                   {/* Authentic Front MacBook Pro Unibody Base Chin (matching Shoji) */}
-                  <div className="relative -mx-[2.5%] sm:-mx-[3%] h-3 sm:h-3.5 rounded-b-xl rounded-t-[2px] border-t border-white/50 dark:border-white/15 bg-gradient-to-b from-[#e3e6ec] via-[#cbd0db] to-[#a2a8b6] dark:from-[#323642] dark:via-[#242732] dark:to-[#171920] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.35)] dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] flex items-start justify-center">
+                  <div className="relative -mx-[2.5%] sm:-mx-[3%] h-3.5 sm:h-4 rounded-b-xl rounded-t-[2px] border-t border-white/50 dark:border-white/15 bg-gradient-to-b from-[#e3e6ec] via-[#cbd0db] to-[#a2a8b6] dark:from-[#323642] dark:via-[#242732] dark:to-[#171920] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.35)] dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] flex items-start justify-center">
                     {/* Centered Display Opening Thumb Scoop Notch */}
                     <div className="h-[6px] sm:h-[7px] w-16 sm:w-20 rounded-b-[4px] bg-[#1a1d24] shadow-inner" />
                     
@@ -542,40 +624,49 @@ export default function Home() {
                       <button
                         type="button"
                         onClick={toggleLid}
-                        className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:border-emerald-500/50 transition cursor-pointer select-none"
+                        className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:border-emerald-500/50 transition cursor-pointer select-none active:scale-95"
                       >
                         <span className="relative flex h-2 w-2">
                           <span className="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-emerald-400" />
                           <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
                         </span>
-                        <span>{isLidClosed ? t.hud.lidClosedPill : t.hud.lidOpenPill}</span>
-                        <span className="text-[10px] opacity-75 font-normal">· {t.hud.clickMacbook}</span>
+                        <span>{isLidClosed ? 'Lid Closed · Tasks Running (100% speed)' : 'Lid Open · Tasks Active'}</span>
+                        <span className="text-[11px] opacity-80 font-normal">· Click to {isLidClosed ? 'open' : 'close'}</span>
                       </button>
                     </div>
 
                     {/* Real-time Hardware Telemetry Bar */}
                     <div className="grid grid-cols-3 gap-2 rounded-2xl border border-black/[0.08] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02] py-2.5 px-3 text-center font-mono text-xs backdrop-blur-md">
                       <div>
-                        <span className="text-slate-500 dark:text-zinc-400 text-xs block font-medium">{t.hud.powerDraw}</span>
-                        <span className="font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">
+                        <span className="text-slate-600 dark:text-zinc-400 text-xs block font-medium">{t.hud.powerDraw}</span>
+                        <span className="font-bold text-emerald-700 dark:text-emerald-400 tabular-nums">
                           {isLidClosed ? '3.4W' : '18.2W'}
+                        </span>
+                        <span className="block text-[11px] text-slate-500 dark:text-zinc-500">
+                          {isLidClosed ? 'Screen off (-14.8W)' : 'Display on'}
                         </span>
                       </div>
                       <div>
-                        <span className="text-slate-500 dark:text-zinc-400 text-xs block font-medium">{t.hud.socTemp}</span>
+                        <span className="text-slate-600 dark:text-zinc-400 text-xs block font-medium">{t.hud.socTemp}</span>
                         <span className="font-bold text-slate-900 dark:text-white tabular-nums">
                           42°C
                         </span>
+                        <span className="block text-[11px] text-slate-500 dark:text-zinc-500">
+                          Optimal thermal
+                        </span>
                       </div>
                       <div>
-                        <span className="text-slate-500 dark:text-zinc-400 text-xs block font-medium">{t.hud.fanSpeed}</span>
+                        <span className="text-slate-600 dark:text-zinc-400 text-xs block font-medium">{t.hud.fanSpeed}</span>
                         <span className="font-bold text-slate-900 dark:text-white tabular-nums">
-                          0 RPM ({t.hud.silent})
+                          0 RPM
+                        </span>
+                        <span className="block text-[11px] text-slate-500 dark:text-zinc-500">
+                          Silent continuity
                         </span>
                       </div>
                     </div>
 
-                    {/* Active Tasks Grid */}
+                    {/* Active Tasks Grid - Running smoothly uninterrupted in BOTH states */}
                     <div className="grid sm:grid-cols-2 gap-2.5">
                       {/* Agent Worker Card */}
                       <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] p-3 backdrop-blur-md">
@@ -587,15 +678,15 @@ export default function Home() {
                             </div>
                             <div>
                               <p className="text-xs font-semibold text-slate-900 dark:text-white">Agent · refactor-auth</p>
-                              <p className="text-[10px] text-slate-500 dark:text-zinc-400">Background Worker</p>
+                              <p className="text-[11px] text-slate-500 dark:text-zinc-400">Background Worker</p>
                             </div>
                           </div>
-                          <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                          <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
                             {isLidClosed ? 'Active · lid shut' : 'Active'}
                           </span>
                         </div>
-                        <div className="mt-2 rounded-lg border border-black/5 dark:border-white/5 bg-slate-100 dark:bg-[#06080e] p-1.5 font-mono text-[10px] text-slate-700 dark:text-zinc-300">
-                          <p className="truncate text-accent-600 dark:text-accent-400 font-medium">
+                        <div className="mt-2 rounded-lg border border-black/5 dark:border-white/5 bg-slate-100 dark:bg-[#06080e] p-2 font-mono text-[11px] text-slate-700 dark:text-zinc-300">
+                          <p className="truncate text-accent-700 dark:text-accent-400 font-medium">
                             {agentSteps[agentStep]}
                           </p>
                         </div>
@@ -610,7 +701,7 @@ export default function Home() {
                             </div>
                             <div>
                               <p className="text-xs font-semibold text-slate-900 dark:text-white">Midnight City</p>
-                              <p className="text-[10px] text-slate-500 dark:text-zinc-400">M83 · AirPlay</p>
+                              <p className="text-[11px] text-slate-500 dark:text-zinc-400">M83 · AirPlay</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-1.5">
@@ -628,9 +719,9 @@ export default function Home() {
                             </button>
                           </div>
                         </div>
-                        <div className="mt-2 flex items-center justify-between text-[10px] text-slate-500 dark:text-zinc-400 font-mono">
+                        <div className="mt-2 flex items-center justify-between text-[11px] text-slate-500 dark:text-zinc-400 font-mono">
                           <span>Speakers</span>
-                          <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+                          <span className="text-emerald-700 dark:text-emerald-400 font-medium">
                             {isLidClosed ? 'Playing · lid shut' : 'Streaming (M83)'}
                           </span>
                         </div>
@@ -650,10 +741,7 @@ export default function Home() {
           <div className="mx-auto max-w-6xl px-4 md:px-6">
             {/* Section Header */}
             <div className="mx-auto max-w-2xl text-center">
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-mono">
-                {t.features.tag}
-              </span>
-              <h2 className="mt-3 text-balance text-3xl font-extrabold tracking-tight md:text-4xl text-slate-900 dark:text-white">
+              <h2 className="text-balance text-3xl font-extrabold tracking-tight md:text-4xl text-slate-900 dark:text-white">
                 {t.features.heading}
               </h2>
               <p className="mt-4 text-pretty text-slate-600 dark:text-zinc-300 md:text-lg leading-relaxed">
@@ -757,7 +845,7 @@ export default function Home() {
                   Freeze rogue apps without losing state.
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
-                  Non-destructive Mach task suspension halts CPU and battery drain instantly via <code className="text-amber-600 dark:text-amber-300 font-mono text-xs">SIGSTOP</code> — safely resume anytime with zero data loss.
+                  Non-destructive Mach task suspension halts CPU and battery drain instantly via <code className="text-amber-600 dark:text-amber-300 font-mono text-xs">SIGSTOP</code>. Safely resume anytime with zero data loss.
                 </p>
                 <div className="mt-5 flex items-center gap-3">
                   <a
@@ -844,14 +932,11 @@ export default function Home() {
         <section id="diagnostics" className="relative py-24 md:py-32 border-t border-black/[0.08] dark:border-white/[0.08]">
           <div className="mx-auto max-w-6xl px-4 md:px-6">
             <div className="mx-auto max-w-2xl text-center">
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-mono">
-                Live interactive preview
-              </span>
-              <h2 className="mt-3 text-balance text-3xl font-extrabold tracking-tight md:text-4xl text-slate-900 dark:text-white">
+              <h2 className="text-balance text-3xl font-extrabold tracking-tight md:text-4xl text-slate-900 dark:text-white">
                 Point at the culprit. Pause it instantly.
               </h2>
               <p className="mt-4 text-pretty text-slate-600 dark:text-zinc-300 md:text-lg leading-relaxed">
-                This is the real lidZen inspector — running on live interactive simulation. Click any process to trace its binary path, then suspend it safely with Mach <code className="text-amber-600 dark:text-amber-300 font-mono">SIGSTOP</code> signals and resume whenever you&apos;re ready.
+                This is the real lidZen inspector, running on a live interactive simulation. Click any process to trace its binary path, then suspend it safely with Mach <code className="text-amber-600 dark:text-amber-300 font-mono">SIGSTOP</code> signals and resume whenever you&apos;re ready.
               </p>
             </div>
 
@@ -952,14 +1037,14 @@ export default function Home() {
                               }`}
                             >
                               <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-black/5 dark:bg-white/5 ${
-                                isPaused ? 'text-amber-500 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'
+                                isPaused ? 'text-amber-700 dark:text-amber-400' : 'text-emerald-700 dark:text-emerald-400'
                               }`}>
                                 {item.kind === 'docker' ? (
-                                  <Layers size={18} className={isPaused ? 'text-amber-500 dark:text-amber-400' : 'text-rose-500 dark:text-rose-400'} />
+                                  <Layers size={18} className={isPaused ? 'text-amber-700 dark:text-amber-400' : 'text-rose-700 dark:text-rose-400'} />
                                 ) : item.kind === 'tab' ? (
-                                  <Monitor size={18} className={isPaused ? 'text-amber-500 dark:text-amber-400' : 'text-sky-600 dark:text-sky-400'} />
+                                  <Monitor size={18} className={isPaused ? 'text-amber-700 dark:text-amber-400' : 'text-sky-700 dark:text-sky-400'} />
                                 ) : (
-                                  <Terminal size={18} className={isPaused ? 'text-amber-500 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'} />
+                                  <Terminal size={18} className={isPaused ? 'text-amber-700 dark:text-amber-400' : 'text-emerald-700 dark:text-emerald-400'} />
                                 )}
                               </span>
 
@@ -969,12 +1054,12 @@ export default function Home() {
                                     {item.name}
                                   </p>
                                   {isPaused && (
-                                    <span className="shrink-0 rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.2 text-xs font-mono font-semibold text-amber-600 dark:text-amber-300">
+                                    <span className="shrink-0 rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.2 text-xs font-mono font-semibold text-amber-800 dark:text-amber-300">
                                       PAUSED
                                     </span>
                                   )}
                                 </div>
-                                <p className="truncate font-mono text-xs text-slate-500 dark:text-zinc-400">
+                                <p className="truncate font-mono text-xs text-slate-600 dark:text-zinc-400">
                                   {item.path}
                                 </p>
                               </div>
@@ -982,11 +1067,11 @@ export default function Home() {
                               <div className="shrink-0 flex items-center gap-3">
                                 <div className="text-right">
                                   <span className={`text-sm font-bold tabular-nums ${
-                                    isPaused ? 'text-slate-400 dark:text-zinc-500 line-through' : 'text-rose-500 dark:text-rose-400'
+                                    isPaused ? 'text-slate-500 dark:text-zinc-500 line-through' : 'text-rose-700 dark:text-rose-400'
                                   }`}>
                                     {isPaused ? '0%' : `${item.cpu}%`}
                                   </span>
-                                  <span className="block text-xs text-slate-500 dark:text-zinc-400 font-mono">
+                                  <span className="block text-xs text-slate-600 dark:text-zinc-400 font-mono">
                                     {isPaused ? 'SIGSTOP' : 'CPU'}
                                   </span>
                                 </div>
@@ -1000,8 +1085,8 @@ export default function Home() {
                                   }}
                                   className={`btn-action p-1.5 ${
                                     isPaused
-                                      ? 'text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 bg-emerald-500/10 border-emerald-500/30'
-                                      : 'text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 bg-amber-500/10 border-amber-500/30'
+                                      ? 'text-emerald-700 dark:text-emerald-400 hover:bg-emerald-500/20 bg-emerald-500/10 border-emerald-500/30'
+                                      : 'text-amber-800 dark:text-amber-400 hover:bg-amber-500/20 bg-amber-500/10 border-amber-500/30'
                                   }`}
                                   title={isPaused ? 'Resume process (SIGCONT)' : 'Pause process (SIGSTOP)'}
                                   aria-label={isPaused ? `Resume ${item.name}` : `Pause ${item.name}`}
@@ -1050,8 +1135,8 @@ export default function Home() {
                         </span>
                         <span className={`text-xs font-semibold uppercase tracking-wider font-mono rounded-full px-2.5 py-0.5 border ${
                           isSelectedPaused
-                            ? 'text-amber-700 dark:text-amber-300 border-amber-500/30 bg-amber-500/10'
-                            : 'text-rose-600 dark:text-rose-400 border-rose-500/30 bg-rose-500/10'
+                            ? 'text-amber-800 dark:text-amber-300 border-amber-500/30 bg-amber-500/10'
+                            : 'text-rose-700 dark:text-rose-400 border-rose-500/30 bg-rose-500/10'
                         }`}>
                           {isSelectedPaused ? 'Suspended (SIGSTOP)' : 'Thermal Culprit (Active)'}
                         </span>
@@ -1059,13 +1144,13 @@ export default function Home() {
 
                       {/* Path box */}
                       <div className="mt-2.5 rounded-2xl border border-black/10 dark:border-white/10 bg-slate-100 dark:bg-[#06080e] p-3.5 font-mono text-xs leading-relaxed text-slate-900 dark:text-white">
-                        <span className="text-slate-500 dark:text-zinc-500 block">executable location:</span>
+                        <span className="text-slate-600 dark:text-zinc-400 block">executable location:</span>
                         <span className="break-all text-slate-900 dark:text-zinc-300 font-medium">
                           {selectedCulprit.path}
                         </span>
-                        <span className="text-slate-500 dark:text-zinc-500 block mt-1.5 border-t border-black/5 dark:border-white/5 pt-1.5 text-xs">
+                        <span className="text-slate-600 dark:text-zinc-400 block mt-1.5 border-t border-black/5 dark:border-white/5 pt-1.5 text-xs">
                           Mach Thread State:{' '}
-                          <span className={isSelectedPaused ? 'text-amber-600 dark:text-amber-300 font-semibold' : 'text-emerald-600 dark:text-emerald-400 font-semibold'}>
+                          <span className={isSelectedPaused ? 'text-amber-700 dark:text-amber-300 font-semibold' : 'text-emerald-700 dark:text-emerald-400 font-semibold'}>
                             {isSelectedPaused ? 'TASK_SUSPENDED (Execution paused, state preserved)' : 'TASK_RUNNING (Active CPU thread)'}
                           </span>
                         </span>
@@ -1074,33 +1159,33 @@ export default function Home() {
                       {/* Metric grid */}
                       <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
                         <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-3 text-center">
-                          <span className="text-xs text-slate-500 dark:text-zinc-400 font-mono">CPU Load</span>
+                          <span className="text-xs text-slate-600 dark:text-zinc-400 font-mono">CPU Load</span>
                           <p className={`mt-1 text-lg font-bold tabular-nums ${
-                            isSelectedPaused ? 'text-slate-400 dark:text-zinc-500' : 'text-rose-500 dark:text-rose-400'
+                            isSelectedPaused ? 'text-slate-500 dark:text-zinc-500' : 'text-rose-700 dark:text-rose-400'
                           }`}>
                             {isSelectedPaused ? '0%' : `${selectedCulprit.cpu}%`}
                           </p>
                         </div>
                         <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-3 text-center">
-                          <span className="text-xs text-slate-500 dark:text-zinc-400 font-mono">Temp</span>
+                          <span className="text-xs text-slate-600 dark:text-zinc-400 font-mono">Temp</span>
                           <p className={`mt-1 text-lg font-bold tabular-nums ${
-                            isSelectedPaused ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400'
+                            isSelectedPaused ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'
                           }`}>
                             {isSelectedPaused ? '42°C' : `${selectedCulprit.temp}°C`}
                           </p>
                         </div>
                         <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-3 text-center">
-                          <span className="text-xs text-slate-500 dark:text-zinc-400 font-mono">Fan Speed</span>
+                          <span className="text-xs text-slate-600 dark:text-zinc-400 font-mono">Fan Speed</span>
                           <p className={`mt-1 text-lg font-bold tabular-nums ${
-                            isSelectedPaused ? 'text-slate-900 dark:text-white' : 'text-sky-600 dark:text-sky-400'
+                            isSelectedPaused ? 'text-slate-900 dark:text-white' : 'text-sky-700 dark:text-sky-400'
                           }`}>
                             {isSelectedPaused ? '0 RPM' : selectedCulprit.fan.toLocaleString()}
                           </p>
                         </div>
                         <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-3 text-center">
-                          <span className="text-xs text-slate-500 dark:text-zinc-400 font-mono">Drain Rate</span>
+                          <span className="text-xs text-slate-600 dark:text-zinc-400 font-mono">Drain Rate</span>
                           <p className={`mt-1 text-lg font-bold tabular-nums ${
-                            isSelectedPaused ? 'text-slate-400 dark:text-zinc-500' : 'text-rose-500 dark:text-rose-400'
+                            isSelectedPaused ? 'text-slate-500 dark:text-zinc-500' : 'text-rose-700 dark:text-rose-400'
                           }`}>
                             {isSelectedPaused ? '0.0%/h' : `${selectedCulprit.drain}%/h`}
                           </p>
@@ -1228,7 +1313,7 @@ export default function Home() {
                             </div>
                             <div className="mt-2 flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 backdrop-blur-sm">
                               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                              <span className="font-mono text-[10px] font-semibold text-slate-700 dark:text-zinc-300 uppercase tracking-widest">
+                              <span className="font-mono text-[11px] font-semibold text-slate-700 dark:text-zinc-300 uppercase tracking-widest">
                                 Clamshell Active
                               </span>
                             </div>
@@ -1238,7 +1323,7 @@ export default function Home() {
                         {/* Left Edge: MagSafe 3 Port with Glowing Status LED */}
                         <div className="absolute left-2.5 top-4 flex items-center gap-1.5" title="MagSafe 3: Continuous power delivery">
                           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
-                          <span className="font-mono text-[8px] text-slate-500 dark:text-zinc-400 uppercase tracking-tight hidden sm:inline">
+                          <span className="font-mono text-[11px] text-slate-600 dark:text-zinc-400 uppercase tracking-tight hidden sm:inline">
                             PWR
                           </span>
                         </div>
@@ -1318,14 +1403,11 @@ export default function Home() {
 
               {/* Right text & 6 cards */}
               <div>
-                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-mono">
-                  Clamshell mode
-                </span>
-                <h2 className="mt-3 text-balance text-3xl font-extrabold tracking-tight md:text-4xl text-slate-900 dark:text-white">
+                <h2 className="text-balance text-3xl font-extrabold tracking-tight md:text-4xl text-slate-900 dark:text-white">
                   Close the lid. Your Mac keeps working.
                 </h2>
                 <p className="mt-4 max-w-xl text-pretty text-slate-600 dark:text-zinc-300 md:text-lg leading-relaxed">
-                  lidZen holds your session in an active continuity state — no sleep assertions fighting, no suspension, no external monitor required. Whatever you left running stays running.
+                  lidZen holds your session in an active continuity state without sleep assertions fighting, no suspension, no external monitor required. Whatever you left running stays running.
                 </p>
 
                 <div className="mt-8 grid gap-3 sm:grid-cols-2">
@@ -1399,10 +1481,7 @@ export default function Home() {
         <section id="faq" className="relative py-24 md:py-32 border-t border-black/[0.08] dark:border-white/[0.08]">
           <div className="mx-auto max-w-6xl px-4 md:px-6">
             <div className="mx-auto max-w-2xl text-center">
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-mono">
-                Frequently asked questions
-              </span>
-              <h2 className="mt-3 text-balance text-3xl font-extrabold tracking-tight md:text-4xl text-slate-900 dark:text-white">
+              <h2 className="text-balance text-3xl font-extrabold tracking-tight md:text-4xl text-slate-900 dark:text-white">
                 Everything you need to know about lidZen
               </h2>
               <p className="mt-4 text-pretty text-slate-600 dark:text-zinc-300 md:text-lg leading-relaxed">

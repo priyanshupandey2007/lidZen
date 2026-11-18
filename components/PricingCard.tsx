@@ -47,7 +47,7 @@ export default function PricingCard() {
     {
       icon: <Laptop size={18} className="text-slate-800 dark:text-zinc-200" />,
       title: tier === 'one' ? 'One Mac' : 'Two Macs',
-      desc: tier === 'one' ? 'Moving to a new Mac? Move the license seamlessly.' : 'Run lidZen on both your desktop and portable Mac.',
+      desc: tier === 'one' ? 'Moving to a new Mac? Move your license in seconds.' : 'Run lidZen on both your desktop and portable Mac.',
     },
   ];
 
@@ -61,10 +61,7 @@ export default function PricingCard() {
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           {/* Left Column: Heading, Subtitle & 2x2 Feature Grid */}
           <div>
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-zinc-400 font-mono">
-              PRICING
-            </span>
-            <h2 className="mt-3 text-balance text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.08]">
+            <h2 className="text-balance text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.08]">
               Pay once.
               <br />
               Keep it.

@@ -45,10 +45,10 @@
     @apply bg-gradient-to-b from-slate-900 via-slate-800 to-slate-600 dark:from-white dark:via-zinc-200 dark:to-zinc-400 bg-clip-text text-transparent;
   }
   .text-gradient-accent {
-    @apply bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 dark:from-emerald-300 dark:via-teal-200 dark:to-cyan-300 bg-clip-text text-transparent;
+    @apply text-emerald-700 dark:text-emerald-400 font-semibold;
   }
   .btn-primary {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 px-6 py-3 text-sm font-semibold shadow-md dark:shadow-[0_0_25px_rgba(255,255,255,0.22)] transition-all duration-200 hover:scale-[1.02] active:scale-[0.98];
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 px-6 py-3 text-sm font-semibold shadow-md dark:shadow-[0_0_25px_rgba(255,255,255,0.22)] transition-transform duration-150 hover:scale-[1.02] active:scale-[0.98];
   }
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-black/[0.04] dark:bg-white/[0.04] px-6 py-3 text-sm font-medium text-slate-800 dark:text-zinc-200 backdrop-blur-xl transition-all duration-200 hover:border-black/20 dark:hover:border-white/20 hover:bg-black/[0.08] dark:hover:bg-white/[0.08] hover:text-black dark:hover:text-white hover:scale-[1.02] active:scale-[0.98];
@@ -134,7 +134,23 @@ section {
 
 /* 4. Interactive Micro‑Polish (Human Touch) */
 a, button, input, select, textarea {
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+  transition-duration: 0.15s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button:active, .btn-primary:active, .btn-secondary:active, .btn-action:active {
+  transform: scale(0.97);
+}
+
+/* Accessible reduced-motion guarantee */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Removes harsh default focus rings and replaces them with a refined outline */
