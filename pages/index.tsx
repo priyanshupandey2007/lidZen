@@ -249,13 +249,13 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>lidZen — Prevent Mac Sleep with the Lid Closed</title>
+        <title>lidZen — Keep Your Mac Awake with the Lid Closed</title>
         <meta
           name="description"
           content="Keep your Mac awake with the lid closed. lidZen bypasses macOS sleep limits so AI agents, audio, and renders run overnight with zero battery drain."
         />
         <link rel="canonical" href="https://lidzenmac.vercel.app/" />
-        <meta property="og:title" content="lidZen — Prevent Mac Sleep with the Lid Closed" />
+        <meta property="og:title" content="lidZen — Keep Your Mac Awake with the Lid Closed" />
         <meta
           property="og:description"
           content="Keep your Mac awake with the lid closed. lidZen bypasses macOS sleep limits so AI agents, audio, and renders run overnight with zero battery drain."
@@ -264,7 +264,7 @@ export default function Home() {
         <meta property="og:url" content="https://lidzenmac.vercel.app/" />
         <meta property="og:image" content="https://lidzenmac.vercel.app/logo.png" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="lidZen — Prevent Mac Sleep with the Lid Closed" />
+        <meta name="twitter:title" content="lidZen — Keep Your Mac Awake with the Lid Closed" />
         <meta
           name="twitter:description"
           content="Keep your Mac awake with the lid closed. lidZen bypasses macOS sleep limits so AI agents, audio, and renders run overnight with zero battery drain."
@@ -294,7 +294,7 @@ export default function Home() {
                   '@type': 'WebPage',
                   '@id': 'https://lidzenmac.vercel.app/#webpage',
                   url: 'https://lidzenmac.vercel.app/',
-                  name: 'lidZen — Prevent Mac Sleep with the Lid Closed',
+                  name: 'lidZen — Keep Your Mac Awake with the Lid Closed',
                   isPartOf: { '@id': 'https://lidzenmac.vercel.app/#organization' },
                   about: { '@id': 'https://lidzenmac.vercel.app/#software' },
                   description:
