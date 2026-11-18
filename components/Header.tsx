@@ -81,7 +81,7 @@ export default function Header() {
           <ThemeToggle />
           <Link
             href="/#pricing"
-            className="group relative inline-flex items-center gap-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 px-4 py-2 text-xs font-semibold shadow-sm transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
+            className="btn-primary !px-4 !py-2 text-xs whitespace-nowrap"
           >
             <AppleLogo size={14} className="fill-current -mt-0.5" />
             <span>{buttonLabel}</span>
@@ -119,7 +119,7 @@ export default function Header() {
             <Link
               href="/#pricing"
               onClick={() => setMobileOpen(false)}
-              className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 px-4 py-2.5 text-xs font-semibold shadow-md transition-all"
+              className="btn-primary w-full mt-3 !py-2.5 text-xs"
             >
               <AppleLogo size={14} className="fill-current -mt-0.5" />
               <span>{buttonLabel}</span>

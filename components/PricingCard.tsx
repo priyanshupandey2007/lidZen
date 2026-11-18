@@ -140,10 +140,10 @@ export default function PricingCard() {
               </p>
             </div>
 
-            {/* Primary Purchase Button - Shoji Pill CTA */}
+            {/* Primary Purchase Button - Standardized Button System */}
             <a
               href="#checkout"
-              className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 py-3.5 text-sm font-semibold shadow-md dark:shadow-[0_0_25px_rgba(255,255,255,0.22)] transition-all duration-200 hover:scale-[1.01] active:scale-[0.98]"
+              className="btn-primary w-full mt-8"
             >
               <AppleLogo size={16} className="fill-current -mt-0.5" />
               <span>Get lidZen · {activePrice}</span>

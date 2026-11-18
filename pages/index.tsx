@@ -109,8 +109,8 @@ export default function Home() {
   const [agentStep, setAgentStep] = useState(0);
 
   const agentSteps = [
-    'Reading src/auth/session.ts…',
-    'Running vitest suite (14 passing)…',
+    'Reading src/auth/session.ts',
+    'Running vitest suite (14 passing)',
     'Committing patch: fix(auth): prevent sleep deadlock',
   ];
 
@@ -560,7 +560,7 @@ export default function Home() {
                   <p className="mt-2 leading-relaxed">
                     <strong>Audience & Use Cases:</strong> Built for AI engineers running autonomous agent workflows, software developers executing long builds, and audio producers streaming music with the laptop closed.
                   </p>
-                  <p className="mt-1.5 leading-relaxed text-[11px] text-slate-500 dark:text-zinc-400">
+                  <p className="mt-2 leading-relaxed text-xs text-slate-600 dark:text-zinc-400">
                     <strong>When to Use:</strong> Use when closing your MacBook lid while running background jobs on battery or AC power without sleeping.
                   </p>
                 </motion.div>
@@ -629,27 +629,27 @@ export default function Home() {
 
                             {/* Retina Screen Window */}
                             <div className="relative h-full w-full rounded-xl bg-gradient-to-b from-[#0d1117] to-black p-3 flex flex-col justify-between border border-white/10 shadow-inner">
-                              <div className="flex items-center justify-between text-[10px] text-zinc-400 border-b border-white/5 pb-1">
-                                <span className="font-mono text-[9px] text-emerald-400 font-semibold flex items-center gap-1">
-                                  <Terminal size={10} /> {t.hud.terminalTitle}
+                              <div className="flex items-center justify-between text-xs text-zinc-400 border-b border-white/10 pb-1">
+                                <span className="font-mono text-xs text-emerald-400 font-semibold flex items-center gap-1">
+                                  <Terminal size={12} /> {t.hud.terminalTitle}
                                 </span>
-                                <span className="font-mono text-[9px] text-zinc-400">10:24 AM</span>
+                                <span className="font-mono text-xs text-zinc-400">10:24 AM</span>
                               </div>
 
-                              <div className="space-y-1 font-mono text-[10px]">
+                              <div className="space-y-1 font-mono text-xs">
                                 <p className="text-white font-medium">
                                   <span className="text-emerald-400">$</span> lidzen dispatch
                                 </p>
-                                <p className="text-zinc-400">tasks &quot;agent + audio&quot;</p>
-                                <p className="text-zinc-500 text-[9px]">
+                                <p className="text-zinc-300">tasks &quot;agent + audio&quot;</p>
+                                <p className="text-zinc-400 text-xs">
                                   ✓ Worker thread: <span className="text-emerald-400">Agent refactor-auth</span>
                                 </p>
-                                <p className="text-zinc-500 text-[9px]">
+                                <p className="text-zinc-400 text-xs">
                                   ✓ Audio route: <span className="text-sky-400">AirPlay (M83)</span>
                                 </p>
                               </div>
 
-                              <div className="flex items-center justify-between text-[9px] font-mono text-emerald-400/90 pt-1 border-t border-white/5">
+                              <div className="flex items-center justify-between text-xs font-mono text-emerald-400 pt-1 border-t border-white/10">
                                 <span className="truncate">{t.hud.readyTasks}</span>
                                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0 ml-1 animate-pulse" />
                               </div>
@@ -671,7 +671,7 @@ export default function Home() {
                                 height={34}
                                 className="relative z-10 opacity-95 drop-shadow-[0_0_12px_rgba(45,212,191,0.6)]"
                               />
-                              <span className="mt-1 font-mono text-[8px] text-slate-800 dark:text-zinc-300 uppercase tracking-widest font-semibold">
+                              <span className="mt-1 font-mono text-xs text-slate-900 dark:text-zinc-200 font-semibold tracking-wide">
                                 {t.hud.clamshellActive}
                               </span>
                             </div>
@@ -702,10 +702,10 @@ export default function Home() {
                     {/* Helper subtext with fixed height so it never shifts layout */}
                     <div className="h-5 mt-1 flex items-center justify-center">
                       <div
-                        className={`text-[11px] font-mono flex items-center gap-1.5 transition-all duration-300 ${
+                        className={`text-xs font-mono flex items-center gap-1.5 transition-all duration-300 ${
                           isLidClosed
-                            ? 'opacity-100 translate-y-0 text-emerald-700 dark:text-emerald-400'
-                            : 'opacity-80 translate-y-0 text-slate-500 dark:text-zinc-400'
+                            ? 'opacity-100 translate-y-0 text-emerald-600 dark:text-emerald-400'
+                            : 'opacity-80 translate-y-0 text-slate-600 dark:text-zinc-400'
                         }`}
                       >
                         {isLidClosed ? (
@@ -714,7 +714,7 @@ export default function Home() {
                             <span>{t.hud.sleepSaved}</span>
                           </>
                         ) : (
-                          <span className="text-[10px] text-slate-500 dark:text-zinc-500 group-hover:text-slate-700 dark:group-hover:text-zinc-400 transition">
+                          <span className="text-xs text-slate-500 dark:text-zinc-400 group-hover:text-slate-700 dark:group-hover:text-zinc-300 transition">
                             {t.hud.clickMacbook}
                           </span>
                         )}
@@ -723,21 +723,21 @@ export default function Home() {
                   </div>
 
                   {/* Real-time Telemetry Bar */}
-                  <div className="mt-4 grid grid-cols-3 gap-2 border-y border-black/[0.08] dark:border-white/[0.08] py-2.5 text-center font-mono text-[11px]">
+                  <div className="mt-4 grid grid-cols-3 gap-2 border-y border-black/[0.08] dark:border-white/[0.08] py-2.5 text-center font-mono text-xs">
                     <div>
-                      <span className="text-slate-600 dark:text-zinc-400 text-[10px] block font-medium">{t.hud.powerDraw}</span>
-                      <span className="font-bold text-emerald-700 dark:text-emerald-400 tabular-nums">
+                      <span className="text-slate-600 dark:text-zinc-400 text-xs block font-medium">{t.hud.powerDraw}</span>
+                      <span className="font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">
                         {isLidClosed ? '3.4W' : '18.2W'}
                       </span>
                     </div>
                     <div>
-                      <span className="text-slate-600 dark:text-zinc-400 text-[10px] block font-medium">{t.hud.socTemp}</span>
+                      <span className="text-slate-600 dark:text-zinc-400 text-xs block font-medium">{t.hud.socTemp}</span>
                       <span className="font-bold text-slate-900 dark:text-white tabular-nums">
                         42°C
                       </span>
                     </div>
                     <div>
-                      <span className="text-slate-600 dark:text-zinc-400 text-[10px] block font-medium">{t.hud.fanSpeed}</span>
+                      <span className="text-slate-600 dark:text-zinc-400 text-xs block font-medium">{t.hud.fanSpeed}</span>
                       <span className="font-bold text-slate-900 dark:text-white tabular-nums">
                         0 RPM ({t.hud.silent})
                       </span>
@@ -750,21 +750,21 @@ export default function Home() {
                     <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] p-3 backdrop-blur-md">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <div className="relative grid h-7 w-7 place-items-center rounded-xl bg-accent-500/20 text-accent-700 dark:text-accent-300">
+                          <div className="relative grid h-7 w-7 place-items-center rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
                             <Bot size={15} />
-                            <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-accent-400 ring-2 ring-slate-100 dark:ring-zinc-900" />
+                            <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-slate-100 dark:ring-zinc-900" />
                           </div>
                           <div>
                             <p className="text-xs font-semibold text-slate-900 dark:text-white">Agent · refactor-auth</p>
-                            <p className="text-[11px] text-slate-500 dark:text-zinc-400">Background Worker</p>
+                            <p className="text-xs text-slate-500 dark:text-zinc-400">Background Worker</p>
                           </div>
                         </div>
-                        <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
+                        <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
                           {isLidClosed ? 'Active · lid shut' : 'Active'}
                         </span>
                       </div>
-                      <div className="mt-2 rounded-lg border border-black/5 dark:border-white/5 bg-slate-100 dark:bg-[#06080e] p-2 font-mono text-[11px] text-slate-700 dark:text-zinc-300 h-8 flex items-center">
-                        <p className="truncate text-accent-700 dark:text-accent-400 font-medium">
+                      <div className="mt-2 rounded-lg border border-black/5 dark:border-white/5 bg-slate-100 dark:bg-[#06080e] p-2 font-mono text-xs text-slate-700 dark:text-zinc-300 min-h-[2rem] flex items-center">
+                        <p title={agentSteps[agentStep]} className="text-emerald-600 dark:text-emerald-400 font-medium break-words leading-tight">
                           {agentSteps[agentStep]}
                         </p>
                       </div>
@@ -779,7 +779,7 @@ export default function Home() {
                           </div>
                           <div>
                             <p className="text-xs font-semibold text-slate-900 dark:text-white">Midnight City</p>
-                            <p className="text-[11px] text-slate-500 dark:text-zinc-400">M83 · AirPlay</p>
+                            <p className="text-xs text-slate-500 dark:text-zinc-400">M83 · AirPlay</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-1.5">
@@ -797,9 +797,9 @@ export default function Home() {
                           </button>
                         </div>
                       </div>
-                      <div className="mt-2 flex items-center justify-between text-[11px] text-slate-500 dark:text-zinc-400 font-mono h-8">
+                      <div className="mt-2 flex items-center justify-between text-xs text-slate-500 dark:text-zinc-400 font-mono h-8">
                         <span className="truncate">Speakers</span>
-                        <span className="text-emerald-700 dark:text-emerald-400 font-medium">
+                        <span className="text-emerald-600 dark:text-emerald-400 font-medium">
                           {isLidClosed ? 'Playing · lid shut' : 'Streaming (M83)'}
                         </span>
                       </div>
@@ -886,20 +886,20 @@ export default function Home() {
               <div className="space-y-4">
                 {/* Target Audience, Decision Context & Supported Use Cases */}
                 <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-zinc-900/50 p-5 shadow-sm backdrop-blur-md">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white font-mono">
-                    Audience, Decision Context & Supported Use Cases
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white font-mono">
+                    Audience, Decision Context &amp; Supported Use Cases
                   </h3>
                   <div className="mt-3 space-y-2.5 text-xs text-slate-600 dark:text-zinc-300 leading-relaxed">
                     <p>
-                      <strong>• Target Audience & Industry:</strong> Built for software engineers, machine learning researchers, audio engineers, and creative digital studios on macOS.
+                      <strong>• Target Audience &amp; Industry:</strong> Built for software engineers, machine learning researchers, audio engineers, and creative digital studios on macOS.
                     </p>
                     <p>
-                      <strong>• When to Use & Decision Context:</strong> Use lidZen whenever you need continuous Mac operation with the clamshell display shut, avoiding Apple&apos;s requirement for external display and AC charging.
+                      <strong>• When to Use &amp; Decision Context:</strong> Use lidZen whenever you need continuous Mac operation with the clamshell display shut, avoiding Apple&apos;s requirement for external display and AC charging.
                     </p>
                     <p>
                       <strong>• Supported Use Cases:</strong>
                     </p>
-                    <div className="pl-2 space-y-1.5 text-[11px]">
+                    <div className="pl-2 space-y-1.5 text-xs text-slate-600 dark:text-zinc-300">
                       <p><strong>1. AI Workflows:</strong> Overnight autonomous agents, fine-tuning, and local Ollama or Claude runs.</p>
                       <p><strong>2. Audio Streaming:</strong> AirPlay 2 and Hi-Fi Bluetooth playback with zero screen battery drain.</p>
                       <p><strong>3. Software Compiles:</strong> Long Docker builds and Xcode compilation suites without sleep interruptions.</p>
@@ -1185,7 +1185,7 @@ export default function Home() {
                   <a
                     href="#download"
                     aria-label="Download lidZen"
-                    className="grid h-9 w-9 place-items-center rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200 transition hover:scale-105 shadow-md"
+                    className="btn-primary !p-0 h-9 w-9 shadow-md"
                   >
                     <ArrowRight size={16} />
                   </a>
