@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --vh: 1vh;
+  --dvh: 1dvh;
+  --vw: 1vw;
+}
+@supports (height: 100dvh) {
+  :root {
+    --dvh: 1dvh;
+  }
+}
+
+/* Deep obsidian dark theme and frosted glass utilities with full light/dark mode support */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+    overflow-x: hidden;
+  }
+  body {
+    @apply bg-slate-50 text-slate-900 dark:bg-[#06080A] dark:text-zinc-100 antialiased transition-colors duration-300;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    overflow-x: hidden;
+    min-height: 100%;
+  }
+  ::selection {
+    @apply bg-[#1a73e8]/30 text-white;
+  }
+}
+@layer components {
+  /* Frosted glass card */
+  .glass {
+    @apply bg-white/70 border border-slate-200/80 shadow-[0_8px_32px_rgba(0,0,0,0.06)] dark:bg-zinc-900/60 dark:border-white/[0.08] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl backdrop-blur-xl;
+  }
+  .glass-strong {
+    @apply bg-white/85 border border-slate-200/90 shadow-[0_16px_48px_rgba(0,0,0,0.08)] dark:bg-[#0c0e14]/80 dark:border-white/[0.1] dark:shadow-[0_16px_48px_rgba(0,0,0,0.6)] rounded-3xl backdrop-blur-2xl;
+  }
+  .text-gradient {
+    @apply bg-gradient-to-b from-slate-900 via-slate-700 to-slate-500 dark:from-white dark:via-zinc-100 dark:to-zinc-400 bg-clip-text text-transparent;
+  }
+  .text-gradient-silver {
+    @apply bg-gradient-to-b from-slate-900 via-slate-800 to-slate-600 dark:from-white dark:via-zinc-200 dark:to-zinc-400 bg-clip-text text-transparent;
+  }
+  .text-gradient-accent {
+    @apply bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 dark:from-emerald-300 dark:via-teal-200 dark:to-cyan-300 bg-clip-text text-transparent;
+  }
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 px-6 py-3 text-sm font-semibold shadow-md dark:shadow-[0_0_25px_rgba(255,255,255,0.22)] transition-all duration-200 hover:scale-[1.02] active:scale-[0.98];
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-black/[0.04] dark:bg-white/[0.04] px-6 py-3 text-sm font-medium text-slate-800 dark:text-zinc-200 backdrop-blur-xl transition-all duration-200 hover:border-black/20 dark:hover:border-white/20 hover:bg-black/[0.08] dark:hover:bg-white/[0.08] hover:text-black dark:hover:text-white hover:scale-[1.02] active:scale-[0.98];
+  }
+  .btn-action {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-xl border px-3.5 py-1.5 text-xs font-semibold shadow-sm transition-all duration-200 active:scale-95;
+  }
+  .btn-icon {
+    @apply relative inline-flex items-center justify-center rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-slate-700 dark:text-zinc-300 transition-all duration-200 hover:bg-black/10 dark:hover:bg-white/10 hover:text-black dark:hover:text-white active:scale-95 shadow-sm;
+  }
+}
+@layer utilities {
+  .mac-perspective { perspective: 1200px; }
+  .preserve-3d { transform-style: preserve-3d; }
+  .stabilize-layout {
+    contain: layout style;
+  }
+  .transition-dimensions {
+    transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), height 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* Prevent layout thrashing and jitter during active window or display resizing */
+html.is-resizing *,
+html.is-resizing *::before,
+html.is-resizing *::after {
+  transition: none !important;
+}
+/* ====================================================================
+   Global Reset & Polish Engine (Unslop & Premium Reset)
+   ==================================================================== */
+
+/* 1. Global Reset & Antialiasing for Crisp, Non-AI Rendering */
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  /* Prevents awkward text-scaling bugs across mobile/desktop viewports */
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  /* Fixes muddy line heights and tracking common in unrefined templates */
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.011em; /* Subtle premium tighter tracking */
+}
+
+/* 2. Typography Corrections (Eliminating Generic AI Look) */
+h1, h2, h3, h4, h5, h6 {
+  /* Tighter, modern heading metrics */
+  letter-spacing: -0.03em;
+  font-weight: 600; /* Avoids heavy, robotic 700/800 bolding */
+  line-height: 1.15;
+}
+
+article h2, article h3, article h4, article h5 {
+  @apply text-slate-900 dark:text-white;
+}
+
+p {
+  /* Optimal reading line height and human‑readable measure */
+  line-height: 1.65;
+  letter-spacing: -0.006em;
+  max-width: 65ch; /* Prevents uncomfortably long lines */
+}
+
+/* Fixes broken or harsh text contrast issues */
+.text-muted, [class*="text-gray-"], [class*="text-zinc-"] {
+  /* Ensures text never feels washed out or unreadable */
+  text-wrap: balance;
+}
+
+/* 3. Spacing & Rhythm Normalization */
+section {
+  padding-top: clamp(3rem, 6vw, 7rem);
+  padding-bottom: clamp(3rem, 6vw, 7rem);
+}
+
+/* 4. Interactive Micro‑Polish (Human Touch) */
+a, button, input, select, textarea {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Removes harsh default focus rings and replaces them with a refined outline */
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
