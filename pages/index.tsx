@@ -572,7 +572,7 @@ export default function Home() {
                       style={{ perspective: 1200 }}
                     >
                       {/* Fixed height container anchoring the screen hinge to the base deck with 0 layout shift */}
-                      <div className="h-44 w-full flex flex-col justify-end items-center relative">
+                      <div className="h-48 sm:h-52 w-full flex flex-col justify-end items-center relative">
                         {/* Rotating Lid Screen Assembly: Pure CSS GPU-accelerated 3D Transform */}
                         <div
                           style={{
@@ -580,41 +580,41 @@ export default function Home() {
                             transformOrigin: 'bottom center',
                             transformStyle: 'preserve-3d',
                           }}
-                          className="relative w-64 sm:w-72 h-40 z-10 transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
+                          className="relative w-64 sm:w-72 h-44 sm:h-48 z-10 transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
                         >
                           {/* FRONT: High-DPI Screen with active terminal (Visible when Lid Open) */}
                           <div
-                            className={`absolute inset-0 rounded-t-2xl border-2 border-zinc-700 bg-slate-950 p-2 shadow-2xl flex flex-col justify-between transition-opacity duration-300 ${
+                            className={`absolute inset-0 rounded-t-2xl border-2 border-zinc-700 bg-slate-950 p-2 sm:p-2.5 shadow-2xl flex flex-col justify-between overflow-hidden transition-opacity duration-300 ${
                               isLidClosed ? 'opacity-0 pointer-events-none' : 'opacity-100'
                             }`}
                           >
                             {/* Screen Camera Notch */}
-                            <div className="absolute left-1/2 top-2 h-1.5 w-8 -translate-x-1/2 rounded-b-lg bg-black/90 z-20" />
+                            <div className="absolute left-1/2 top-1.5 h-1.5 w-8 -translate-x-1/2 rounded-b-lg bg-black/90 z-20" />
 
                             {/* Retina Screen Window */}
-                            <div className="relative h-full w-full rounded-xl bg-gradient-to-b from-[#0d1117] to-black p-3 flex flex-col justify-between border border-white/10 shadow-inner">
-                              <div className="flex items-center justify-between text-xs text-zinc-400 border-b border-white/10 pb-1">
-                                <span className="font-mono text-xs text-emerald-400 font-semibold flex items-center gap-1">
+                            <div className="relative h-full w-full rounded-xl bg-gradient-to-b from-[#0d1117] to-black p-2.5 sm:p-3 flex flex-col justify-between border border-white/10 shadow-inner overflow-hidden">
+                              <div className="flex items-center justify-between text-[11px] sm:text-xs text-zinc-400 border-b border-white/10 pb-1">
+                                <span className="font-mono text-emerald-400 font-semibold flex items-center gap-1">
                                   <Terminal size={12} /> {t.hud.terminalTitle}
                                 </span>
-                                <span className="font-mono text-xs text-zinc-400">10:24 AM</span>
+                                <span className="font-mono text-zinc-400">10:24 AM</span>
                               </div>
 
-                              <div className="space-y-1 font-mono text-xs">
+                              <div className="space-y-1 font-mono text-[11px] sm:text-xs">
                                 <p className="text-white font-medium">
                                   <span className="text-emerald-400">$</span> lidzen dispatch
                                 </p>
                                 <p className="text-zinc-300">tasks &quot;agent + audio&quot;</p>
-                                <p className="text-zinc-400 text-xs">
+                                <p className="text-zinc-400">
                                   ✓ Worker thread: <span className="text-emerald-400">Agent refactor-auth</span>
                                 </p>
-                                <p className="text-zinc-400 text-xs">
+                                <p className="text-zinc-400">
                                   ✓ Audio route: <span className="text-sky-400">AirPlay (M83)</span>
                                 </p>
                               </div>
 
-                              <div className="flex items-center justify-between text-xs font-mono text-emerald-400 pt-1 border-t border-white/10">
-                                <span className="break-words leading-tight whitespace-normal">{t.hud.readyTasks}</span>
+                              <div className="flex items-center justify-between text-[10px] sm:text-xs font-mono text-emerald-400 pt-1 border-t border-white/10">
+                                <span className="truncate pr-1">{t.hud.readyTasks}</span>
                                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0 ml-1 animate-pulse" />
                               </div>
                             </div>
@@ -622,7 +622,7 @@ export default function Home() {
 
                           {/* BACK: Authentic Brushed Aluminum MacBook Lid (Visible when Lid Closed) */}
                           <div
-                            className={`absolute inset-0 rounded-t-2xl border-2 border-zinc-500/80 bg-gradient-to-b from-slate-200 via-slate-300 to-slate-400 dark:from-slate-700 dark:via-slate-800 dark:to-slate-900 shadow-2xl flex flex-col items-center justify-center transition-opacity duration-300 ${
+                            className={`absolute inset-0 rounded-t-2xl border-2 border-zinc-500/80 bg-gradient-to-b from-slate-200 via-slate-300 to-slate-400 dark:from-slate-700 dark:via-slate-800 dark:to-slate-900 shadow-2xl flex flex-col items-center justify-center overflow-hidden transition-opacity duration-300 ${
                               isLidClosed ? 'opacity-100' : 'opacity-0 pointer-events-none'
                             }`}
                           >
