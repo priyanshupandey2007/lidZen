@@ -1525,12 +1525,6 @@ export default function Home() {
                     <span>{buttonLabel}</span>
                     <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
                   </a>
-                  <a
-                    href="#pricing"
-                    className="btn-secondary"
-                  >
-                    <span>One-time purchase · {priceOneMac}</span>
-                  </a>
                 </div>
 
                 <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500 dark:text-zinc-400 font-mono">
