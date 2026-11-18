@@ -11,22 +11,22 @@ const faqData: FAQItem[] = [
   {
     question: 'How is clamshell continuity different from closing the lid normally?',
     answer:
-      'lidZen holds your session in an active continuity state. It keeps power, network, and I/O execution paths awake for agents, compiles, and media streams when your display turns off — without fighting sleep assertions or heating up unventilated displays.',
+      'Direct Answer: lidZen holds your session in an active continuity state. It keeps power, network, and I/O execution paths awake for agents, compiles, and media streams when your display turns off — without fighting sleep assertions or heating up unventilated displays.',
   },
   {
     question: 'Does path tracing need Full Disk Access or kernel extensions?',
     answer:
-      'No kernel extensions (kexts) are needed whatsoever. lidZen is an 18 MB universal binary using standard macOS userland APIs. To trace system-level helper paths and browser sub-processes, standard system diagnostic permissions are requested during initial onboarding.',
+      'Direct Answer: No kernel extensions (kexts) are needed whatsoever. lidZen is an 18 MB universal binary using standard macOS userland APIs. To trace system-level helper paths and browser sub-processes, standard system diagnostic permissions are requested during initial onboarding.',
   },
   {
     question: 'Will pausing rogue processes cause data corruption or lost work?',
     answer:
-      'No. Unlike destructive termination (SIGKILL), lidZen uses non-destructive Mach task suspension (SIGSTOP). It freezes thread execution and CPU consumption completely while preserving all memory allocations, unsaved window state, and socket connections—allowing you to safely resume (SIGCONT) whenever you need.',
+      'Direct Answer: No. Unlike destructive termination (SIGKILL), lidZen uses non-destructive Mach task suspension (SIGSTOP). It freezes thread execution and CPU consumption completely while preserving all memory allocations, unsaved window state, and socket connections—allowing you to safely resume (SIGCONT) whenever you need.',
   },
   {
     question: 'Which Mac models and macOS versions are supported?',
     answer:
-      'macOS 15 (Sequoia) or later is required. Both Apple Silicon (M1, M2, M3, M4) and recent Intel MacBook models are natively supported. External display clamshell setups and standalone lid-shut workflows are first-class citizens.',
+      'Direct Answer: macOS 15 (Sequoia) or later is required. Both Apple Silicon (M1, M2, M3, M4) and recent Intel MacBook models are natively supported. External display clamshell setups and standalone lid-shut workflows are first-class citizens.',
   },
 ];
 

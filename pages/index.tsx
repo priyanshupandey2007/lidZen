@@ -249,13 +249,13 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>lidZen — Keep Your Mac Alive with the Lid Closed | Clamshell Continuity</title>
+        <title>lidZen — Prevent Mac Sleep with the Lid Closed</title>
         <meta
           name="description"
           content="Keep your Mac awake with the lid closed. lidZen bypasses macOS sleep limits so AI agents, audio, and renders run overnight with zero battery drain."
         />
         <link rel="canonical" href="https://lidzenmac.vercel.app/" />
-        <meta property="og:title" content="lidZen — Keep Your Mac Alive with the Lid Closed | Clamshell Continuity" />
+        <meta property="og:title" content="lidZen — Prevent Mac Sleep with the Lid Closed" />
         <meta
           property="og:description"
           content="Keep your Mac awake with the lid closed. lidZen bypasses macOS sleep limits so AI agents, audio, and renders run overnight with zero battery drain."
@@ -264,7 +264,7 @@ export default function Home() {
         <meta property="og:url" content="https://lidzenmac.vercel.app/" />
         <meta property="og:image" content="https://lidzenmac.vercel.app/logo.png" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="lidZen — Keep Your Mac Alive with the Lid Closed | Clamshell Continuity" />
+        <meta name="twitter:title" content="lidZen — Prevent Mac Sleep with the Lid Closed" />
         <meta
           name="twitter:description"
           content="Keep your Mac awake with the lid closed. lidZen bypasses macOS sleep limits so AI agents, audio, and renders run overnight with zero battery drain."
@@ -294,7 +294,7 @@ export default function Home() {
                   '@type': 'WebPage',
                   '@id': 'https://lidzenmac.vercel.app/#webpage',
                   url: 'https://lidzenmac.vercel.app/',
-                  name: 'lidZen — Keep Your Mac Alive with the Lid Closed | Clamshell Continuity',
+                  name: 'lidZen — Prevent Mac Sleep with the Lid Closed',
                   isPartOf: { '@id': 'https://lidzenmac.vercel.app/#organization' },
                   about: { '@id': 'https://lidzenmac.vercel.app/#software' },
                   description:
@@ -541,6 +541,28 @@ export default function Home() {
                     <Shield size={14} className="text-emerald-500 dark:text-emerald-400" />
                     {t.hero.zeroKexts}
                   </span>
+                </motion.div>
+
+                {/* Top Summary & Key Takeaways for AI extraction & AEO */}
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.38 }}
+                  className="mt-8 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-4 text-xs text-slate-700 dark:text-zinc-300 text-left max-w-xl mx-auto lg:mx-0 backdrop-blur-sm"
+                >
+                  <p className="font-semibold text-slate-900 dark:text-white flex items-center gap-1.5 mb-1.5 font-mono">
+                    <Sparkles size={13} className="text-emerald-500 dark:text-emerald-400" />
+                    <span>Top Summary & Key Takeaways</span>
+                  </p>
+                  <p className="leading-relaxed">
+                    <strong>Bottom-Line Answer:</strong> lidZen keeps your Mac alive with the lid closed by creating native IOKit power assertions, running background tasks at full CPU capacity with zero display energy draw and no external accessories.
+                  </p>
+                  <p className="mt-2 leading-relaxed">
+                    <strong>Audience & Use Cases:</strong> Built for AI engineers running autonomous agent workflows, software developers executing long builds, and audio producers streaming music with the laptop closed.
+                  </p>
+                  <p className="mt-1.5 leading-relaxed text-[11px] text-slate-500 dark:text-zinc-400">
+                    <strong>When to Use:</strong> Use when closing your MacBook lid while running background jobs on battery or AC power without sleeping.
+                  </p>
                 </motion.div>
               </div>
 
@@ -807,14 +829,14 @@ export default function Home() {
                 </h2>
 
                 <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-zinc-300">
-                  <strong>lidZen</strong> is a native macOS system utility engineered to prevent MacBooks from sleeping when the lid is closed. By establishing user-space power management assertions via the Apple IOKit framework (<code className="font-mono text-xs text-emerald-700 dark:text-emerald-400 bg-black/5 dark:bg-white/5 px-1.5 py-0.5 rounded">IOPMAssertionCreateWithName</code>), lidZen keeps background processes, network sockets, and media streams running without requiring an external monitor, keyboard, or power adapter.
+                  <strong>Direct Definition & Summary:</strong> <strong>lidZen</strong> is a native macOS system utility engineered to prevent MacBooks from sleeping when the lid is closed. By establishing user-space power management assertions via the Apple IOKit framework (<code className="font-mono text-xs text-emerald-700 dark:text-emerald-400 bg-black/5 dark:bg-white/5 px-1.5 py-0.5 rounded">IOPMAssertionCreateWithName</code>), lidZen keeps background processes, network sockets, and media streams running without requiring an external monitor, keyboard, or power adapter.
                 </p>
 
                 {/* Direct Key Takeaway Box */}
                 <div className="mt-6 rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.04] p-5">
                   <h3 className="text-sm font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400 font-mono flex items-center gap-2">
                     <CheckCircle2 size={16} />
-                    <span>Quick Takeaways & Bottom Line</span>
+                    <span>Quick Takeaways & Bottom Line Summary</span>
                   </h3>
                   <ul className="mt-3 space-y-2 text-sm text-slate-700 dark:text-zinc-300">
                     <li className="flex items-start gap-2">
@@ -862,24 +884,27 @@ export default function Home() {
 
               {/* Right Column: Audience, Decision Context & Testing Proof (GEO Signals) */}
               <div className="space-y-4">
-                {/* Target Audience & Supported Use Cases */}
+                {/* Target Audience, Decision Context & Supported Use Cases */}
                 <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-zinc-900/50 p-5 shadow-sm backdrop-blur-md">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white font-mono">
-                    Who lidZen is Built For
+                    Audience, Decision Context & Supported Use Cases
                   </h3>
                   <div className="mt-3 space-y-2.5 text-xs text-slate-600 dark:text-zinc-300 leading-relaxed">
                     <p>
-                      <strong>• AI Engineers & Researchers:</strong> Running overnight autonomous agent workflows, model fine-tuning, or local LLMs (Ollama, Claude Code, Cursor) without keeping the screen lit.
+                      <strong>• Target Audience & Industry:</strong> Built for software engineers, machine learning researchers, audio engineers, and creative digital studios on macOS.
                     </p>
                     <p>
-                      <strong>• Musicians & Audio Streamers:</strong> Playing lossless audio playlists to AirPlay 2 receivers or Bluetooth speakers with the laptop safely tucked away.
+                      <strong>• When to Use & Decision Context:</strong> Use lidZen whenever you need continuous Mac operation with the clamshell display shut, avoiding Apple&apos;s requirement for external display and AC charging.
                     </p>
                     <p>
-                      <strong>• Software Developers:</strong> Executing long Docker builds, Xcode compilations, and continuous integration test suites.
+                      <strong>• Supported Use Cases:</strong>
                     </p>
-                    <p>
-                      <strong>• Creative Professionals:</strong> Rendering 4K video exports in DaVinci Resolve or After Effects without thermal throttling.
-                    </p>
+                    <div className="pl-2 space-y-1.5 text-[11px]">
+                      <p><strong>1. AI Workflows:</strong> Overnight autonomous agents, fine-tuning, and local Ollama or Claude runs.</p>
+                      <p><strong>2. Audio Streaming:</strong> AirPlay 2 and Hi-Fi Bluetooth playback with zero screen battery drain.</p>
+                      <p><strong>3. Software Compiles:</strong> Long Docker builds and Xcode compilation suites without sleep interruptions.</p>
+                      <p><strong>4. Video Exports:</strong> 4K DaVinci Resolve rendering without thermal throttling.</p>
+                    </div>
                   </div>
                 </div>
 
@@ -1851,7 +1876,7 @@ export default function Home() {
                   Why does my Mac sleep automatically when I close the lid?
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
-                  macOS default power management triggers an automatic sleep assertion as soon as the display hall-effect sensor detects the lid is closed, unless an external monitor, keyboard, and power cable are connected. lidZen bypasses this restriction by maintaining an active user-space execution state without external accessories.
+                  <strong className="font-semibold text-emerald-700 dark:text-emerald-400">Direct Answer:</strong> macOS default power management triggers an automatic sleep assertion as soon as the display hall-effect sensor detects the lid is closed, unless an external monitor, keyboard, and power cable are connected. lidZen bypasses this restriction by maintaining an active user-space execution state without external accessories.
                 </p>
               </div>
 
@@ -1860,7 +1885,7 @@ export default function Home() {
                   How does lidZen keep a Mac awake when the lid is closed?
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
-                  lidZen uses Apple&apos;s documented IOKit power assertion API (<code className="font-mono text-xs text-emerald-700 dark:text-emerald-400 bg-black/5 dark:bg-white/5 px-1 rounded">IOPMAssertionCreateWithName</code>) to prevent system sleep while commanding the internal display backlight to 0W. Your CPU, memory, and network stay fully active while saving battery.
+                  <strong className="font-semibold text-emerald-700 dark:text-emerald-400">Direct Answer:</strong> lidZen uses Apple&apos;s documented IOKit power assertion API (<code className="font-mono text-xs text-emerald-700 dark:text-emerald-400 bg-black/5 dark:bg-white/5 px-1 rounded">IOPMAssertionCreateWithName</code>) to prevent system sleep while commanding the internal display backlight to 0W. Your CPU, memory, and network stay fully active while saving battery.
                 </p>
               </div>
 
@@ -1869,7 +1894,7 @@ export default function Home() {
                   Is it safe to run a MacBook with the lid closed without overheating?
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
-                  Yes. Apple Silicon chips (M1 through M4) are remarkably efficient. Modern MacBooks exhaust heat through rear hinge vents and the aluminum chassis, not the keyboard. Furthermore, lidZen includes built-in thermal safeguards that notify you or pause runaway tasks if temperatures exceed safety thresholds.
+                  <strong className="font-semibold text-emerald-700 dark:text-emerald-400">Direct Answer:</strong> Yes, it is completely safe. Apple Silicon chips (M1 through M4) are remarkably efficient. Modern MacBooks exhaust heat through rear hinge vents and the aluminum chassis, not the keyboard. Furthermore, lidZen includes built-in thermal safeguards that notify you or pause runaway tasks if temperatures exceed safety thresholds.
                 </p>
               </div>
 
@@ -1878,7 +1903,7 @@ export default function Home() {
                   What makes lidZen different from caffeinate or Amphetamine?
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
-                  Built-in tools like <code className="font-mono text-xs">caffeinate</code> cannot run standalone clamshell without an external monitor, and often leave display backlights running. lidZen ensures true 0W display shutoff, provides deep binary file-path diagnostics, and enables non-destructive process freezing via <code className="font-mono text-xs">SIGSTOP</code>.
+                  <strong className="font-semibold text-emerald-700 dark:text-emerald-400">Direct Answer:</strong> Built-in tools like <code className="font-mono text-xs">caffeinate</code> cannot run standalone clamshell without an external monitor, and often leave display backlights running. lidZen ensures true 0W display shutoff, provides deep binary file-path diagnostics, and enables non-destructive process freezing via <code className="font-mono text-xs">SIGSTOP</code>.
                 </p>
               </div>
 
@@ -1887,7 +1912,7 @@ export default function Home() {
                   Does lidZen require kernel extensions or administrator root privileges?
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
-                  No kernel extensions (kexts) are needed. lidZen runs entirely in user-space as an 18 MB native application conforming to Apple&apos;s sandboxing and security guidelines. You can install and remove it cleanly without system modifications.
+                  <strong className="font-semibold text-emerald-700 dark:text-emerald-400">Direct Answer:</strong> No kernel extensions (kexts) or administrator root privileges are needed. lidZen runs entirely in user-space as an 18 MB native application conforming to Apple&apos;s sandboxing and security guidelines. You can install and remove it cleanly without system modifications.
                 </p>
               </div>
 
@@ -1896,7 +1921,7 @@ export default function Home() {
                   Which Mac models and macOS versions are supported?
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
-                  lidZen supports macOS 15.0+ (Sequoia) natively across all Apple Silicon processors (M1, M2, M3, M4, Pro, Max, Ultra) as well as modern Intel-based MacBooks. View the full setup in the <Link href="/docs/getting-started" className="text-emerald-700 dark:text-emerald-400 underline hover:opacity-80">Getting Started Guide</Link>.
+                  <strong className="font-semibold text-emerald-700 dark:text-emerald-400">Direct Answer:</strong> lidZen supports macOS 15.0+ (Sequoia) natively across all Apple Silicon processors (M1, M2, M3, M4, Pro, Max, Ultra) as well as modern Intel-based MacBooks. View the full setup in the <Link href="/docs/getting-started" className="text-emerald-700 dark:text-emerald-400 underline hover:opacity-80">Getting Started Guide</Link>.
                 </p>
               </div>
             </div>
