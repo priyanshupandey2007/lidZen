@@ -913,6 +913,7 @@ export default function Home() {
                   <span className="text-xs text-slate-500 dark:text-zinc-400 font-mono">Instant DMG download</span>
                   <a
                     href="#download"
+                    aria-label="Download lidZen"
                     className="grid h-9 w-9 place-items-center rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200 transition hover:scale-105 shadow-md"
                   >
                     <ArrowRight size={16} />

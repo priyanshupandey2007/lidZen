@@ -83,7 +83,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-black/[0.06] dark:border-white/[0.06] pt-8 text-xs text-slate-500 dark:text-zinc-400 sm:flex-row font-mono">
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-black/[0.06] dark:border-white/[0.06] pt-8 text-xs text-slate-600 dark:text-zinc-300 sm:flex-row font-mono">
           <div className="flex items-center gap-4">
             <span>© {new Date().getFullYear()} lidZen. {t.footer.rights}</span>
             <LanguageSelector />
