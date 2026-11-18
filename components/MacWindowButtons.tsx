@@ -18,6 +18,21 @@ export default function MacWindowButtons({
   onMinimize,
   onMaximize,
 }: MacWindowButtonsProps) {
+  const isInteractive = Boolean(onClose || onMinimize || onMaximize);
+
+  if (!isInteractive) {
+    return (
+      <div
+        className={`flex items-center gap-2 select-none ${className}`}
+        aria-hidden="true"
+      >
+        <span className="h-3 w-3 rounded-full bg-[#FF5F56] border border-[#E0443E] shadow-sm inline-block" />
+        <span className="h-3 w-3 rounded-full bg-[#FFBD2E] border border-[#DEA123] shadow-sm inline-block" />
+        <span className="h-3 w-3 rounded-full bg-[#27C93F] border border-[#1AAB29] shadow-sm inline-block" />
+      </div>
+    );
+  }
+
   return (
     <div
       className={`group/mac-controls flex items-center gap-2 select-none ${className}`}

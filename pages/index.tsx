@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowRight,
   Download,
@@ -148,37 +147,41 @@ export default function Home() {
 
   useEffect(() => {
     if (autoCyclePaused) {
-      const resumeTimer = setTimeout(() => setAutoCyclePaused(false), 12000);
+      const resumeTimer = setTimeout(() => setAutoCyclePaused(false), 15000);
       return () => clearTimeout(resumeTimer);
     }
-    const interval = setInterval(() => {
-      setIsLidClosed((prev) => !prev);
-    }, 6000);
+    // Defer interval start so initial hydration and paint have zero CPU contention
+    const delayTimer = setTimeout(() => {
+      const interval = setInterval(() => {
+        setIsLidClosed((prev) => !prev);
+      }, 8000);
+      return () => clearInterval(interval);
+    }, 5000);
 
-    return () => clearInterval(interval);
+    return () => clearTimeout(delayTimer);
   }, [autoCyclePaused]);
 
   const toggleLid = () => {
     setIsLidClosed((prev) => !prev);
-    setAutoCyclePaused(true); // pause auto-cycle for 12s when user interacts
+    setAutoCyclePaused(true); // pause auto-cycle for 15s when user interacts
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setAgentStep((prev) => (prev + 1) % agentSteps.length);
-    }, 2400);
-    return () => clearInterval(timer);
+    // Defer agent step ticker past initial load
+    const delayTimer = setTimeout(() => {
+      const timer = setInterval(() => {
+        setAgentStep((prev) => (prev + 1) % agentSteps.length);
+      }, 4000);
+      return () => clearInterval(timer);
+    }, 4000);
+
+    return () => clearTimeout(delayTimer);
   }, [agentSteps.length]);
 
   // Diagnostics interactive inspector state: tracks paused (SIGSTOP) vs active tasks
   const [selectedId, setSelectedId] = useState<string>(initialCulprits[0].id);
   const [pausedIds, setPausedIds] = useState<Set<string>>(new Set());
-  const [isScanning, setIsScanning] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsScanning(false), 900);
-    return () => clearTimeout(timer);
-  }, []);
+  const [isScanning, setIsScanning] = useState(false);
 
   const activeCulprits = useMemo(
     () => initialCulprits.filter((c) => !pausedIds.has(c.id)),
@@ -570,18 +573,14 @@ export default function Home() {
                     >
                       {/* Fixed height container anchoring the screen hinge to the base deck with 0 layout shift */}
                       <div className="h-44 w-full flex flex-col justify-end items-center relative">
-                        {/* Rotating Lid Screen Assembly */}
-                        <motion.div
-                          animate={{
-                            rotateX: isLidClosed ? -88 : 0,
-                            y: isLidClosed ? 12 : 0,
-                          }}
-                          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                        {/* Rotating Lid Screen Assembly: Pure CSS GPU-accelerated 3D Transform */}
+                        <div
                           style={{
+                            transform: isLidClosed ? 'rotateX(-88deg) translateY(12px)' : 'rotateX(0deg) translateY(0px)',
                             transformOrigin: 'bottom center',
                             transformStyle: 'preserve-3d',
                           }}
-                          className="relative w-64 sm:w-72 h-40 z-10"
+                          className="relative w-64 sm:w-72 h-40 z-10 transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
                         >
                           {/* FRONT: High-DPI Screen with active terminal (Visible when Lid Open) */}
                           <div
@@ -641,7 +640,7 @@ export default function Home() {
                               </span>
                             </div>
                           </div>
-                        </motion.div>
+                        </div>
                       </div>
 
                       {/* Authentic MacBook Hinge: Screen meets base seamlessly with 0 dead space */}
@@ -1039,9 +1038,9 @@ export default function Home() {
                   No more guessing. See the precise process, tab, or container behind the heat.
                 </p>
 
-                <div className="mt-5 rounded-2xl border border-black/10 dark:border-white/10 bg-slate-100 dark:bg-[#06080e] p-3 font-mono text-xs text-slate-900 dark:text-white">
-                  <div className="text-slate-500 dark:text-zinc-400">~/projects/api</div>
-                  <div className="mt-1 flex items-center justify-between text-rose-600 dark:text-rose-400 font-semibold">
+                <div className="mt-5 rounded-2xl border border-black/10 dark:border-white/10 bg-slate-900 text-white p-3 font-mono text-xs shadow-inner">
+                  <div className="text-zinc-400">~/projects/api</div>
+                  <div className="mt-1 flex items-center justify-between text-rose-400 font-semibold">
                     <span className="truncate">node · docker-compose</span>
                     <span>94% CPU</span>
                   </div>
@@ -1210,20 +1209,13 @@ export default function Home() {
                   </div>
 
                   <ul className="space-y-2">
-                    <AnimatePresence>
-                      {initialCulprits.map((item) => {
-                        const isSelected = item.id === selectedId;
-                        const isPaused = pausedIds.has(item.id);
-                        return (
-                          <motion.li
-                            key={item.id}
-                            layout
-                            initial={{ opacity: 0, scale: 0.96 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.25 }}
-                          >
-                            <div
-                              onClick={() => setSelectedId(item.id)}
+                    {initialCulprits.map((item) => {
+                      const isSelected = item.id === selectedId;
+                      const isPaused = pausedIds.has(item.id);
+                      return (
+                        <li key={item.id}>
+                          <div
+                            onClick={() => setSelectedId(item.id)}
                               className={`group flex w-full items-center gap-3 rounded-2xl border p-3.5 text-left transition-all cursor-pointer ${
                                 isSelected
                                   ? isPaused
@@ -1297,10 +1289,9 @@ export default function Home() {
                                 </button>
                               </div>
                             </div>
-                          </motion.li>
+                          </li>
                         );
                       })}
-                    </AnimatePresence>
                   </ul>
 
                   {activeCulprits.length === 0 && (
@@ -1318,14 +1309,10 @@ export default function Home() {
 
                 {/* Right: Detailed Path & Instant Pause/Resume Controller */}
                 <div className="relative p-5 md:p-7 min-h-[380px] transition-dimensions">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={selectedCulprit.id + '-' + (isSelectedPaused ? 'paused' : 'active')}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.25 }}
-                    >
+                  <div
+                    key={selectedCulprit.id + '-' + (isSelectedPaused ? 'paused' : 'active')}
+                    className="transition-opacity duration-200"
+                  >
                       <div className="flex items-center justify-between">
                         <span className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-zinc-300 font-mono">
                           <FolderTree size={14} className="text-emerald-600 dark:text-emerald-400" />
@@ -1430,8 +1417,7 @@ export default function Home() {
                             : 'Halts CPU instantly via Mach task_suspend'}
                         </span>
                       </div>
-                    </motion.div>
-                  </AnimatePresence>
+                    </div>
                 </div>
               </div>
 
@@ -1440,7 +1426,7 @@ export default function Home() {
                 <div className="flex items-center gap-4 sm:gap-6 font-mono text-xs">
                   <span>
                     Aggregate CPU:{' '}
-                    <strong className={activeCulprits.length > 0 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}>
+                    <strong className={activeCulprits.length > 0 ? 'text-rose-700 dark:text-rose-400' : 'text-emerald-700 dark:text-emerald-400'}>
                       {aggregateStats.cpu}%
                     </strong>
                   </span>
@@ -1687,9 +1673,9 @@ export default function Home() {
                     <td className="py-3.5 px-3 sm:px-4 text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/[0.08]">
                       ✓ Supported natively
                     </td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ Forces sleep</td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ Forces sleep</td>
-                    <td className="py-3.5 px-3 sm:px-4 text-amber-600">Requires Display Clamshell</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-700 dark:text-rose-400">✗ Forces sleep</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-700 dark:text-rose-400">✗ Forces sleep</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-amber-800 dark:text-amber-400">Requires Display Clamshell</td>
                   </tr>
                   <tr>
                     <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-900 dark:text-white font-sans text-xs sm:text-sm">
@@ -1699,8 +1685,8 @@ export default function Home() {
                       0W (Display off)
                     </td>
                     <td className="py-3.5 px-3 sm:px-4 text-slate-500">0W (System asleep)</td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">Display active (~8W)</td>
-                    <td className="py-3.5 px-3 sm:px-4 text-amber-600">Partial support</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-700 dark:text-rose-400">Display active (~8W)</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-amber-800 dark:text-amber-400">Partial support</td>
                   </tr>
                   <tr>
                     <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-900 dark:text-white font-sans text-xs sm:text-sm">
@@ -1709,9 +1695,9 @@ export default function Home() {
                     <td className="py-3.5 px-3 sm:px-4 text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/[0.08]">
                       ✓ Full path & PID
                     </td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ App name only</td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ None</td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ None</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-700 dark:text-rose-400">✗ App name only</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-700 dark:text-rose-400">✗ None</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-700 dark:text-rose-400">✗ None</td>
                   </tr>
                   <tr>
                     <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-900 dark:text-white font-sans text-xs sm:text-sm">
@@ -1720,9 +1706,9 @@ export default function Home() {
                     <td className="py-3.5 px-3 sm:px-4 text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/[0.08]">
                       ✓ Zero data loss
                     </td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ Force kill only</td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ None</td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ None</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-700 dark:text-rose-400">✗ Force kill only</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-700 dark:text-rose-400">✗ None</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-700 dark:text-rose-400">✗ None</td>
                   </tr>
                   <tr>
                     <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-900 dark:text-white font-sans text-xs sm:text-sm">
