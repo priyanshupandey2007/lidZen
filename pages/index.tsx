@@ -537,12 +537,7 @@ export default function Home() {
               </div>
 
               {/* Right Column: High-End macOS Workstation HUD with Hardware Visualizer */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative mx-auto w-full max-w-md lg:max-w-none"
-              >
+              <div className="relative mx-auto w-full max-w-md lg:max-w-none">
                 <div className="relative overflow-hidden rounded-3xl glass-strong p-6 sm:p-7 shadow-2xl">
                   {/* Subtle luxury glow behind window */}
                   <div className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-b from-accent-400/10 via-transparent to-transparent" />
@@ -776,7 +771,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
         </section>
@@ -990,13 +985,7 @@ export default function Home() {
             {/* Bento Grid */}
             <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-6">
               {/* Card 1: Clamshell Continuity (Large, spans 4 cols) */}
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6 }}
-                className="group relative overflow-hidden rounded-3xl glass p-7 md:p-9 md:col-span-4"
-              >
+              <div className="group relative overflow-hidden rounded-3xl glass p-7 md:p-9 md:col-span-4">
                 <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
                   <Layers size={14} />
                   Clamshell Continuity
@@ -1035,22 +1024,16 @@ export default function Home() {
                 </div>
 
                 <div className="pointer-events-none absolute -bottom-20 -right-10 h-56 w-56 rounded-full bg-accent-400/15 blur-3xl opacity-40 group-hover:opacity-100 transition-opacity" />
-              </motion.div>
+              </div>
 
               {/* Card 2: Deep Path Diagnostics (Spans 2 cols) */}
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, delay: 0.08 }}
-                className="group relative overflow-hidden rounded-3xl glass p-7 md:col-span-2"
-              >
+              <div className="group relative overflow-hidden rounded-3xl glass p-7 md:col-span-2">
                 <div className="inline-flex items-center gap-2 rounded-full border border-rose-500/30 bg-rose-500/10 px-3.5 py-1 text-xs font-semibold text-rose-500 dark:text-rose-400">
                   <FolderTree size={14} />
                   Deep Path Diagnostics
                 </div>
                 <h3 className="mt-5 text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-                  Trace heat & drain to the exact file path.
+                  Trace heat &amp; drain to the exact file path.
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
                   No more guessing. See the precise process, tab, or container behind the heat.
@@ -1065,19 +1048,13 @@ export default function Home() {
                 </div>
 
                 <div className="pointer-events-none absolute -top-12 -right-12 h-40 w-40 rounded-full bg-rose-500/15 blur-3xl" />
-              </motion.div>
+              </div>
 
               {/* Card 3: Smart Pause & Process Suspension (Spans 2 cols) */}
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, delay: 0.16 }}
-                className="group relative overflow-hidden rounded-3xl glass p-7 md:col-span-2"
-              >
+              <div className="group relative overflow-hidden rounded-3xl glass p-7 md:col-span-2">
                 <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-semibold text-amber-600 dark:text-amber-300">
                   <Pause size={13} />
-                  Smart Pause & Suspend
+                  Smart Pause &amp; Suspend
                 </div>
                 <h3 className="mt-5 text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                   Freeze rogue apps without losing state.
@@ -1095,16 +1072,10 @@ export default function Home() {
                   </a>
                   <span className="text-xs text-slate-500 dark:text-zinc-400 font-mono">Mach SIGSTOP · Safe resume</span>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Card 4: Real-time Thermal Map (Spans 2 cols) */}
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, delay: 0.24 }}
-                className="rounded-3xl glass p-6 md:col-span-2"
-              >
+              <div className="rounded-3xl glass p-6 md:col-span-2">
                 <div className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white">
                   <Flame size={16} className="text-rose-500 dark:text-rose-400" />
                   <span>Real-time thermal map</span>
@@ -1129,16 +1100,10 @@ export default function Home() {
                     <p className="mt-1 text-base font-bold text-slate-900 dark:text-white tabular-nums">−14%/h</p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Card 5: Ready in seconds (Spans 2 cols) */}
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, delay: 0.32 }}
-                className="relative overflow-hidden rounded-3xl border border-emerald-500/25 bg-gradient-to-br from-emerald-500/10 via-emerald-500/[0.03] to-transparent p-6 md:col-span-2 flex flex-col justify-between"
-              >
+              <div className="relative overflow-hidden rounded-3xl border border-emerald-500/25 bg-gradient-to-br from-emerald-500/10 via-emerald-500/[0.03] to-transparent p-6 md:col-span-2 flex flex-col justify-between">
                 <div>
                   <div className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-mono">
                     Ready in seconds
@@ -1160,7 +1125,7 @@ export default function Home() {
                     <ArrowRight size={16} />
                   </a>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
         </section>
@@ -1180,13 +1145,7 @@ export default function Home() {
             </div>
 
             {/* Inspector Window */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.7 }}
-              className="mt-12 overflow-hidden rounded-3xl glass-strong shadow-2xl"
-            >
+            <div className="mt-12 overflow-hidden rounded-3xl glass-strong shadow-2xl">
               {/* Window Header */}
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-black/[0.08] dark:border-white/[0.08] px-4 py-3 bg-slate-100 dark:bg-[#0c0e14]">
                 <div className="flex items-center gap-3">
@@ -1504,7 +1463,7 @@ export default function Home() {
                   </span>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
@@ -1515,13 +1474,7 @@ export default function Home() {
           <div className="mx-auto max-w-6xl px-4 md:px-6">
             <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
               {/* Left Silhouette Graphic */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.7 }}
-                className="relative"
-              >
+              <div className="relative">
                 <div className="relative overflow-hidden rounded-3xl glass p-8 shadow-xl">
                   <div className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-b from-emerald-400/10 to-transparent" />
                   <div className="relative flex flex-col items-center text-center">
@@ -1635,7 +1588,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Right text & 6 cards */}
               <div>
@@ -1679,12 +1632,8 @@ export default function Home() {
                       desc: 'If it runs on your Mac, lidZen keeps it running — lid or no lid.',
                     },
                   ].map((item, idx) => (
-                    <motion.div
+                    <div
                       key={item.title}
-                      initial={{ opacity: 0, y: 16 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: '-60px' }}
-                      transition={{ duration: 0.5, delay: idx * 0.05 }}
                       className="group rounded-2xl border border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.02] p-4 transition-all hover:border-black/15 dark:hover:border-white/15 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]"
                     >
                       <div className="flex items-center gap-3">
@@ -1694,7 +1643,7 @@ export default function Home() {
                         <span className="text-sm font-bold text-slate-900 dark:text-white">{item.title}</span>
                       </div>
                       <p className="mt-2.5 text-xs leading-relaxed text-slate-600 dark:text-zinc-300">{item.desc}</p>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -1908,13 +1857,7 @@ export default function Home() {
         {/* ======================================================== */}
         <section id="download" className="relative py-24 md:py-32 border-t border-black/[0.08] dark:border-white/[0.08]">
           <div className="mx-auto max-w-5xl px-4 md:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.7 }}
-              className="relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-gradient-to-b from-slate-100 via-slate-50 to-white dark:from-[#0f1422] dark:via-[#090c15] dark:to-[#06080e] p-8 sm:p-14 text-center shadow-xl dark:shadow-[0_24px_80px_rgba(0,0,0,0.8)]"
-            >
+            <div className="relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-gradient-to-b from-slate-100 via-slate-50 to-white dark:from-[#0f1422] dark:via-[#090c15] dark:to-[#06080e] p-8 sm:p-14 text-center shadow-xl dark:shadow-[0_24px_80px_rgba(0,0,0,0.8)]">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(45,212,191,0.15),transparent_70%)]" />
 
               <div className="relative">
@@ -1953,7 +1896,7 @@ export default function Home() {
                   </span>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
       </main>
