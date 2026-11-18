@@ -46,8 +46,15 @@ export default function Header() {
         <div className="flex items-center gap-7 lg:gap-10 shrink-0">
           {/* Brand */}
           <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="relative h-7 w-7 rounded-lg bg-slate-900 dark:bg-white flex items-center justify-center group-hover:scale-105 transition-transform shadow-sm">
-              <AppleLogo size={16} className="text-white dark:text-slate-950 fill-current" />
+            <div className="relative h-7 w-7 rounded-lg overflow-hidden group-hover:scale-105 transition-transform shadow-sm">
+              <Image
+                src="/logo.png"
+                alt="lidZen"
+                width={28}
+                height={28}
+                className="h-full w-full object-cover rounded-lg"
+                priority
+              />
             </div>
             <span className="text-base font-semibold tracking-tight text-slate-900 dark:text-white transition-colors">
               lidZen

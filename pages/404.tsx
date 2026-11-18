@@ -72,8 +72,15 @@ export default function NotFound() {
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="h-16 w-16 rounded-full bg-emerald-400/20 blur-xl animate-pulse" />
               </div>
-              <Link href="/" className="relative z-10 inline-flex items-center justify-center h-14 w-14 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0e14] shadow-lg mx-auto hover:scale-105 transition-transform">
-                <AppleLogo size={30} className="text-slate-900 dark:text-white fill-current drop-shadow-[0_0_10px_rgba(45,212,191,0.5)]" />
+              <Link href="/" className="relative z-10 inline-flex items-center justify-center h-14 w-14 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0e14] shadow-lg mx-auto hover:scale-105 transition-transform overflow-hidden">
+                <Image
+                  src="/logo.png"
+                  alt="lidZen"
+                  width={56}
+                  height={56}
+                  className="h-full w-full object-cover rounded-2xl"
+                  priority
+                />
               </Link>
             </motion.div>
 

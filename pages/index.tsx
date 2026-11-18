@@ -665,8 +665,8 @@ export default function Home() {
                               {/* Floating macOS Dock */}
                               <div className="mt-auto pt-2 z-20">
                                 <div className="inline-flex items-center gap-2 rounded-xl bg-white/10 dark:bg-black/40 border border-white/15 px-2.5 py-1 backdrop-blur-xl shadow-lg">
-                                  <div className="h-4 w-4 rounded-md bg-blue-500/80 flex items-center justify-center">
-                                    <AppleLogo size={9} className="text-white fill-current" />
+                                  <div className="h-4 w-4 rounded-md overflow-hidden flex items-center justify-center">
+                                    <Image src="/logo.png" alt="lidZen" width={16} height={16} className="h-full w-full object-cover" />
                                   </div>
                                   <div className="h-4 w-4 rounded-md bg-zinc-900 border border-emerald-400/50 flex items-center justify-center relative">
                                     <span className="h-2 w-2 rounded-sm bg-emerald-400" />

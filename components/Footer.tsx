@@ -46,8 +46,14 @@ export default function Footer() {
           {/* Brand info */}
           <div>
             <Link href="/" className="inline-flex items-center gap-2.5">
-              <div className="relative h-8 w-8 rounded-xl bg-slate-900 dark:bg-white flex items-center justify-center shadow-sm">
-                <AppleLogo size={18} className="text-white dark:text-slate-950 fill-current" />
+              <div className="relative h-8 w-8 rounded-xl overflow-hidden shadow-sm">
+                <Image
+                  src="/logo.png"
+                  alt="lidZen"
+                  width={32}
+                  height={32}
+                  className="h-full w-full object-cover rounded-xl"
+                />
               </div>
               <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">lidZen</span>
             </Link>
