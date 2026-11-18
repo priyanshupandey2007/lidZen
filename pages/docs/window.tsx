@@ -38,17 +38,17 @@ export default function WindowDocs() {
           <div className="rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-4 text-center">
             <Monitor size={22} className="mx-auto text-accent-500 dark:text-accent-400 mb-2" />
             <h5 className="font-semibold text-slate-900 dark:text-white text-xs">Thunderbolt Displays</h5>
-            <p className="mt-1 text-[11px] text-slate-600 dark:text-zinc-400">Apple Studio Display, Pro Display XDR, LG UltraFine.</p>
+            <p className="mt-1 text-xs text-slate-600 dark:text-zinc-400">Apple Studio Display, Pro Display XDR, LG UltraFine.</p>
           </div>
           <div className="rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-4 text-center">
             <Tv size={22} className="mx-auto text-cool-500 dark:text-cool-300 mb-2" />
             <h5 className="font-semibold text-slate-900 dark:text-white text-xs">HDMI 2.1 & DisplayPort</h5>
-            <p className="mt-1 text-[11px] text-slate-600 dark:text-zinc-400">4K & 8K high-refresh rate gaming and productivity monitors.</p>
+            <p className="mt-1 text-xs text-slate-600 dark:text-zinc-400">4K & 8K high-refresh rate gaming and productivity monitors.</p>
           </div>
           <div className="rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-4 text-center">
             <Layout size={22} className="mx-auto text-signal-500 dark:text-signal-400 mb-2" />
             <h5 className="font-semibold text-slate-900 dark:text-white text-xs">Sidecar & AirPlay</h5>
-            <p className="mt-1 text-[11px] text-slate-600 dark:text-zinc-400">Wirelessly stream or extend desktops to iPad and Apple TV.</p>
+            <p className="mt-1 text-xs text-slate-600 dark:text-zinc-400">Wirelessly stream or extend desktops to iPad and Apple TV.</p>
           </div>
         </div>
       </section>

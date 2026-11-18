@@ -442,7 +442,7 @@ export default function Home() {
 
       <Header />
 
-      <main className="relative min-h-screen bg-slate-50 dark:bg-[#07090e] text-slate-900 dark:text-zinc-200 transition-colors duration-300 overflow-x-hidden selection:bg-accent-400/30 selection:text-white">
+      <main className="relative min-h-screen bg-slate-50 dark:bg-[#07090e] text-slate-900 dark:text-zinc-300 transition-colors duration-300 overflow-x-hidden selection:bg-accent-400/30 selection:text-white">
         {/* Multi-layered luxury glow: Emerald + Deep Indigo ambient light */}
         <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-[680px] w-full max-w-7xl -z-10">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_20%,rgba(45,212,191,0.18),transparent_75%)] blur-2xl dark:opacity-100 opacity-60" />
@@ -473,7 +473,7 @@ export default function Home() {
                     {t.hero.titleLine1}
                   </span>
                   <br />
-                  <span className="text-slate-700 dark:text-zinc-300">
+                  <span className="text-slate-600 dark:text-zinc-300">
                     {t.hero.titleLine2}
                   </span>
                 </h1>
@@ -497,7 +497,7 @@ export default function Home() {
                     href="#diagnostics"
                     className="btn-secondary"
                   >
-                    <Activity size={16} className="text-emerald-500 dark:text-emerald-400" />
+                    <Activity size={16} className="text-emerald-600 dark:text-emerald-400" />
                     <span>{t.hero.demoCta}</span>
                   </a>
                 </div>
@@ -505,23 +505,23 @@ export default function Home() {
                 {/* Specs / trust line in crisp high-contrast */}
                 <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500 dark:text-zinc-400 lg:justify-start font-mono">
                   <span className="flex items-center gap-2">
-                    <Cpu size={14} className="text-emerald-500 dark:text-emerald-400" />
+                    <Cpu size={14} className="text-emerald-600 dark:text-emerald-400" />
                     {t.hero.silicon}
                   </span>
                   <span className="flex items-center gap-2">
-                    <AppleLogo size={14} className="text-emerald-500 dark:text-emerald-400" />
+                    <AppleLogo size={14} className="text-emerald-600 dark:text-emerald-400" />
                     {t.hero.os}
                   </span>
                   <span className="flex items-center gap-2">
-                    <Shield size={14} className="text-emerald-500 dark:text-emerald-400" />
+                    <Shield size={14} className="text-emerald-600 dark:text-emerald-400" />
                     {t.hero.zeroKexts}
                   </span>
                 </div>
 
                 {/* Top Summary & Key Takeaways for AI extraction & AEO */}
-                <div className="mt-8 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-4 text-xs text-slate-700 dark:text-zinc-300 text-left max-w-xl mx-auto lg:mx-0 backdrop-blur-sm">
+                <div className="mt-8 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-4 text-xs text-slate-600 dark:text-zinc-300 text-left max-w-xl mx-auto lg:mx-0 backdrop-blur-sm">
                   <p className="font-semibold text-slate-900 dark:text-white flex items-center gap-1.5 mb-1.5 font-mono">
-                    <Sparkles size={13} className="text-emerald-500 dark:text-emerald-400" />
+                    <Sparkles size={13} className="text-emerald-600 dark:text-emerald-400" />
                     <span>Top Summary & Key Takeaways</span>
                   </p>
                   <p className="leading-relaxed">
@@ -538,20 +538,20 @@ export default function Home() {
 
               {/* Right Column: High-End macOS Workstation HUD with Hardware Visualizer */}
               <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-                <div className="relative overflow-hidden rounded-3xl glass-strong p-6 sm:p-7 shadow-2xl">
+                <div className="relative overflow-hidden rounded-2xl glass-strong p-6 sm:p-7 shadow-2xl">
                   {/* Subtle luxury glow behind window */}
-                  <div className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-b from-accent-400/10 via-transparent to-transparent" />
+                  <div className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-b from-accent-400/10 via-transparent to-transparent" />
 
                   {/* Top Window Chrome Bar */}
                   <div className="flex items-center justify-between border-b border-black/[0.08] dark:border-white/[0.08] pb-3.5">
                     <div className="flex items-center gap-3">
                       <MacWindowButtons />
-                      <span className="text-xs font-mono font-medium text-slate-700 dark:text-zinc-300">
+                      <span className="text-xs font-mono font-medium text-slate-600 dark:text-zinc-300">
                         {t.hud.title}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-2.5 py-0.5 text-[10px] font-mono text-slate-700 dark:text-zinc-300">
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-2.5 py-0.5 text-xs font-mono text-slate-600 dark:text-zinc-300">
                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
                         <span>{t.hud.continuityActive}</span>
                       </span>
@@ -590,7 +590,7 @@ export default function Home() {
                             }`}
                           >
                             {/* Screen Camera Notch */}
-                            <div className="absolute left-1/2 top-2 h-1.5 w-8 -translate-x-1/2 rounded-b bg-black/90 z-20" />
+                            <div className="absolute left-1/2 top-2 h-1.5 w-8 -translate-x-1/2 rounded-b-lg bg-black/90 z-20" />
 
                             {/* Retina Screen Window */}
                             <div className="relative h-full w-full rounded-xl bg-gradient-to-b from-[#0d1117] to-black p-3 flex flex-col justify-between border border-white/10 shadow-inner">
@@ -615,7 +615,7 @@ export default function Home() {
                               </div>
 
                               <div className="flex items-center justify-between text-xs font-mono text-emerald-400 pt-1 border-t border-white/10">
-                                <span className="truncate">{t.hud.readyTasks}</span>
+                                <span className="break-words leading-tight whitespace-normal">{t.hud.readyTasks}</span>
                                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0 ml-1 animate-pulse" />
                               </div>
                             </div>
@@ -636,7 +636,7 @@ export default function Home() {
                                 height={34}
                                 className="relative z-10 opacity-95 drop-shadow-[0_0_12px_rgba(45,212,191,0.6)]"
                               />
-                              <span className="mt-1 font-mono text-xs text-slate-900 dark:text-zinc-200 font-semibold tracking-wide">
+                              <span className="mt-1 font-mono text-xs text-slate-900 dark:text-zinc-300 font-semibold tracking-wide">
                                 {t.hud.clamshellActive}
                               </span>
                             </div>
@@ -645,16 +645,16 @@ export default function Home() {
                       </div>
 
                       {/* Authentic MacBook Hinge: Screen meets base seamlessly with 0 dead space */}
-                      <div className="w-36 sm:w-40 h-1.5 bg-zinc-950 rounded-t-[2px] border-x border-zinc-700/80 -mb-[1px] z-20 shadow-inner" />
+                      <div className="w-36 sm:w-40 h-1.5 bg-zinc-950 rounded-t-lg border-x border-zinc-700/80 -mb-[1px] z-20 shadow-inner" />
 
                       {/* MacBook Bottom Base Deck */}
-                      <div className="relative w-72 sm:w-80 h-3 rounded-b-xl rounded-t-[2px] border border-black/20 dark:border-white/15 bg-gradient-to-b from-slate-300 via-slate-400 to-slate-500 dark:from-slate-600 dark:via-slate-700 dark:to-slate-800 shadow-md z-20">
-                        <div className="absolute left-1/2 top-0 h-1 w-14 -translate-x-1/2 rounded-b-md bg-black/70" />
+                      <div className="relative w-72 sm:w-80 h-3 rounded-b-lg rounded-t-lg border border-black/20 dark:border-white/15 bg-gradient-to-b from-slate-300 via-slate-400 to-slate-500 dark:from-slate-600 dark:via-slate-700 dark:to-slate-800 shadow-md z-20">
+                        <div className="absolute left-1/2 top-0 h-1 w-14 -translate-x-1/2 rounded-b-lg bg-black/70" />
                       </div>
                     </div>
 
                     {/* Status pill reflecting lid state (Physical Sensor + Interactive) */}
-                    <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400 group-hover:border-emerald-500/50 transition">
+                    <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 group-hover:border-emerald-500/50 transition">
                       <span className="relative flex h-2 w-2">
                         <span className="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-emerald-400" />
                         <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
@@ -679,7 +679,7 @@ export default function Home() {
                             <span>{t.hud.sleepSaved}</span>
                           </>
                         ) : (
-                          <span className="text-xs text-slate-500 dark:text-zinc-400 group-hover:text-slate-700 dark:group-hover:text-zinc-300 transition">
+                          <span className="text-xs text-slate-500 dark:text-zinc-400 group-hover:text-slate-600 dark:group-hover:text-zinc-300 transition">
                             {t.hud.clickMacbook}
                           </span>
                         )}
@@ -728,7 +728,7 @@ export default function Home() {
                           {isLidClosed ? 'Active · lid shut' : 'Active'}
                         </span>
                       </div>
-                      <div className="mt-2 rounded-lg border border-black/5 dark:border-white/5 bg-slate-100 dark:bg-[#06080e] p-2 font-mono text-xs text-slate-700 dark:text-zinc-300 min-h-[2rem] flex items-center">
+                      <div className="mt-2 rounded-lg border border-black/5 dark:border-white/5 bg-slate-100 dark:bg-[#06080e] p-2 font-mono text-xs text-slate-600 dark:text-zinc-300 min-h-[2rem] flex items-center">
                         <p title={agentSteps[agentStep]} className="text-emerald-600 dark:text-emerald-400 font-medium break-words leading-tight">
                           {agentSteps[agentStep]}
                         </p>
@@ -784,7 +784,7 @@ export default function Home() {
             <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
               {/* Left Column: Direct Definition & Structured Answer Signals */}
               <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400 font-mono">
+                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 font-mono">
                   <Sparkles size={13} />
                   <span>AI Overview & Technical Definition</span>
                 </div>
@@ -793,17 +793,17 @@ export default function Home() {
                   What is lidZen? Clamshell Continuity Defined
                 </h2>
 
-                <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-zinc-300">
-                  <strong>Direct Definition & Summary:</strong> <strong>lidZen</strong> is a native macOS system utility engineered to prevent MacBooks from sleeping when the lid is closed. By establishing user-space power management assertions via the Apple IOKit framework (<code className="font-mono text-xs text-emerald-700 dark:text-emerald-400 bg-black/5 dark:bg-white/5 px-1.5 py-0.5 rounded">IOPMAssertionCreateWithName</code>), lidZen keeps background processes, network sockets, and media streams running without requiring an external monitor, keyboard, or power adapter.
+                <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600 dark:text-zinc-300">
+                  <strong>Direct Definition & Summary:</strong> <strong>lidZen</strong> is a native macOS system utility engineered to prevent MacBooks from sleeping when the lid is closed. By establishing user-space power management assertions via the Apple IOKit framework (<code className="font-mono text-xs text-emerald-600 dark:text-emerald-400 bg-black/5 dark:bg-white/5 px-1.5 py-0.5 rounded-lg">IOPMAssertionCreateWithName</code>), lidZen keeps background processes, network sockets, and media streams running without requiring an external monitor, keyboard, or power adapter.
                 </p>
 
                 {/* Direct Key Takeaway Box */}
                 <div className="mt-6 rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.04] p-5">
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400 font-mono flex items-center gap-2">
+                  <h3 className="text-sm font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
                     <CheckCircle2 size={16} />
                     <span>Quick Takeaways & Bottom Line Summary</span>
                   </h3>
-                  <ul className="mt-3 space-y-2 text-sm text-slate-700 dark:text-zinc-300">
+                  <ul className="mt-3 space-y-2 text-sm text-slate-600 dark:text-zinc-300">
                     <li className="flex items-start gap-2">
                       <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">✓</span>
                       <span><strong>Zero Display Energy:</strong> Powers down the internal Retina backlight to 0W while keeping CPU/GPU pipelines executing at 100% capacity.</span>
@@ -839,7 +839,7 @@ export default function Home() {
                     href="https://developer.apple.com/documentation/iokit"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-900 dark:hover:text-zinc-200 transition"
+                    className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-900 dark:hover:text-zinc-300 transition"
                   >
                     <span>Apple IOKit Docs</span>
                     <ExternalLink size={12} />
@@ -900,7 +900,7 @@ export default function Home() {
                       <span>Author & Reviewer:</span>
                       <span className="text-slate-900 dark:text-white">lidZen Engineering Team</span>
                     </div>
-                    <div className="flex justify-between pt-1 text-[11px] text-slate-500">
+                    <div className="flex justify-between pt-1 text-xs text-slate-500">
                       <span>Last Updated:</span>
                       <span>November 18, 2026</span>
                     </div>
@@ -923,7 +923,7 @@ export default function Home() {
               <div className="mt-8 grid gap-4 md:grid-cols-3">
                 <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-zinc-900/40 p-5 shadow-sm">
                   <div className="flex items-center gap-3">
-                    <span className="grid h-8 w-8 place-items-center rounded-xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-mono font-bold text-sm">
+                    <span className="grid h-8 w-8 place-items-center rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-mono font-bold text-sm">
                       1
                     </span>
                     <h3 className="font-bold text-slate-900 dark:text-white text-sm">
@@ -937,7 +937,7 @@ export default function Home() {
 
                 <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-zinc-900/40 p-5 shadow-sm">
                   <div className="flex items-center gap-3">
-                    <span className="grid h-8 w-8 place-items-center rounded-xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-mono font-bold text-sm">
+                    <span className="grid h-8 w-8 place-items-center rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-mono font-bold text-sm">
                       2
                     </span>
                     <h3 className="font-bold text-slate-900 dark:text-white text-sm">
@@ -951,7 +951,7 @@ export default function Home() {
 
                 <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-zinc-900/40 p-5 shadow-sm">
                   <div className="flex items-center gap-3">
-                    <span className="grid h-8 w-8 place-items-center rounded-xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-mono font-bold text-sm">
+                    <span className="grid h-8 w-8 place-items-center rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-mono font-bold text-sm">
                       3
                     </span>
                     <h3 className="font-bold text-slate-900 dark:text-white text-sm">
@@ -985,7 +985,7 @@ export default function Home() {
             {/* Bento Grid */}
             <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-6">
               {/* Card 1: Clamshell Continuity (Large, spans 4 cols) */}
-              <div className="group relative overflow-hidden rounded-3xl glass p-7 md:p-9 md:col-span-4">
+              <div className="group relative overflow-hidden rounded-2xl glass p-7 md:p-9 md:col-span-4">
                 <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
                   <Layers size={14} />
                   Clamshell Continuity
@@ -1000,7 +1000,7 @@ export default function Home() {
                 <div className="mt-8 grid grid-cols-3 gap-3">
                   <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] p-3.5">
                     <div className="flex items-center gap-2 text-slate-500 dark:text-zinc-400">
-                      <span className="h-1.5 w-1.5 rounded-full bg-cool-400" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                       <span className="text-xs font-mono">Agents</span>
                     </div>
                     <div className="mt-2 text-sm font-bold text-slate-900 dark:text-white">3 active</div>
@@ -1027,8 +1027,8 @@ export default function Home() {
               </div>
 
               {/* Card 2: Deep Path Diagnostics (Spans 2 cols) */}
-              <div className="group relative overflow-hidden rounded-3xl glass p-7 md:col-span-2">
-                <div className="inline-flex items-center gap-2 rounded-full border border-rose-500/30 bg-rose-500/10 px-3.5 py-1 text-xs font-semibold text-rose-500 dark:text-rose-400">
+              <div className="group relative overflow-hidden rounded-2xl glass p-7 md:col-span-2">
+                <div className="inline-flex items-center gap-2 rounded-full border border-rose-500/30 bg-rose-500/10 px-3.5 py-1 text-xs font-semibold text-rose-600 dark:text-rose-400">
                   <FolderTree size={14} />
                   Deep Path Diagnostics
                 </div>
@@ -1040,8 +1040,8 @@ export default function Home() {
                 </p>
 
                 <div className="mt-5 rounded-2xl border border-black/10 dark:border-white/10 bg-slate-100 dark:bg-[#06080e] p-3 font-mono text-xs text-slate-900 dark:text-white">
-                  <div className="text-slate-500 dark:text-zinc-500">~/projects/api</div>
-                  <div className="mt-1 flex items-center justify-between text-rose-500 dark:text-rose-400 font-semibold">
+                  <div className="text-slate-500 dark:text-zinc-400">~/projects/api</div>
+                  <div className="mt-1 flex items-center justify-between text-rose-600 dark:text-rose-400 font-semibold">
                     <span className="truncate">node · docker-compose</span>
                     <span>94% CPU</span>
                   </div>
@@ -1051,8 +1051,8 @@ export default function Home() {
               </div>
 
               {/* Card 3: Smart Pause & Process Suspension (Spans 2 cols) */}
-              <div className="group relative overflow-hidden rounded-3xl glass p-7 md:col-span-2">
-                <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-semibold text-amber-600 dark:text-amber-300">
+              <div className="group relative overflow-hidden rounded-2xl glass p-7 md:col-span-2">
+                <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400">
                   <Pause size={13} />
                   Smart Pause &amp; Suspend
                 </div>
@@ -1060,12 +1060,12 @@ export default function Home() {
                   Freeze rogue apps without losing state.
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
-                  Non-destructive Mach task suspension halts CPU and battery drain instantly via <code className="text-amber-600 dark:text-amber-300 font-mono text-xs">SIGSTOP</code>. Safely resume anytime with zero data loss.
+                  Non-destructive Mach task suspension halts CPU and battery drain instantly via <code className="text-amber-600 dark:text-amber-400 font-mono text-xs">SIGSTOP</code>. Safely resume anytime with zero data loss.
                 </p>
                 <div className="mt-5 flex items-center gap-3">
                   <a
                     href="#diagnostics"
-                    className="btn-action border-amber-500/40 bg-amber-500/15 text-amber-700 dark:text-amber-300 hover:bg-amber-500/25"
+                    className="btn-action border-amber-500/40 bg-amber-500/15 text-amber-600 dark:text-amber-400 hover:bg-amber-500/25"
                   >
                     <Pause size={13} />
                     <span>Pause culprits</span>
@@ -1075,14 +1075,14 @@ export default function Home() {
               </div>
 
               {/* Card 4: Real-time Thermal Map (Spans 2 cols) */}
-              <div className="rounded-3xl glass p-6 md:col-span-2">
+              <div className="rounded-2xl glass p-6 md:col-span-2">
                 <div className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white">
-                  <Flame size={16} className="text-rose-500 dark:text-rose-400" />
+                  <Flame size={16} className="text-rose-600 dark:text-rose-400" />
                   <span>Real-time thermal map</span>
                 </div>
                 <div className="mt-5 grid grid-cols-3 gap-2.5">
                   <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] p-2.5 text-center">
-                    <span className="text-xs text-rose-500 dark:text-rose-400 font-mono flex items-center justify-center gap-1">
+                    <span className="text-xs text-rose-600 dark:text-rose-400 font-mono flex items-center justify-center gap-1">
                       <Flame size={12} /> Temp
                     </span>
                     <p className="mt-1 text-base font-bold text-slate-900 dark:text-white tabular-nums">82°C</p>
@@ -1094,7 +1094,7 @@ export default function Home() {
                     <p className="mt-1 text-base font-bold text-slate-900 dark:text-white tabular-nums">4,810 rpm</p>
                   </div>
                   <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] p-2.5 text-center">
-                    <span className="text-xs text-rose-500 dark:text-rose-400 font-mono flex items-center justify-center gap-1">
+                    <span className="text-xs text-rose-600 dark:text-rose-400 font-mono flex items-center justify-center gap-1">
                       <BatteryCharging size={12} /> Drain
                     </span>
                     <p className="mt-1 text-base font-bold text-slate-900 dark:text-white tabular-nums">−14%/h</p>
@@ -1103,7 +1103,7 @@ export default function Home() {
               </div>
 
               {/* Card 5: Ready in seconds (Spans 2 cols) */}
-              <div className="relative overflow-hidden rounded-3xl border border-emerald-500/25 bg-gradient-to-br from-emerald-500/10 via-emerald-500/[0.03] to-transparent p-6 md:col-span-2 flex flex-col justify-between">
+              <div className="relative overflow-hidden rounded-2xl border border-emerald-500/25 bg-gradient-to-br from-emerald-500/10 via-emerald-500/[0.03] to-transparent p-6 md:col-span-2 flex flex-col justify-between">
                 <div>
                   <div className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-mono">
                     Ready in seconds
@@ -1140,18 +1140,18 @@ export default function Home() {
                 Point at the culprit. Pause it instantly.
               </h2>
               <p className="mt-4 text-pretty text-slate-600 dark:text-zinc-300 md:text-lg leading-relaxed">
-                This is the real lidZen inspector, running on a live interactive simulation. Click any process to trace its binary path, then suspend it safely with Mach <code className="text-amber-600 dark:text-amber-300 font-mono">SIGSTOP</code> signals and resume whenever you&apos;re ready.
+                This is the real lidZen inspector, running on a live interactive simulation. Click any process to trace its binary path, then suspend it safely with Mach <code className="text-amber-600 dark:text-amber-400 font-mono">SIGSTOP</code> signals and resume whenever you&apos;re ready.
               </p>
             </div>
 
             {/* Inspector Window */}
-            <div className="mt-12 overflow-hidden rounded-3xl glass-strong shadow-2xl">
+            <div className="mt-12 overflow-hidden rounded-2xl glass-strong shadow-2xl">
               {/* Window Header */}
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-black/[0.08] dark:border-white/[0.08] px-4 py-3 bg-slate-100 dark:bg-[#0c0e14]">
                 <div className="flex items-center gap-3">
                   <MacWindowButtons />
-                  <div className="flex items-center gap-1.5 text-xs font-mono font-medium text-slate-700 dark:text-zinc-300">
-                    <Activity size={14} className="text-emerald-500 dark:text-emerald-400" />
+                  <div className="flex items-center gap-1.5 text-xs font-mono font-medium text-slate-600 dark:text-zinc-300">
+                    <Activity size={14} className="text-emerald-600 dark:text-emerald-400" />
                     <span>lidZen Inspector</span>
                   </div>
                 </div>
@@ -1161,7 +1161,7 @@ export default function Home() {
                   {pausedIds.size > 0 && (
                     <button
                       onClick={handleResumeAll}
-                      className="btn-action border-emerald-500/30 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/25"
+                      className="btn-action border-emerald-500/30 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/25"
                       title="Resume all suspended background tasks (SIGCONT)"
                     >
                       <Play size={12} className="fill-current" />
@@ -1171,7 +1171,7 @@ export default function Home() {
                   {activeCulprits.length > 0 && (
                     <button
                       onClick={handlePauseAll}
-                      className="btn-action border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300 hover:bg-amber-500/20"
+                      className="btn-action border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20"
                       title="Pause all runaway tasks (SIGSTOP)"
                     >
                       <Pause size={11} />
@@ -1189,7 +1189,7 @@ export default function Home() {
                           : 'bg-amber-400'
                       }`}
                     />
-                    <span className="text-slate-700 dark:text-zinc-300 font-mono text-xs">
+                    <span className="text-slate-600 dark:text-zinc-300 font-mono text-xs">
                       {isScanning
                         ? 'Scanning…'
                         : activeCulprits.length === 0
@@ -1206,7 +1206,7 @@ export default function Home() {
                 <div className="relative border-b border-black/[0.08] dark:border-white/[0.08] p-4 lg:border-b-0 lg:border-r border-black/[0.08] dark:border-white/[0.08] min-h-[380px] transition-dimensions">
                   <div className="mb-3 flex items-center justify-between text-xs text-slate-500 dark:text-zinc-400 font-mono px-1">
                     <span>Background Tasks ({initialCulprits.length})</span>
-                    <span className="text-xs text-slate-400 dark:text-zinc-500">Click to inspect</span>
+                    <span className="text-xs text-slate-500 dark:text-zinc-400">Click to inspect</span>
                   </div>
 
                   <ul className="space-y-2">
@@ -1235,14 +1235,14 @@ export default function Home() {
                               }`}
                             >
                               <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-black/5 dark:bg-white/5 ${
-                                isPaused ? 'text-amber-700 dark:text-amber-400' : 'text-emerald-700 dark:text-emerald-400'
+                                isPaused ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'
                               }`}>
                                 {item.kind === 'docker' ? (
-                                  <Layers size={18} className={isPaused ? 'text-amber-700 dark:text-amber-400' : 'text-rose-700 dark:text-rose-400'} />
+                                  <Layers size={18} className={isPaused ? 'text-amber-600 dark:text-amber-400' : 'text-rose-600 dark:text-rose-400'} />
                                 ) : item.kind === 'tab' ? (
-                                  <Monitor size={18} className={isPaused ? 'text-amber-700 dark:text-amber-400' : 'text-sky-700 dark:text-sky-400'} />
+                                  <Monitor size={18} className={isPaused ? 'text-amber-600 dark:text-amber-400' : 'text-sky-600 dark:text-sky-400'} />
                                 ) : (
-                                  <Terminal size={18} className={isPaused ? 'text-amber-700 dark:text-amber-400' : 'text-emerald-700 dark:text-emerald-400'} />
+                                  <Terminal size={18} className={isPaused ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'} />
                                 )}
                               </span>
 
@@ -1252,7 +1252,7 @@ export default function Home() {
                                     {item.name}
                                   </p>
                                   {isPaused && (
-                                    <span className="shrink-0 rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.2 text-xs font-mono font-semibold text-amber-800 dark:text-amber-300">
+                                    <span className="shrink-0 rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.2 text-xs font-mono font-semibold text-amber-600 dark:text-amber-400">
                                       PAUSED
                                     </span>
                                   )}
@@ -1265,7 +1265,7 @@ export default function Home() {
                               <div className="shrink-0 flex items-center gap-3">
                                 <div className="text-right">
                                   <span className={`text-sm font-bold tabular-nums ${
-                                    isPaused ? 'text-slate-500 dark:text-zinc-500 line-through' : 'text-rose-700 dark:text-rose-400'
+                                    isPaused ? 'text-slate-500 dark:text-zinc-400 line-through' : 'text-rose-600 dark:text-rose-400'
                                   }`}>
                                     {isPaused ? '0%' : `${item.cpu}%`}
                                   </span>
@@ -1283,8 +1283,8 @@ export default function Home() {
                                   }}
                                   className={`btn-action p-1.5 ${
                                     isPaused
-                                      ? 'text-emerald-700 dark:text-emerald-400 hover:bg-emerald-500/20 bg-emerald-500/10 border-emerald-500/30'
-                                      : 'text-amber-800 dark:text-amber-400 hover:bg-amber-500/20 bg-amber-500/10 border-amber-500/30'
+                                      ? 'text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 bg-emerald-500/10 border-emerald-500/30'
+                                      : 'text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 bg-amber-500/10 border-amber-500/30'
                                   }`}
                                   title={isPaused ? 'Resume process (SIGCONT)' : 'Pause process (SIGSTOP)'}
                                   aria-label={isPaused ? `Resume ${item.name}` : `Pause ${item.name}`}
@@ -1305,8 +1305,8 @@ export default function Home() {
 
                   {activeCulprits.length === 0 && (
                     <div className="mt-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/[0.06] p-3 text-center">
-                      <p className="text-xs text-emerald-700 dark:text-emerald-300 font-semibold flex items-center justify-center gap-1.5">
-                        <CheckCircle2 size={14} className="text-emerald-500 dark:text-emerald-400" />
+                      <p className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold flex items-center justify-center gap-1.5">
+                        <CheckCircle2 size={14} className="text-emerald-600 dark:text-emerald-400" />
                         All runaway processes safely suspended!
                       </p>
                       <p className="mt-1 text-xs text-slate-500 dark:text-zinc-400">
@@ -1327,14 +1327,14 @@ export default function Home() {
                       transition={{ duration: 0.25 }}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="flex items-center gap-1.5 text-xs text-slate-700 dark:text-zinc-300 font-mono">
-                          <FolderTree size={14} className="text-emerald-500 dark:text-emerald-400" />
+                        <span className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-zinc-300 font-mono">
+                          <FolderTree size={14} className="text-emerald-600 dark:text-emerald-400" />
                           Binary Path Trace
                         </span>
                         <span className={`text-xs font-semibold uppercase tracking-wider font-mono rounded-full px-2.5 py-0.5 border ${
                           isSelectedPaused
-                            ? 'text-amber-800 dark:text-amber-300 border-amber-500/30 bg-amber-500/10'
-                            : 'text-rose-700 dark:text-rose-400 border-rose-500/30 bg-rose-500/10'
+                            ? 'text-amber-600 dark:text-amber-400 border-amber-500/30 bg-amber-500/10'
+                            : 'text-rose-600 dark:text-rose-400 border-rose-500/30 bg-rose-500/10'
                         }`}>
                           {isSelectedPaused ? 'Suspended (SIGSTOP)' : 'Thermal Culprit (Active)'}
                         </span>
@@ -1348,7 +1348,7 @@ export default function Home() {
                         </span>
                         <span className="text-slate-600 dark:text-zinc-400 block mt-1.5 border-t border-black/5 dark:border-white/5 pt-1.5 text-xs">
                           Mach Thread State:{' '}
-                          <span className={isSelectedPaused ? 'text-amber-700 dark:text-amber-300 font-semibold' : 'text-emerald-700 dark:text-emerald-400 font-semibold'}>
+                          <span className={isSelectedPaused ? 'text-amber-600 dark:text-amber-400 font-semibold' : 'text-emerald-600 dark:text-emerald-400 font-semibold'}>
                             {isSelectedPaused ? 'TASK_SUSPENDED (Execution paused, state preserved)' : 'TASK_RUNNING (Active CPU thread)'}
                           </span>
                         </span>
@@ -1359,7 +1359,7 @@ export default function Home() {
                         <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-3 text-center">
                           <span className="text-xs text-slate-600 dark:text-zinc-400 font-mono">CPU Load</span>
                           <p className={`mt-1 text-lg font-bold tabular-nums ${
-                            isSelectedPaused ? 'text-slate-500 dark:text-zinc-500' : 'text-rose-700 dark:text-rose-400'
+                            isSelectedPaused ? 'text-slate-500 dark:text-zinc-400' : 'text-rose-600 dark:text-rose-400'
                           }`}>
                             {isSelectedPaused ? '0%' : `${selectedCulprit.cpu}%`}
                           </p>
@@ -1367,7 +1367,7 @@ export default function Home() {
                         <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-3 text-center">
                           <span className="text-xs text-slate-600 dark:text-zinc-400 font-mono">Temp</span>
                           <p className={`mt-1 text-lg font-bold tabular-nums ${
-                            isSelectedPaused ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'
+                            isSelectedPaused ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'
                           }`}>
                             {isSelectedPaused ? '42°C' : `${selectedCulprit.temp}°C`}
                           </p>
@@ -1375,7 +1375,7 @@ export default function Home() {
                         <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-3 text-center">
                           <span className="text-xs text-slate-600 dark:text-zinc-400 font-mono">Fan Speed</span>
                           <p className={`mt-1 text-lg font-bold tabular-nums ${
-                            isSelectedPaused ? 'text-slate-900 dark:text-white' : 'text-sky-700 dark:text-sky-400'
+                            isSelectedPaused ? 'text-slate-900 dark:text-white' : 'text-sky-600 dark:text-sky-400'
                           }`}>
                             {isSelectedPaused ? '0 RPM' : selectedCulprit.fan.toLocaleString()}
                           </p>
@@ -1383,7 +1383,7 @@ export default function Home() {
                         <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-3 text-center">
                           <span className="text-xs text-slate-600 dark:text-zinc-400 font-mono">Drain Rate</span>
                           <p className={`mt-1 text-lg font-bold tabular-nums ${
-                            isSelectedPaused ? 'text-slate-500 dark:text-zinc-500' : 'text-rose-700 dark:text-rose-400'
+                            isSelectedPaused ? 'text-slate-500 dark:text-zinc-400' : 'text-rose-600 dark:text-rose-400'
                           }`}>
                             {isSelectedPaused ? '0.0%/h' : `${selectedCulprit.drain}%/h`}
                           </p>
@@ -1397,8 +1397,8 @@ export default function Home() {
                           onClick={() => handleTogglePause(selectedCulprit.id)}
                           className={`btn-action px-5 py-2.5 ${
                             isSelectedPaused
-                              ? 'border-emerald-500/40 bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/30'
-                              : 'border-amber-500/40 bg-amber-500/15 text-amber-700 dark:text-amber-300 hover:bg-amber-500/25'
+                              ? 'border-emerald-500/40 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/30'
+                              : 'border-amber-500/40 bg-amber-500/15 text-amber-600 dark:text-amber-400 hover:bg-amber-500/25'
                           }`}
                         >
                           {isSelectedPaused ? (
@@ -1417,7 +1417,7 @@ export default function Home() {
                         <button
                           type="button"
                           onClick={handleResetInspector}
-                          className="btn-action border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3.5 py-2.5 text-slate-700 dark:text-zinc-400 hover:bg-black/10 dark:hover:bg-white/10 hover:text-black dark:hover:text-white"
+                          className="btn-action border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3.5 py-2.5 text-slate-600 dark:text-zinc-400 hover:bg-black/10 dark:hover:bg-white/10 hover:text-black dark:hover:text-white"
                           title="Reset simulation to initial culprits"
                         >
                           <RotateCcw size={13} />
@@ -1436,11 +1436,11 @@ export default function Home() {
               </div>
 
               {/* Bottom Aggregates Bar */}
-              <div className="flex flex-wrap items-center justify-between gap-4 border-t border-black/[0.08] dark:border-white/[0.08] px-5 py-3 text-xs text-slate-700 dark:text-zinc-300 bg-slate-100 dark:bg-[#0c0e14]">
+              <div className="flex flex-wrap items-center justify-between gap-4 border-t border-black/[0.08] dark:border-white/[0.08] px-5 py-3 text-xs text-slate-600 dark:text-zinc-300 bg-slate-100 dark:bg-[#0c0e14]">
                 <div className="flex items-center gap-4 sm:gap-6 font-mono text-xs">
                   <span>
                     Aggregate CPU:{' '}
-                    <strong className={activeCulprits.length > 0 ? 'text-rose-500 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}>
+                    <strong className={activeCulprits.length > 0 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}>
                       {aggregateStats.cpu}%
                     </strong>
                   </span>
@@ -1475,8 +1475,8 @@ export default function Home() {
             <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
               {/* Left Silhouette Graphic */}
               <div className="relative">
-                <div className="relative overflow-hidden rounded-3xl glass p-8 shadow-xl">
-                  <div className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-b from-emerald-400/10 to-transparent" />
+                <div className="relative overflow-hidden rounded-2xl glass p-8 shadow-xl">
+                  <div className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-b from-emerald-400/10 to-transparent" />
                   <div className="relative flex flex-col items-center text-center">
                     {/* Authentic Closed MacBook Pro Clamshell Hardware - Seamlessly Merged into the Interface */}
                     <div className="relative flex flex-col items-center py-4 w-full">
@@ -1484,9 +1484,9 @@ export default function Home() {
                       <div className="pointer-events-none absolute -inset-6 rounded-full bg-emerald-400/15 blur-3xl opacity-70 dark:opacity-80 animate-pulse" />
 
                       {/* MacBook Pro Clamshell Unibody Assembly */}
-                      <div className="relative w-72 sm:w-84 h-44 sm:h-50 rounded-[20px] sm:rounded-[22px] border border-black/[0.08] dark:border-white/15 bg-gradient-to-b from-slate-100 via-slate-200 to-slate-300 dark:from-[#1b202c] dark:via-[#131622] dark:to-[#0a0d14] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15),0_0_35px_rgba(52,211,153,0.12)] flex flex-col justify-between overflow-hidden transition-all duration-300">
+                      <div className="relative w-72 sm:w-84 h-44 sm:h-50 rounded-2xl border border-black/[0.08] dark:border-white/15 bg-gradient-to-b from-slate-100 via-slate-200 to-slate-300 dark:from-[#1b202c] dark:via-[#131622] dark:to-[#0a0d14] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15),0_0_35px_rgba(52,211,153,0.12)] flex flex-col justify-between overflow-hidden transition-all duration-300">
                         {/* Rear Precision Anodized Hinge Bar */}
-                        <div className="mx-auto h-1.5 w-36 sm:w-44 rounded-b-[2px] bg-zinc-900 dark:bg-black border-x border-zinc-700/60 shadow-inner" />
+                        <div className="mx-auto h-1.5 w-36 sm:w-44 rounded-b-lg bg-zinc-900 dark:bg-black border-x border-zinc-700/60 shadow-inner" />
 
                         {/* Top Unibody Surface with Laser-Etched Emblem & Soft Breathing Glow */}
                         <div className="relative flex-1 flex flex-col items-center justify-center my-auto">
@@ -1502,7 +1502,7 @@ export default function Home() {
                             </div>
                             <div className="mt-2 flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 backdrop-blur-sm">
                               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                              <span className="font-mono text-[11px] font-semibold text-slate-700 dark:text-zinc-300 uppercase tracking-widest">
+                              <span className="font-mono text-xs font-semibold text-slate-600 dark:text-zinc-300 uppercase tracking-widest">
                                 Clamshell Active
                               </span>
                             </div>
@@ -1512,7 +1512,7 @@ export default function Home() {
                         {/* Left Edge: MagSafe 3 Port with Glowing Status LED */}
                         <div className="absolute left-2.5 top-4 flex items-center gap-1.5" title="MagSafe 3: Continuous power delivery">
                           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
-                          <span className="font-mono text-[11px] text-slate-600 dark:text-zinc-400 uppercase tracking-tight hidden sm:inline">
+                          <span className="font-mono text-xs text-slate-600 dark:text-zinc-400 uppercase tracking-tight hidden sm:inline">
                             PWR
                           </span>
                         </div>
@@ -1525,7 +1525,7 @@ export default function Home() {
 
                         {/* Front Unibody Seam & Iconic Display Thumb Notch */}
                         <div className="relative w-full h-3 border-t border-black/[0.08] dark:border-white/[0.08] bg-gradient-to-b from-slate-200 to-slate-300 dark:from-zinc-800/90 dark:to-zinc-900/90 flex items-start justify-center">
-                          <div className="h-1.5 w-16 sm:w-20 rounded-b-sm bg-zinc-400/80 dark:bg-black/90 shadow-inner" />
+                          <div className="h-1.5 w-16 sm:w-20 rounded-b-lg bg-zinc-400/80 dark:bg-black/90 shadow-inner" />
                         </div>
                       </div>
 
@@ -1545,7 +1545,7 @@ export default function Home() {
                   <div className="mt-6 grid grid-cols-2 gap-3">
                     <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] p-3">
                       <div className="flex items-center gap-2 text-slate-500 dark:text-zinc-400 text-xs">
-                        <Bot size={14} className="text-emerald-500 dark:text-emerald-400" />
+                        <Bot size={14} className="text-emerald-600 dark:text-emerald-400" />
                         <span className="font-mono">AI Agent</span>
                       </div>
                       <div className="mt-1.5 flex items-center justify-between text-xs font-bold text-slate-900 dark:text-white">
@@ -1567,7 +1567,7 @@ export default function Home() {
 
                     <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] p-3">
                       <div className="flex items-center gap-2 text-slate-500 dark:text-zinc-400 text-xs">
-                        <Terminal size={14} className="text-emerald-500 dark:text-emerald-400" />
+                        <Terminal size={14} className="text-emerald-600 dark:text-emerald-400" />
                         <span className="font-mono">Build / CI</span>
                       </div>
                       <div className="mt-1.5 flex items-center justify-between text-xs font-bold text-slate-900 dark:text-white">
@@ -1657,7 +1657,7 @@ export default function Home() {
         <section className="relative py-20 border-t border-black/[0.08] dark:border-white/[0.08] bg-black/[0.01] dark:bg-white/[0.01]">
           <div className="mx-auto max-w-5xl px-4 md:px-6">
             <div className="text-center max-w-2xl mx-auto">
-              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400 font-mono">
+              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 font-mono">
                 <span>Decision & Feature Breakdown</span>
               </div>
               <h2 className="mt-4 text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
@@ -1668,12 +1668,12 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="mt-10 overflow-x-auto rounded-3xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-zinc-900/60 shadow-xl backdrop-blur-xl">
+            <div className="mt-10 overflow-x-auto rounded-2xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-zinc-900/60 shadow-xl backdrop-blur-xl">
               <table className="w-full text-left text-xs sm:text-sm">
                 <thead>
                   <tr className="border-b border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
                     <th className="py-4 px-4 sm:px-6 font-semibold text-slate-900 dark:text-white">Feature / Metric</th>
-                    <th className="py-4 px-3 sm:px-4 font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-500/[0.08]">lidZen</th>
+                    <th className="py-4 px-3 sm:px-4 font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/[0.08]">lidZen</th>
                     <th className="py-4 px-3 sm:px-4 font-medium text-slate-600 dark:text-zinc-400">macOS Default</th>
                     <th className="py-4 px-3 sm:px-4 font-medium text-slate-600 dark:text-zinc-400">CLI caffeinate</th>
                     <th className="py-4 px-3 sm:px-4 font-medium text-slate-600 dark:text-zinc-400">Amphetamine</th>
@@ -1684,51 +1684,51 @@ export default function Home() {
                     <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-900 dark:text-white font-sans text-xs sm:text-sm">
                       Run with Lid Closed (No External Display)
                     </td>
-                    <td className="py-3.5 px-3 sm:px-4 text-emerald-700 dark:text-emerald-400 font-bold bg-emerald-500/[0.08]">
+                    <td className="py-3.5 px-3 sm:px-4 text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/[0.08]">
                       ✓ Supported natively
                     </td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-500">✗ Forces sleep</td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-500">✗ Forces sleep</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ Forces sleep</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ Forces sleep</td>
                     <td className="py-3.5 px-3 sm:px-4 text-amber-600">Requires Display Clamshell</td>
                   </tr>
                   <tr>
                     <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-900 dark:text-white font-sans text-xs sm:text-sm">
                       Display Backlight Power Consumption
                     </td>
-                    <td className="py-3.5 px-3 sm:px-4 text-emerald-700 dark:text-emerald-400 font-bold bg-emerald-500/[0.08]">
+                    <td className="py-3.5 px-3 sm:px-4 text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/[0.08]">
                       0W (Display off)
                     </td>
-                    <td className="py-3.5 px-3 sm:px-4 text-slate-400">0W (System asleep)</td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-500">Display active (~8W)</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-slate-500">0W (System asleep)</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">Display active (~8W)</td>
                     <td className="py-3.5 px-3 sm:px-4 text-amber-600">Partial support</td>
                   </tr>
                   <tr>
                     <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-900 dark:text-white font-sans text-xs sm:text-sm">
                       Exact Binary File Path Attribution
                     </td>
-                    <td className="py-3.5 px-3 sm:px-4 text-emerald-700 dark:text-emerald-400 font-bold bg-emerald-500/[0.08]">
+                    <td className="py-3.5 px-3 sm:px-4 text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/[0.08]">
                       ✓ Full path & PID
                     </td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-500">✗ App name only</td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-500">✗ None</td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-500">✗ None</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ App name only</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ None</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ None</td>
                   </tr>
                   <tr>
                     <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-900 dark:text-white font-sans text-xs sm:text-sm">
                       Non-Destructive Freeze (SIGSTOP/SIGCONT)
                     </td>
-                    <td className="py-3.5 px-3 sm:px-4 text-emerald-700 dark:text-emerald-400 font-bold bg-emerald-500/[0.08]">
+                    <td className="py-3.5 px-3 sm:px-4 text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/[0.08]">
                       ✓ Zero data loss
                     </td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-500">✗ Force kill only</td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-500">✗ None</td>
-                    <td className="py-3.5 px-3 sm:px-4 text-rose-500">✗ None</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ Force kill only</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ None</td>
+                    <td className="py-3.5 px-3 sm:px-4 text-rose-600">✗ None</td>
                   </tr>
                   <tr>
                     <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-900 dark:text-white font-sans text-xs sm:text-sm">
                       Apple Silicon & Intel Universal Binary
                     </td>
-                    <td className="py-3.5 px-3 sm:px-4 text-emerald-700 dark:text-emerald-400 font-bold bg-emerald-500/[0.08]">
+                    <td className="py-3.5 px-3 sm:px-4 text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/[0.08]">
                       ✓ M1/M2/M3/M4 & Intel
                     </td>
                     <td className="py-3.5 px-3 sm:px-4 text-emerald-600">✓ Native</td>
@@ -1739,7 +1739,7 @@ export default function Home() {
                     <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-900 dark:text-white font-sans text-xs sm:text-sm">
                       Kernel Extensions (kexts) & Privacy
                     </td>
-                    <td className="py-3.5 px-3 sm:px-4 text-emerald-700 dark:text-emerald-400 font-bold bg-emerald-500/[0.08]">
+                    <td className="py-3.5 px-3 sm:px-4 text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/[0.08]">
                       Zero Kexts · 0 Telemetry
                     </td>
                     <td className="py-3.5 px-3 sm:px-4 text-slate-500">Apple Diagnostics</td>
@@ -1753,7 +1753,7 @@ export default function Home() {
             <div className="mt-4 text-center">
               <Link
                 href="/docs/features"
-                className="inline-flex items-center gap-1.5 text-xs text-emerald-700 dark:text-emerald-400 hover:underline font-mono"
+                className="inline-flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 hover:underline font-mono"
               >
                 <span>Read detailed architecture and diagnostics comparison in the documentation</span>
                 <ArrowRight size={13} />
@@ -1777,7 +1777,7 @@ export default function Home() {
         <section id="faq" className="relative py-24 md:py-32 border-t border-black/[0.08] dark:border-white/[0.08]">
           <div className="mx-auto max-w-6xl px-4 md:px-6">
             <div className="mx-auto max-w-2xl text-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400 font-mono">
+              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 font-mono">
                 <span>Frequently Asked Questions</span>
               </div>
               <h2 className="mt-4 text-balance text-3xl font-extrabold tracking-tight md:text-4xl text-slate-900 dark:text-white">
@@ -1795,7 +1795,7 @@ export default function Home() {
                   Why does my Mac sleep automatically when I close the lid?
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
-                  <strong className="font-semibold text-emerald-700 dark:text-emerald-400">Direct Answer:</strong> macOS default power management triggers an automatic sleep assertion as soon as the display hall-effect sensor detects the lid is closed, unless an external monitor, keyboard, and power cable are connected. lidZen bypasses this restriction by maintaining an active user-space execution state without external accessories.
+                  <strong className="font-semibold text-emerald-600 dark:text-emerald-400">Direct Answer:</strong> macOS default power management triggers an automatic sleep assertion as soon as the display hall-effect sensor detects the lid is closed, unless an external monitor, keyboard, and power cable are connected. lidZen bypasses this restriction by maintaining an active user-space execution state without external accessories.
                 </p>
               </div>
 
@@ -1804,7 +1804,7 @@ export default function Home() {
                   How does lidZen keep a Mac awake when the lid is closed?
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
-                  <strong className="font-semibold text-emerald-700 dark:text-emerald-400">Direct Answer:</strong> lidZen uses Apple&apos;s documented IOKit power assertion API (<code className="font-mono text-xs text-emerald-700 dark:text-emerald-400 bg-black/5 dark:bg-white/5 px-1 rounded">IOPMAssertionCreateWithName</code>) to prevent system sleep while commanding the internal display backlight to 0W. Your CPU, memory, and network stay fully active while saving battery.
+                  <strong className="font-semibold text-emerald-600 dark:text-emerald-400">Direct Answer:</strong> lidZen uses Apple&apos;s documented IOKit power assertion API (<code className="font-mono text-xs text-emerald-600 dark:text-emerald-400 bg-black/5 dark:bg-white/5 px-1 rounded-lg">IOPMAssertionCreateWithName</code>) to prevent system sleep while commanding the internal display backlight to 0W. Your CPU, memory, and network stay fully active while saving battery.
                 </p>
               </div>
 
@@ -1813,7 +1813,7 @@ export default function Home() {
                   Is it safe to run a MacBook with the lid closed without overheating?
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
-                  <strong className="font-semibold text-emerald-700 dark:text-emerald-400">Direct Answer:</strong> Yes, it is completely safe. Apple Silicon chips (M1 through M4) are remarkably efficient. Modern MacBooks exhaust heat through rear hinge vents and the aluminum chassis, not the keyboard. Furthermore, lidZen includes built-in thermal safeguards that notify you or pause runaway tasks if temperatures exceed safety thresholds.
+                  <strong className="font-semibold text-emerald-600 dark:text-emerald-400">Direct Answer:</strong> Yes, it is completely safe. Apple Silicon chips (M1 through M4) are remarkably efficient. Modern MacBooks exhaust heat through rear hinge vents and the aluminum chassis, not the keyboard. Furthermore, lidZen includes built-in thermal safeguards that notify you or pause runaway tasks if temperatures exceed safety thresholds.
                 </p>
               </div>
 
@@ -1822,7 +1822,7 @@ export default function Home() {
                   What makes lidZen different from caffeinate or Amphetamine?
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
-                  <strong className="font-semibold text-emerald-700 dark:text-emerald-400">Direct Answer:</strong> Built-in tools like <code className="font-mono text-xs">caffeinate</code> cannot run standalone clamshell without an external monitor, and often leave display backlights running. lidZen ensures true 0W display shutoff, provides deep binary file-path diagnostics, and enables non-destructive process freezing via <code className="font-mono text-xs">SIGSTOP</code>.
+                  <strong className="font-semibold text-emerald-600 dark:text-emerald-400">Direct Answer:</strong> Built-in tools like <code className="font-mono text-xs">caffeinate</code> cannot run standalone clamshell without an external monitor, and often leave display backlights running. lidZen ensures true 0W display shutoff, provides deep binary file-path diagnostics, and enables non-destructive process freezing via <code className="font-mono text-xs">SIGSTOP</code>.
                 </p>
               </div>
 
@@ -1831,7 +1831,7 @@ export default function Home() {
                   Does lidZen require kernel extensions or administrator root privileges?
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
-                  <strong className="font-semibold text-emerald-700 dark:text-emerald-400">Direct Answer:</strong> No kernel extensions (kexts) or administrator root privileges are needed. lidZen runs entirely in user-space as an 18 MB native application conforming to Apple&apos;s sandboxing and security guidelines. You can install and remove it cleanly without system modifications.
+                  <strong className="font-semibold text-emerald-600 dark:text-emerald-400">Direct Answer:</strong> No kernel extensions (kexts) or administrator root privileges are needed. lidZen runs entirely in user-space as an 18 MB native application conforming to Apple&apos;s sandboxing and security guidelines. You can install and remove it cleanly without system modifications.
                 </p>
               </div>
 
@@ -1840,7 +1840,7 @@ export default function Home() {
                   Which Mac models and macOS versions are supported?
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
-                  <strong className="font-semibold text-emerald-700 dark:text-emerald-400">Direct Answer:</strong> lidZen supports macOS 15.0+ (Sequoia) natively across all Apple Silicon processors (M1, M2, M3, M4, Pro, Max, Ultra) as well as modern Intel-based MacBooks. View the full setup in the <Link href="/docs/getting-started" className="text-emerald-700 dark:text-emerald-400 underline hover:opacity-80">Getting Started Guide</Link>.
+                  <strong className="font-semibold text-emerald-600 dark:text-emerald-400">Direct Answer:</strong> lidZen supports macOS 15.0+ (Sequoia) natively across all Apple Silicon processors (M1, M2, M3, M4, Pro, Max, Ultra) as well as modern Intel-based MacBooks. View the full setup in the <Link href="/docs/getting-started" className="text-emerald-600 dark:text-emerald-400 underline hover:opacity-80">Getting Started Guide</Link>.
                 </p>
               </div>
             </div>
@@ -1857,7 +1857,7 @@ export default function Home() {
         {/* ======================================================== */}
         <section id="download" className="relative py-24 md:py-32 border-t border-black/[0.08] dark:border-white/[0.08]">
           <div className="mx-auto max-w-5xl px-4 md:px-6">
-            <div className="relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-gradient-to-b from-slate-100 via-slate-50 to-white dark:from-[#0f1422] dark:via-[#090c15] dark:to-[#06080e] p-8 sm:p-14 text-center shadow-xl dark:shadow-[0_24px_80px_rgba(0,0,0,0.8)]">
+            <div className="relative overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-b from-slate-100 via-slate-50 to-white dark:from-[#0f1422] dark:via-[#090c15] dark:to-[#06080e] p-8 sm:p-14 text-center shadow-xl dark:shadow-[0_24px_80px_rgba(0,0,0,0.8)]">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(45,212,191,0.15),transparent_70%)]" />
 
               <div className="relative">
@@ -1886,13 +1886,13 @@ export default function Home() {
 
                 <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500 dark:text-zinc-400 font-mono">
                   <span className="flex items-center gap-1.5">
-                    <Shield size={14} className="text-emerald-500 dark:text-emerald-400" /> {t.download.noTelemetry}
+                    <Shield size={14} className="text-emerald-600 dark:text-emerald-400" /> {t.download.noTelemetry}
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <Zap size={14} className="text-emerald-500 dark:text-emerald-400" /> {t.download.size}
+                    <Zap size={14} className="text-emerald-600 dark:text-emerald-400" /> {t.download.size}
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <AppleLogo size={14} className="text-emerald-500 dark:text-emerald-400" /> {t.download.sequoia}
+                    <AppleLogo size={14} className="text-emerald-600 dark:text-emerald-400" /> {t.download.sequoia}
                   </span>
                 </div>
               </div>

@@ -161,11 +161,11 @@ export default function SearchModal({ isOpen: controlledOpen, onClose: controlle
       {/* Trigger pill button */}
       <button
         onClick={() => setInternalOpen(true)}
-        className="flex items-center gap-2 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/5 px-3 py-1.5 text-xs text-slate-600 dark:text-zinc-400 hover:border-black/20 dark:hover:border-white/20 hover:text-slate-900 dark:hover:text-white transition"
+        className="btn-action !px-3 !py-1.5 text-xs text-slate-600 dark:text-zinc-400"
       >
         <Search size={14} className="text-accent-500" />
         <span className="hidden sm:inline">Search docs…</span>
-        <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded border border-black/15 dark:border-white/15 bg-black/5 dark:bg-white/10 px-1.5 py-0.5 font-mono text-[10px] text-slate-700 dark:text-zinc-300">
+        <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded-lg border border-black/15 dark:border-white/15 bg-black/5 dark:bg-white/10 px-1.5 py-0.5 font-mono text-xs text-slate-600 dark:text-zinc-300">
           ⌘K
         </kbd>
       </button>
@@ -178,7 +178,7 @@ export default function SearchModal({ isOpen: controlledOpen, onClose: controlle
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-xl overflow-hidden rounded-3xl border border-black/15 dark:border-white/15 bg-white dark:bg-[#0c0c12] shadow-2xl backdrop-blur-2xl transition-all"
+            className="w-full max-w-xl overflow-hidden rounded-2xl border border-black/15 dark:border-white/15 bg-white dark:bg-[#0c0c12] shadow-2xl backdrop-blur-2xl transition-all"
           >
             {/* Search Input Bar */}
             <div className="flex items-center gap-3 border-b border-black/[0.06] dark:border-white/[0.08] px-4 py-3.5 bg-slate-50 dark:bg-[#0e0e16]">
@@ -198,7 +198,7 @@ export default function SearchModal({ isOpen: controlledOpen, onClose: controlle
               {query && (
                 <button
                   onClick={() => setQuery('')}
-                  className="rounded p-1 text-slate-400 dark:text-zinc-400 hover:text-black dark:hover:text-white"
+                  className="rounded-lg p-1 text-slate-500 dark:text-zinc-400 hover:text-black dark:hover:text-white"
                 >
                   <X size={15} />
                 </button>
@@ -230,7 +230,7 @@ export default function SearchModal({ isOpen: controlledOpen, onClose: controlle
                               <span className="text-xs font-semibold text-slate-900 dark:text-white">
                                 {item.title}
                               </span>
-                              <span className="rounded-full bg-black/5 dark:bg-white/10 px-1.5 py-0.5 text-[9px] font-semibold text-slate-600 dark:text-zinc-400 font-mono">
+                              <span className="rounded-full bg-black/5 dark:bg-white/10 px-1.5 py-0.5 text-xs font-semibold text-slate-600 dark:text-zinc-400 font-mono">
                                 {item.category}
                               </span>
                             </div>
@@ -249,7 +249,7 @@ export default function SearchModal({ isOpen: controlledOpen, onClose: controlle
               ) : (
                 <div className="py-10 text-center text-slate-500 dark:text-zinc-400">
                   <p className="text-sm font-medium">No documentation found for "{query}"</p>
-                  <p className="mt-1 text-xs text-slate-400 dark:text-zinc-500">
+                  <p className="mt-1 text-xs text-slate-500 dark:text-zinc-400">
                     Try searching for "clamshell", "permissions", "diagnostics", or "faq".
                   </p>
                 </div>
@@ -257,7 +257,7 @@ export default function SearchModal({ isOpen: controlledOpen, onClose: controlle
             </div>
 
             {/* Modal Footer */}
-            <div className="flex items-center justify-between border-t border-black/[0.06] dark:border-white/[0.08] px-4 py-2.5 text-[11px] text-slate-500 dark:text-zinc-500 bg-slate-50 dark:bg-black/40 font-mono">
+            <div className="flex items-center justify-between border-t border-black/[0.06] dark:border-white/[0.08] px-4 py-2.5 text-xs text-slate-500 dark:text-zinc-400 bg-slate-50 dark:bg-black/40 font-mono">
               <div className="flex items-center gap-3">
                 <span>↑↓ Navigate</span>
                 <span>↵ Select</span>

@@ -88,7 +88,7 @@ export default function ThemeToggle() {
       type="button"
       title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-      className="relative flex h-8 w-8 items-center justify-center rounded-full text-slate-600 dark:text-zinc-400 transition-all hover:bg-black/5 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white active:scale-95"
+      className="btn-icon h-8 w-8 text-slate-600 dark:text-zinc-400"
     >
       {theme === 'dark' ? (
         <Sun size={17} className="text-amber-400 transition-transform duration-200 hover:rotate-45" />

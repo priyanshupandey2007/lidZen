@@ -64,7 +64,7 @@ export function CodeBlock({ code, language = 'bash', fileName }: CodeBlockProps)
       {fileName && (
         <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.04] px-4 py-2 text-xs font-mono text-zinc-400">
           <span>{fileName}</span>
-          <span className="text-[10px] uppercase text-zinc-500">{language}</span>
+          <span className="text-xs uppercase text-zinc-500">{language}</span>
         </div>
       )}
       <div className="relative p-4 font-mono text-xs sm:text-sm text-zinc-200 overflow-x-auto">

@@ -213,7 +213,7 @@ export default function DiagnosticPreview() {
                           <div className="flex items-center gap-2">
                             <p className="text-sm font-medium text-zinc-100">{row.name}</p>
                             {isPaused && (
-                              <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.2 text-[9px] font-mono font-semibold text-amber-300">
+                              <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 text-xs font-mono font-semibold text-amber-300">
                                 PAUSED
                               </span>
                             )}
@@ -280,7 +280,7 @@ export default function DiagnosticPreview() {
                     return (
                       <div key={row.id}>
                         <motion.div
-                          className="rounded-xl border border-white/[0.08] bg-black/40 p-3 font-mono text-[11px] leading-relaxed text-zinc-400"
+                          className="rounded-xl border border-white/[0.08] bg-black/40 p-3 font-mono text-xs leading-relaxed text-zinc-400"
                           animate={{
                             borderColor: traced === row.id ? 'rgba(94, 234, 212, 0.45)' : 'rgba(255,255,255,0.08)',
                           }}
@@ -290,7 +290,7 @@ export default function DiagnosticPreview() {
                               <FolderOpen size={14} className="text-accent" />
                               Binary path
                             </span>
-                            <span className={`text-[10px] px-1.5 py-0.5 rounded border ${
+                            <span className={`text-xs px-1.5 py-0.5 rounded-lg border ${
                               isPaused
                                 ? 'text-amber-300 border-amber-500/30 bg-amber-500/10'
                                 : 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10'

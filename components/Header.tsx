@@ -67,7 +67,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-[13px] font-medium text-slate-600 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white transition-colors whitespace-nowrap"
+                className="text-sm font-medium text-slate-600 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white transition-colors whitespace-nowrap"
               >
                 {link.label}
               </Link>
@@ -81,7 +81,7 @@ export default function Header() {
           <ThemeToggle />
           <Link
             href="/#pricing"
-            className="btn-primary !px-4 !py-2 text-xs whitespace-nowrap"
+            className="btn-primary !px-4 !py-2 whitespace-nowrap"
           >
             <AppleLogo size={14} className="fill-current -mt-0.5" />
             <span>{buttonLabel}</span>
@@ -95,7 +95,7 @@ export default function Header() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
-            className="rounded-full p-2 text-slate-700 dark:text-zinc-300 hover:bg-black/5 dark:hover:bg-white/10"
+            className="btn-icon p-2"
           >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -111,7 +111,7 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="rounded-xl px-3 py-2 text-sm font-medium text-slate-700 dark:text-zinc-300 hover:bg-black/5 dark:hover:bg-white/5"
+                className="rounded-xl px-3 py-2 text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-black/5 dark:hover:bg-white/5"
               >
                 {link.label}
               </Link>

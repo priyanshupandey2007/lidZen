@@ -14,7 +14,7 @@ export default function PricingCard() {
   const featureCards = [
     {
       icon: (
-        <span className="font-mono text-xs font-bold text-slate-800 dark:text-zinc-200 border border-black/10 dark:border-white/10 rounded-lg px-1.5 py-0.5 bg-black/5 dark:bg-white/5">
+        <span className="font-mono text-xs font-bold text-slate-900 dark:text-zinc-300 border border-black/10 dark:border-white/10 rounded-lg px-1.5 py-0.5 bg-black/5 dark:bg-white/5">
           08
         </span>
       ),
@@ -32,7 +32,7 @@ export default function PricingCard() {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="text-slate-800 dark:text-zinc-200"
+          className="text-slate-900 dark:text-zinc-300"
         >
           <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" />
         </svg>
@@ -41,12 +41,12 @@ export default function PricingCard() {
       desc: 'One payment. No subscription, no renewals.',
     },
     {
-      icon: <RefreshCw size={17} className="text-slate-800 dark:text-zinc-200" />,
+      icon: <RefreshCw size={17} className="text-slate-900 dark:text-zinc-300" />,
       title: 'Free updates',
       desc: 'Every lidZen 2.x update, installed when you choose.',
     },
     {
-      icon: <Laptop size={18} className="text-slate-800 dark:text-zinc-200" />,
+      icon: <Laptop size={18} className="text-slate-900 dark:text-zinc-300" />,
       title: tier === 'one' ? 'One Mac' : 'Two Macs',
       desc: tier === 'one' ? 'Moving to a new Mac? Move your license in seconds.' : 'Run lidZen on both your desktop and portable Mac.',
     },
@@ -55,10 +55,10 @@ export default function PricingCard() {
   return (
     <div className="relative mx-auto max-w-5xl">
       {/* Ambient background glow */}
-      <div className="pointer-events-none absolute -inset-4 rounded-[2.5rem] bg-gradient-to-b from-accent-400/10 via-transparent to-transparent blur-3xl opacity-60" />
+      <div className="pointer-events-none absolute -inset-4 rounded-2xl bg-gradient-to-b from-accent-400/10 via-transparent to-transparent blur-3xl opacity-60" />
 
       {/* Main Container Card matching Shoji */}
-      <div className="relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-white/90 dark:bg-[#0c0e16]/90 backdrop-blur-2xl p-6 sm:p-10 lg:p-12 shadow-2xl">
+      <div className="relative overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-white/90 dark:bg-[#0c0e16]/90 backdrop-blur-2xl p-6 sm:p-10 lg:p-12 shadow-2xl">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           {/* Left Column: Heading, Subtitle & 2x2 Feature Grid */}
           <div>
@@ -95,12 +95,18 @@ export default function PricingCard() {
           </div>
 
           {/* Right Column: Shoji Style Price Card */}
-          <div className="relative rounded-3xl border border-black/10 dark:border-white/10 bg-gradient-to-b from-slate-50/80 via-white to-slate-50/80 dark:from-[#131722]/80 dark:via-[#0c0f18] dark:to-[#090b12]/90 p-7 sm:p-9 text-center shadow-lg">
-            {/* App Icon Glow with Official Apple Mark */}
+          <div className="relative rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-b from-slate-50/80 via-white to-slate-50/80 dark:from-[#131722]/80 dark:via-[#0c0f18] dark:to-[#090b12]/90 p-7 sm:p-9 text-center shadow-lg">
+            {/* App Icon Glow with Official lidZen App Icon */}
             <div className="relative mx-auto h-16 w-16 mb-5">
               <div className="absolute -inset-2 rounded-2xl bg-emerald-400/25 blur-lg" />
               <div className="relative h-16 w-16 overflow-hidden rounded-2xl border border-black/10 dark:border-white/15 shadow-xl bg-slate-900 flex items-center justify-center">
-                <AppleLogo size={36} className="text-white fill-current drop-shadow-[0_0_12px_rgba(45,212,191,0.5)]" />
+                <Image
+                  src="/logo.png"
+                  alt="lidZen"
+                  width={48}
+                  height={48}
+                  className="h-12 w-12 object-contain rounded-xl"
+                />
               </div>
             </div>
 
@@ -109,9 +115,9 @@ export default function PricingCard() {
               <button
                 type="button"
                 onClick={() => setTier('one')}
-                className={`rounded-full px-5 py-1.5 text-xs font-semibold transition-all duration-200 ${
+                className={`btn-tab ${
                   tier === 'one'
-                    ? 'bg-white text-slate-950 shadow-sm dark:bg-zinc-800 dark:text-white'
+                    ? 'bg-white text-slate-900 shadow-sm dark:bg-zinc-800 dark:text-white'
                     : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
@@ -120,9 +126,9 @@ export default function PricingCard() {
               <button
                 type="button"
                 onClick={() => setTier('two')}
-                className={`rounded-full px-5 py-1.5 text-xs font-semibold transition-all duration-200 ${
+                className={`btn-tab ${
                   tier === 'two'
-                    ? 'bg-white text-slate-950 shadow-sm dark:bg-zinc-800 dark:text-white'
+                    ? 'bg-white text-slate-900 shadow-sm dark:bg-zinc-800 dark:text-white'
                     : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
@@ -155,13 +161,13 @@ export default function PricingCard() {
         {/* Bottom Trust Meta Strip */}
         <div className="mt-10 pt-6 border-t border-black/[0.08] dark:border-white/[0.08] flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500 dark:text-zinc-400 font-mono">
           <span className="flex items-center gap-1.5">
-            <Shield size={14} className="text-emerald-500 dark:text-emerald-400" /> Notarized by Apple
+            <Shield size={14} className="text-emerald-600 dark:text-emerald-400" /> Notarized by Apple
           </span>
           <span className="flex items-center gap-1.5">
-            <Zap size={14} className="text-emerald-500 dark:text-emerald-400" /> 18 MB download
+            <Zap size={14} className="text-emerald-600 dark:text-emerald-400" /> 18 MB download
           </span>
           <span className="flex items-center gap-1.5">
-            <AppleLogo size={14} className="text-emerald-500 dark:text-emerald-400" /> macOS 15+ Sequoia or later
+            <AppleLogo size={14} className="text-emerald-600 dark:text-emerald-400" /> macOS 15+ Sequoia or later
           </span>
         </div>
       </div>
