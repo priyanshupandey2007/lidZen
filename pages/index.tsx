@@ -728,7 +728,7 @@ export default function Home() {
                         </span>
                       </div>
                       <div className="mt-2 rounded-lg border border-black/5 dark:border-white/5 bg-slate-100 dark:bg-[#06080e] p-2 font-mono text-xs text-slate-600 dark:text-zinc-300 min-h-[2rem] flex items-center">
-                        <p title={agentSteps[agentStep]} className="text-emerald-600 dark:text-emerald-400 font-medium break-words leading-tight">
+                        <p title={agentSteps[agentStep]} className="text-emerald-800 dark:text-emerald-400 font-semibold break-words leading-tight">
                           {agentSteps[agentStep]}
                         </p>
                       </div>
@@ -763,7 +763,7 @@ export default function Home() {
                       </div>
                       <div className="mt-2 flex items-center justify-between text-xs text-slate-500 dark:text-zinc-400 font-mono h-8">
                         <span className="truncate">Speakers</span>
-                        <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+                        <span className="text-emerald-800 dark:text-emerald-400 font-semibold">
                           {isLidClosed ? 'Playing · lid shut' : 'Streaming (M83)'}
                         </span>
                       </div>
@@ -1051,7 +1051,7 @@ export default function Home() {
 
               {/* Card 3: Smart Pause & Process Suspension (Spans 2 cols) */}
               <div className="group relative overflow-hidden rounded-2xl glass p-7 md:col-span-2">
-                <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400">
+                <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-bold text-amber-900 dark:text-amber-300">
                   <Pause size={13} />
                   Smart Pause &amp; Suspend
                 </div>
@@ -1059,12 +1059,12 @@ export default function Home() {
                   Freeze rogue apps without losing state.
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-zinc-300">
-                  Non-destructive Mach task suspension halts CPU and battery drain instantly via <code className="text-amber-600 dark:text-amber-400 font-mono text-xs">SIGSTOP</code>. Safely resume anytime with zero data loss.
+                  Non-destructive Mach task suspension halts CPU and battery drain instantly via <code className="text-amber-900 dark:text-amber-300 font-mono text-xs font-semibold">SIGSTOP</code>. Safely resume anytime with zero data loss.
                 </p>
                 <div className="mt-5 flex items-center gap-3">
                   <a
                     href="#diagnostics"
-                    className="btn-action border-amber-500/40 bg-amber-500/15 text-amber-600 dark:text-amber-400 hover:bg-amber-500/25"
+                    className="btn-action border-amber-500/40 bg-amber-500/15 text-amber-900 dark:text-amber-300 hover:bg-amber-500/25 font-semibold"
                   >
                     <Pause size={13} />
                     <span>Pause culprits</span>
@@ -1244,7 +1244,7 @@ export default function Home() {
                                     {item.name}
                                   </p>
                                   {isPaused && (
-                                    <span className="shrink-0 rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.2 text-xs font-mono font-semibold text-amber-600 dark:text-amber-400">
+                                    <span className="shrink-0 rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 text-xs font-mono font-bold text-amber-900 dark:text-amber-300">
                                       PAUSED
                                     </span>
                                   )}
@@ -1320,8 +1320,8 @@ export default function Home() {
                         </span>
                         <span className={`text-xs font-semibold uppercase tracking-wider font-mono rounded-full px-2.5 py-0.5 border ${
                           isSelectedPaused
-                            ? 'text-amber-600 dark:text-amber-400 border-amber-500/30 bg-amber-500/10'
-                            : 'text-rose-600 dark:text-rose-400 border-rose-500/30 bg-rose-500/10'
+                            ? 'text-amber-900 dark:text-amber-300 border-amber-500/30 bg-amber-500/10'
+                            : 'text-rose-700 dark:text-rose-400 border-rose-500/30 bg-rose-500/10'
                         }`}>
                           {isSelectedPaused ? 'Suspended (SIGSTOP)' : 'Thermal Culprit (Active)'}
                         </span>
@@ -1335,7 +1335,7 @@ export default function Home() {
                         </span>
                         <span className="text-slate-600 dark:text-zinc-400 block mt-1.5 border-t border-black/5 dark:border-white/5 pt-1.5 text-xs">
                           Mach Thread State:{' '}
-                          <span className={isSelectedPaused ? 'text-amber-600 dark:text-amber-400 font-semibold' : 'text-emerald-600 dark:text-emerald-400 font-semibold'}>
+                          <span className={isSelectedPaused ? 'text-amber-900 dark:text-amber-300 font-bold' : 'text-emerald-800 dark:text-emerald-400 font-bold'}>
                             {isSelectedPaused ? 'TASK_SUSPENDED (Execution paused, state preserved)' : 'TASK_RUNNING (Active CPU thread)'}
                           </span>
                         </span>
