@@ -459,26 +459,16 @@ export default function Home() {
               {/* Left Column: Editorial Headline & Actions */}
               <div className="text-center lg:text-left">
                 {/* Badge */}
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 shadow-sm dark:shadow-[0_0_20px_rgba(16,185,129,0.15)] backdrop-blur-md"
-                >
+                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 shadow-sm dark:shadow-[0_0_20px_rgba(16,185,129,0.15)] backdrop-blur-md">
                   <span className="relative flex h-2 w-2">
                     <span className="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-emerald-400" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
                   </span>
                   {t.hero.badge}
-                </motion.div>
+                </div>
 
                 {/* Main Heading: High-contrast pure white to silver in dark mode, obsidian in light mode */}
-                <motion.h1
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.08 }}
-                  className="mt-6 text-balance text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-[-0.035em] leading-[1.05]"
-                >
+                <h1 className="mt-6 text-balance text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-[-0.035em] leading-[1.05]">
                   <span className="text-slate-900 dark:text-white drop-shadow-sm dark:drop-shadow-[0_2px_14px_rgba(255,255,255,0.25)]">
                     {t.hero.titleLine1}
                   </span>
@@ -486,25 +476,15 @@ export default function Home() {
                   <span className="text-slate-700 dark:text-zinc-300">
                     {t.hero.titleLine2}
                   </span>
-                </motion.h1>
+                </h1>
 
                 {/* Subtitle with guaranteed WCAG AA high contrast */}
-                <motion.p
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.16 }}
-                  className="mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-slate-600 dark:text-zinc-300 mx-auto lg:mx-0"
-                >
+                <p className="mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-slate-600 dark:text-zinc-300 mx-auto lg:mx-0">
                   {t.hero.subtitle}
-                </motion.p>
+                </p>
 
                 {/* Polished Luxury CTA buttons */}
-                <motion.div
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.24 }}
-                  className="mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start"
-                >
+                <div className="mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
                   <a
                     href="#pricing"
                     className="btn-primary group"
@@ -520,15 +500,10 @@ export default function Home() {
                     <Activity size={16} className="text-emerald-500 dark:text-emerald-400" />
                     <span>{t.hero.demoCta}</span>
                   </a>
-                </motion.div>
+                </div>
 
                 {/* Specs / trust line in crisp high-contrast */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.7, delay: 0.32 }}
-                  className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500 dark:text-zinc-400 lg:justify-start font-mono"
-                >
+                <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500 dark:text-zinc-400 lg:justify-start font-mono">
                   <span className="flex items-center gap-2">
                     <Cpu size={14} className="text-emerald-500 dark:text-emerald-400" />
                     {t.hero.silicon}
@@ -541,15 +516,10 @@ export default function Home() {
                     <Shield size={14} className="text-emerald-500 dark:text-emerald-400" />
                     {t.hero.zeroKexts}
                   </span>
-                </motion.div>
+                </div>
 
                 {/* Top Summary & Key Takeaways for AI extraction & AEO */}
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.38 }}
-                  className="mt-8 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-4 text-xs text-slate-700 dark:text-zinc-300 text-left max-w-xl mx-auto lg:mx-0 backdrop-blur-sm"
-                >
+                <div className="mt-8 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-4 text-xs text-slate-700 dark:text-zinc-300 text-left max-w-xl mx-auto lg:mx-0 backdrop-blur-sm">
                   <p className="font-semibold text-slate-900 dark:text-white flex items-center gap-1.5 mb-1.5 font-mono">
                     <Sparkles size={13} className="text-emerald-500 dark:text-emerald-400" />
                     <span>Top Summary & Key Takeaways</span>
@@ -563,7 +533,7 @@ export default function Home() {
                   <p className="mt-2 leading-relaxed text-xs text-slate-600 dark:text-zinc-400">
                     <strong>When to Use:</strong> Use when closing your MacBook lid while running background jobs on battery or AC power without sleeping.
                   </p>
-                </motion.div>
+                </div>
               </div>
 
               {/* Right Column: High-End macOS Workstation HUD with Hardware Visualizer */}

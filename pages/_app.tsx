@@ -2,29 +2,22 @@ import '../styles/globals.css';
 import { useEffect } from 'react';
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import { getStoredTheme, applyThemeClass } from '../components/ThemeToggle';
 import { LanguageProvider } from '../context/LanguageContext';
 import { CurrencyProvider } from '../context/CurrencyContext';
 
-// Helper to safely calculate and set stable viewport units without layout thrashing
-function updateViewportUnits() {
-  if (typeof window === 'undefined') return;
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-sans',
+});
 
-  const vh = window.innerHeight * 0.01;
-  const vw = window.innerWidth * 0.01;
-  const root = document.documentElement;
-
-  root.style.setProperty('--vh', `${vh}px`);
-  root.style.setProperty('--vw', `${vw}px`);
-
-  // Detect and set dvh fallback
-  if (window.visualViewport) {
-    const dvh = window.visualViewport.height * 0.01;
-    root.style.setProperty('--dvh', `${dvh}px`);
-  } else {
-    root.style.setProperty('--dvh', `${vh}px`);
-  }
-}
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-mono',
+});
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -61,62 +54,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     window.addEventListener('error', handleExtensionError, true);
     window.addEventListener('unhandledrejection', handleRejection, true);
 
-    // Initial calculation
-    updateViewportUnits();
     applyThemeClass(getStoredTheme());
-
-    let rafId: number | null = null;
-    let resizeTimer: NodeJS.Timeout | null = null;
-    let lastWidth = window.innerWidth;
-    let lastHeight = window.innerHeight;
-
-    const handleResize = () => {
-      // Mark root as actively resizing to prevent transition jitter
-      document.documentElement.classList.add('is-resizing');
-
-      if (resizeTimer) clearTimeout(resizeTimer);
-
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        const curWidth = window.innerWidth;
-        const curHeight = window.innerHeight;
-
-        // Ignore micro sub-pixel/jittery height changes (< 4px) caused by browser chrome/clamshell ticks
-        if (Math.abs(curWidth - lastWidth) > 1 || Math.abs(curHeight - lastHeight) > 4) {
-          updateViewportUnits();
-          lastWidth = curWidth;
-          lastHeight = curHeight;
-        }
-      });
-
-      // Remove resizing class after layout has stabilized
-      resizeTimer = setTimeout(() => {
-        document.documentElement.classList.remove('is-resizing');
-      }, 150);
-    };
-
-    const handleVisibilityChange = () => {
-      // When display wakes up or lid opens (visibilitychange), stabilize layout after frame
-      if (document.visibilityState === 'visible') {
-        requestAnimationFrame(() => {
-          updateViewportUnits();
-        });
-      }
-    };
-
-    window.addEventListener('resize', handleResize, { passive: true });
-    window.addEventListener('orientationchange', handleResize, { passive: true });
-    document.addEventListener('visibilitychange', handleVisibilityChange, { passive: true });
 
     return () => {
       window.removeEventListener('error', handleExtensionError, true);
       window.removeEventListener('unhandledrejection', handleRejection, true);
-      if (rafId) cancelAnimationFrame(rafId);
-      if (resizeTimer) clearTimeout(resizeTimer);
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('orientationchange', handleResize);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      document.documentElement.classList.remove('is-resizing');
     };
   }, []);
 
@@ -124,14 +66,16 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <LanguageProvider>
       <CurrencyProvider>
         <Head>
-          <title>lidZen — Keep your Mac alive with the lid closed</title>
+          <title>lidZen — Keep Your Mac Awake with the Lid Closed</title>
           <meta
             name="description"
-            content="lidZen bypasses macOS clamshell limits so AI agents, automated workflows, and music keep running with the lid closed. Deep path diagnostics pinpoint what's making your Mac hot, loud, and drained."
+            content="Keep your Mac awake with the lid closed. lidZen bypasses macOS sleep limits so AI agents, audio, and renders run overnight with zero battery drain."
           />
           <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         </Head>
-        <Component {...pageProps} />
+        <div className={`${inter.variable} ${jetbrainsMono.variable} font-sans`}>
+          <Component {...pageProps} />
+        </div>
       </CurrencyProvider>
     </LanguageProvider>
   );
