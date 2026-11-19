@@ -32,7 +32,9 @@ const footerGroups = [
       { href: '/docs/settings', label: 'Settings & Config' },
       { href: '/docs/file-management', label: 'Path Tracing' },
       { href: '/docs/faq', label: 'FAQ' },
-      { href: '#', label: 'Changelog' },
+      { href: 'https://github.com/priyanshupandey2007/lidZen/releases', label: 'Changelog' },
+      { href: '/privacy', label: 'Privacy Policy' },
+      { href: '/terms', label: 'Terms & Conditions' },
     ],
   },
 ];
@@ -90,8 +92,13 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-black/[0.06] dark:border-white/[0.06] pt-8 text-xs text-slate-600 dark:text-zinc-300 sm:flex-row font-mono">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4">
             <span>© {new Date().getFullYear()} lidZen. {t.footer.rights}</span>
+            <span className="text-black/20 dark:text-white/20">·</span>
+            <Link href="/privacy" className="hover:text-slate-900 dark:hover:text-white transition">Privacy</Link>
+            <span className="text-black/20 dark:text-white/20">·</span>
+            <Link href="/terms" className="hover:text-slate-900 dark:hover:text-white transition">Terms</Link>
+            <span className="text-black/20 dark:text-white/20">·</span>
             <LanguageSelector />
           </div>
           <div className="flex items-center gap-6">

@@ -127,9 +127,9 @@ export default function DocLayout({
 
                 <div className="mt-8 pt-6 border-t border-black/[0.06] dark:border-white/[0.06] text-xs text-slate-500 dark:text-zinc-500 space-y-2">
                   <a
-                    href="https://github.com"
+                    href="https://github.com/priyanshupandey2007/lidZen"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-1 text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition"
                   >
                     <span>Edit this page on GitHub</span>

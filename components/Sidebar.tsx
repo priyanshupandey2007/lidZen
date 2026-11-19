@@ -100,9 +100,9 @@ export default function Sidebar({ mobileOpen, onCloseMobile }: SidebarProps) {
             Reach out via GitHub or join our community Discord.
           </p>
           <a
-            href="https://github.com"
+            href="https://github.com/priyanshupandey2007/lidZen"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="mt-3 inline-flex items-center gap-1.5 text-accent-600 dark:text-accent-300 hover:underline font-medium"
           >
             <span>GitHub Repository</span>

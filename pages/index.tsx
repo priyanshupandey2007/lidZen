@@ -438,7 +438,7 @@ export default function Home() {
                   ],
                 },
               ],
-            }),
+            }).replace(/</g, '\\u003c'),
           }}
         />
       </Head>

@@ -19,6 +19,11 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
+      const stored = localStorage.getItem('lidzen_currency');
+      if (stored === 'INR' || stored === 'USD') {
+        setCurrencyState(stored);
+        return;
+      }
       const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
       const locale = (navigator.language || '').toLowerCase();
       const allLocales = (navigator.languages || []).map((l) => l.toLowerCase());

@@ -796,7 +796,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   useEffect(() => {
     try {
       const saved = localStorage.getItem('lidzen-lang') as LanguageCode;
-      if (saved && translations[saved]) {
+      // Strict allowlist validation prevents prototype poisoning and crash via 'toString' or '__proto__'
+      if (saved && LANGUAGES.some((l) => l.code === saved)) {
         setLanguageState(saved);
       } else {
         // Detect browser language
