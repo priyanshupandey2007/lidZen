@@ -3,9 +3,10 @@ import React from 'react';
 interface AppleLogoProps {
   size?: number | string;
   className?: string;
+  style?: React.CSSProperties;
 }
 
-export default function AppleLogo({ size = 16, className = '' }: AppleLogoProps) {
+export default function AppleLogo({ size = 16, className = '', style }: AppleLogoProps) {
   return (
     <svg
       width={size}
@@ -14,6 +15,7 @@ export default function AppleLogo({ size = 16, className = '' }: AppleLogoProps)
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      style={style}
       aria-hidden="true"
     >
       <path

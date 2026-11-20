@@ -29,7 +29,7 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
       const allLocales = (navigator.languages || []).map((l) => l.toLowerCase());
 
       // Precise location detection: India = INR (₹599 / ₹999), Rest of world = USD ($6.99 / $11.99)
-      const isIndia =
+      const isIndiaTimezoneOrLocale =
         tz.includes('calcutta') ||
         tz.includes('kolkata') ||
         tz.includes('asia/calcutta') ||
@@ -39,11 +39,28 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
         locale === 'en-in' ||
         allLocales.some((l) => l.includes('-in') || l === 'hi');
 
-      if (isIndia) {
+      if (isIndiaTimezoneOrLocale) {
         setCurrencyState('INR');
       } else {
         setCurrencyState('USD');
       }
+
+      // Non-blocking IP geo-lookup fallback for 100% precision
+      fetch('https://api.country.is/')
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.country) {
+            const isIndiaGeo = data.country === 'IN';
+            const determinedCurrency: Currency = isIndiaGeo ? 'INR' : 'USD';
+            setCurrencyState(determinedCurrency);
+            try {
+              localStorage.setItem('lidzen_currency', determinedCurrency);
+            } catch {}
+          }
+        })
+        .catch(() => {
+          // Graceful fallback: timezone & locale already set
+        });
     } catch {
       setCurrencyState('USD');
     }

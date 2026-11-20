@@ -73,7 +73,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           />
           <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         </Head>
-        <div className={`${inter.variable} ${jetbrainsMono.variable} font-sans`}>
+        <div className={`${inter.variable} ${jetbrainsMono.variable}`}>
           <Component {...pageProps} />
         </div>
       </CurrencyProvider>
