@@ -18,52 +18,66 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   const [currency, setCurrencyState] = useState<Currency>('USD');
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('lidzen_currency');
-      if (stored === 'INR' || stored === 'USD') {
-        setCurrencyState(stored);
-        return;
+    // Primary: Real-time IP geolocation (detects VPN, proxies, and real visitor country)
+    const detectRegion = async () => {
+      try {
+        // Allow URL testing override (e.g. ?currency=USD or ?country=US)
+        if (typeof window !== 'undefined') {
+          const params = new URLSearchParams(window.location.search);
+          const forceCur = params.get('currency')?.toUpperCase();
+          if (forceCur === 'USD' || forceCur === 'INR') {
+            setCurrencyState(forceCur as Currency);
+            return;
+          }
+          const forceCountry = (params.get('country') || params.get('geo'))?.toUpperCase();
+          if (forceCountry) {
+            setCurrencyState(forceCountry === 'IN' ? 'INR' : 'USD');
+            return;
+          }
+        }
+
+        // Fetch IP geolocation in real-time
+        const res = await Promise.any([
+          fetch('https://api.country.is/').then((r) => {
+            if (!r.ok) throw new Error();
+            return r.json();
+          }),
+          fetch('https://ipwho.is/').then((r) => {
+            if (!r.ok) throw new Error();
+            return r.json();
+          }).then((d) => ({ country: d.country_code })),
+        ]);
+
+        const country = String(res?.country || '').toUpperCase();
+        if (country) {
+          const isIndia = country === 'IN';
+          const detectedCurrency: Currency = isIndia ? 'INR' : 'USD';
+          setCurrencyState(detectedCurrency);
+          try {
+            localStorage.setItem('lidzen_currency', detectedCurrency);
+          } catch {}
+          return;
+        }
+      } catch {
+        // Fallback only if network request fails (e.g. offline)
       }
-      const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
-      const locale = (navigator.language || '').toLowerCase();
-      const allLocales = (navigator.languages || []).map((l) => l.toLowerCase());
 
-      // Precise location detection: India = INR (₹599 / ₹999), Rest of world = USD ($6.99 / $11.99)
-      const isIndiaTimezoneOrLocale =
-        tz.includes('calcutta') ||
-        tz.includes('kolkata') ||
-        tz.includes('asia/calcutta') ||
-        tz.includes('asia/kolkata') ||
-        locale.includes('-in') ||
-        locale === 'hi' ||
-        locale === 'en-in' ||
-        allLocales.some((l) => l.includes('-in') || l === 'hi');
+      // Offline / Network Failure Fallback:
+      try {
+        const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
+        const isIndiaTz =
+          tz.includes('calcutta') ||
+          tz.includes('kolkata') ||
+          tz.includes('asia/calcutta') ||
+          tz.includes('asia/kolkata');
 
-      if (isIndiaTimezoneOrLocale) {
-        setCurrencyState('INR');
-      } else {
+        setCurrencyState(isIndiaTz ? 'INR' : 'USD');
+      } catch {
         setCurrencyState('USD');
       }
+    };
 
-      // Non-blocking IP geo-lookup fallback for 100% precision
-      fetch('https://api.country.is/')
-        .then((res) => res.json())
-        .then((data) => {
-          if (data && data.country) {
-            const isIndiaGeo = data.country === 'IN';
-            const determinedCurrency: Currency = isIndiaGeo ? 'INR' : 'USD';
-            setCurrencyState(determinedCurrency);
-            try {
-              localStorage.setItem('lidzen_currency', determinedCurrency);
-            } catch {}
-          }
-        })
-        .catch(() => {
-          // Graceful fallback: timezone & locale already set
-        });
-    } catch {
-      setCurrencyState('USD');
-    }
+    detectRegion();
   }, []);
 
   const setCurrency = (c: Currency) => {
