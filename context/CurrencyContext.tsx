@@ -1,6 +1,33 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export type Currency = 'INR' | 'USD';
+export type Currency = 'USD' | 'EUR' | 'GBP' | 'JPY' | 'CNY' | 'INR';
+
+export interface CurrencyConfig {
+  priceOneMac: string;
+  priceTwoMacs: string;
+  symbol: string;
+}
+
+export const CURRENCY_CONFIG: Record<Currency, CurrencyConfig> = {
+  USD: { priceOneMac: '$6.99', priceTwoMacs: '$11.99', symbol: '$' },
+  EUR: { priceOneMac: '€6.99', priceTwoMacs: '€11.99', symbol: '€' },
+  GBP: { priceOneMac: '£5.99', priceTwoMacs: '£9.99', symbol: '£' },
+  JPY: { priceOneMac: '¥1,080', priceTwoMacs: '¥1,850', symbol: '¥' },
+  CNY: { priceOneMac: '¥49', priceTwoMacs: '¥85', symbol: '¥' },
+  INR: { priceOneMac: '₹699', priceTwoMacs: '₹999', symbol: '₹' },
+};
+
+export const LANG_TO_CURRENCY: Record<string, Currency> = {
+  en: 'USD',
+  us: 'USD',
+  in: 'INR',
+  'en-in': 'INR',
+  es: 'EUR',
+  fr: 'EUR',
+  de: 'EUR',
+  ja: 'JPY',
+  zh: 'CNY',
+};
 
 interface CurrencyContextType {
   currency: Currency;
@@ -18,17 +45,22 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   const [currency, setCurrencyState] = useState<Currency>('USD');
 
   useEffect(() => {
-    // Check previously saved user preference with strict allowlist
     try {
+      // 1. If user previously chose a language, align currency to that language
+      const savedLang = localStorage.getItem('lidzen-lang');
+      if (savedLang && LANG_TO_CURRENCY[savedLang]) {
+        setCurrencyState(LANG_TO_CURRENCY[savedLang]);
+        return;
+      }
+
+      // 2. Check previously saved currency
       const stored = localStorage.getItem('lidzen_currency');
-      if (stored === 'USD' || stored === 'INR') {
+      if (stored && stored in CURRENCY_CONFIG) {
         setCurrencyState(stored as Currency);
         return;
       }
-    } catch {}
 
-    // Check timezone first (zero network calls, instant on-device detection)
-    try {
+      // 3. Timezone detection (zero network calls)
       const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
       const isIndiaTz =
         tz.includes('calcutta') ||
@@ -45,24 +77,18 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
       }
     } catch {}
 
-    // Secondary: Non-tracking IP geolocation fallback
+    // 4. Secondary fallback: Non-tracking IP geolocation
     const detectRegion = async () => {
       try {
         if (typeof window !== 'undefined') {
           const params = new URLSearchParams(window.location.search);
-          const forceCur = params.get('currency')?.toUpperCase();
-          if (forceCur === 'USD' || forceCur === 'INR') {
-            setCurrencyState(forceCur as Currency);
-            return;
-          }
-          const forceCountry = (params.get('country') || params.get('geo'))?.toUpperCase();
-          if (forceCountry) {
-            setCurrencyState(forceCountry === 'IN' ? 'INR' : 'USD');
+          const forceCur = params.get('currency')?.toUpperCase() as Currency;
+          if (forceCur && forceCur in CURRENCY_CONFIG) {
+            setCurrencyState(forceCur);
             return;
           }
         }
 
-        // Ephemeral geolocation lookup for localized currency presentation
         const res = await Promise.any([
           fetch('https://api.country.is/').then((r) => {
             if (!r.ok) throw new Error();
@@ -85,7 +111,6 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
           return;
         }
       } catch {
-        // Fallback gracefully
         setCurrencyState('USD');
       }
     };
@@ -94,21 +119,23 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const setCurrency = (c: Currency) => {
-    setCurrencyState(c);
-    try {
-      localStorage.setItem('lidzen_currency', c);
-    } catch {}
+    if (c in CURRENCY_CONFIG) {
+      setCurrencyState(c);
+      try {
+        localStorage.setItem('lidzen_currency', c);
+      } catch {}
+    }
   };
 
   const toggleCurrency = () => {
     setCurrency(currency === 'INR' ? 'USD' : 'INR');
   };
 
-  const isINR = currency === 'INR';
-  const priceOneMac = isINR ? '₹699' : '$6.99';
-  const priceTwoMacs = isINR ? '₹999' : '$11.99';
+  const cfg = CURRENCY_CONFIG[currency] || CURRENCY_CONFIG.USD;
+  const priceOneMac = cfg.priceOneMac;
+  const priceTwoMacs = cfg.priceTwoMacs;
   const buttonLabel = `Get lidZen · ${priceOneMac}`;
-  const currencySymbol = isINR ? '₹' : '$';
+  const currencySymbol = cfg.symbol;
 
   return (
     <CurrencyContext.Provider

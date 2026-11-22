@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown, Check, Globe } from 'lucide-react';
 import { useLanguage, LANGUAGES, LanguageOption } from '../context/LanguageContext';
+import { useCurrency, LANG_TO_CURRENCY } from '../context/CurrencyContext';
 
 export default function LanguageSelector() {
   const { language, setLanguage, currentOption } = useLanguage();
+  const { setCurrency } = useCurrency();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -25,6 +27,11 @@ export default function LanguageSelector() {
 
   const handleSelect = (option: LanguageOption) => {
     setLanguage(option.code);
+    const newCur = LANG_TO_CURRENCY[option.code] || 'USD';
+    setCurrency(newCur);
+    try {
+      localStorage.setItem('lidzen_currency', newCur);
+    } catch {}
     setIsOpen(false);
   };
 

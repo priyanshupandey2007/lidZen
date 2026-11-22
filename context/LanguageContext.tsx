@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
-export type LanguageCode = 'en' | 'es' | 'fr' | 'de' | 'ja' | 'zh';
+export type LanguageCode = 'en' | 'in' | 'es' | 'fr' | 'de' | 'ja' | 'zh';
 
 export interface LanguageOption {
   code: LanguageCode;
@@ -10,6 +10,7 @@ export interface LanguageOption {
 
 export const LANGUAGES: LanguageOption[] = [
   { code: 'en', countryCode: 'US', label: 'English' },
+  { code: 'in', countryCode: 'IN', label: 'English (India)' },
   { code: 'es', countryCode: 'ES', label: 'Español' },
   { code: 'fr', countryCode: 'FR', label: 'Français' },
   { code: 'de', countryCode: 'DE', label: 'Deutsch' },

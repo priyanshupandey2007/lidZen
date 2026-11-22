@@ -1294,3 +1294,6 @@ export const TR_DATA: Record<string, TranslationSchema> = {
     },
   },
 };
+
+TR_DATA.in = TR_DATA.en;
+

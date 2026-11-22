@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useCurrency } from '../context/CurrencyContext';
+import { useCurrency, LANG_TO_CURRENCY, Currency } from '../context/CurrencyContext';
 import AppleLogo from '../components/AppleLogo';
 import CookieConsent from '../components/CookieConsent';
 import { TR_DATA, TranslationSchema } from '../data/translations';
@@ -160,6 +160,7 @@ const schemaData = {
 
 const LG = [
   ['US', 'English', 'en'],
+  ['IN', 'English (India)', 'in'],
   ['ES', 'Español', 'es'],
   ['FR', 'Français', 'fr'],
   ['DE', 'Deutsch', 'de'],
@@ -175,12 +176,37 @@ export default function Home() {
   const [isDark, setIsDark] = useState(false);
   const [currentLang, setCurrentLang] = useState(0);
 
+  const { priceOneMac, priceTwoMacs, currency, setCurrency } = useCurrency();
+
   useEffect(() => {
     try {
       const saved = localStorage.getItem('lidzen-lang');
       if (saved) {
         const idx = LG.findIndex((l) => l[2] === saved);
-        if (idx !== -1) setCurrentLang(idx);
+        if (idx !== -1) {
+          setCurrentLang(idx);
+          const mappedCur = LANG_TO_CURRENCY[saved];
+          if (mappedCur) setCurrency(mappedCur);
+          return;
+        }
+      }
+
+      // Check timezone for initial auto-selection if no saved language
+      const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
+      const isIndiaTz =
+        tz.includes('calcutta') ||
+        tz.includes('kolkata') ||
+        tz.includes('asia/calcutta') ||
+        tz.includes('asia/kolkata');
+
+      if (isIndiaTz) {
+        const inIdx = LG.findIndex((l) => l[2] === 'in');
+        if (inIdx !== -1) {
+          setCurrentLang(inIdx);
+          setCurrency('INR');
+        }
+      } else {
+        setCurrency('USD');
       }
     } catch {}
   }, []);
@@ -195,8 +221,6 @@ export default function Home() {
   const [uptime, setUptime] = useState('02:14:37');
   const [isMounted, setIsMounted] = useState(false);
   const isDoneRef = useRef(false);
-
-  const { priceOneMac, priceTwoMacs, currency } = useCurrency();
   const planPrice = plan === 'One Mac' ? priceOneMac : priceTwoMacs;
   const dodoProductIdOneMac = 'pdt_0NsR03OW6DniKgDV9ETzC';
   const dodoProductIdTwoMacs = 'pdt_0NsR05Gvs4it4UNUGME50';
@@ -625,8 +649,12 @@ export default function Home() {
               onClick={() => {
                 setCurrentLang(i);
                 setLangMenuOpen(false);
+                const langCode = l[2];
+                const mappedCur = LANG_TO_CURRENCY[langCode] || 'USD';
+                setCurrency(mappedCur);
                 try {
-                  localStorage.setItem('lidzen-lang', l[2]);
+                  localStorage.setItem('lidzen-lang', langCode);
+                  localStorage.setItem('lidzen_currency', mappedCur);
                 } catch {}
               }}
             >
