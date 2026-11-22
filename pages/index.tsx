@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useCurrency, LANG_TO_CURRENCY, Currency } from '../context/CurrencyContext';
+import { useCurrency, LANG_TO_CURRENCY, Currency, isIndiaRegion } from '../context/CurrencyContext';
 import AppleLogo from '../components/AppleLogo';
 import CookieConsent from '../components/CookieConsent';
 import { TR_DATA, TranslationSchema } from '../data/translations';
@@ -159,8 +159,8 @@ const schemaData = {
 };
 
 const LG = [
-  ['US', 'English', 'en'],
   ['IN', 'English (India)', 'in'],
+  ['US', 'English', 'en'],
   ['ES', 'Español', 'es'],
   ['FR', 'Français', 'fr'],
   ['DE', 'Deutsch', 'de'],
@@ -174,13 +174,34 @@ export default function Home() {
   const [sceneZoom, setSceneZoom] = useState(false);
   const [sceneStyle, setSceneStyle] = useState<React.CSSProperties>({});
   const [isDark, setIsDark] = useState(false);
-  const [currentLang, setCurrentLang] = useState(0);
+  const [currentLang, setCurrentLang] = useState<number>(() => {
+    if (typeof window !== 'undefined' && isIndiaRegion()) {
+      return 0; // 'in' is index 0
+    }
+    return 1; // 'en' is index 1
+  });
 
   const { priceOneMac, priceTwoMacs, currency, setCurrency } = useCurrency();
 
   useEffect(() => {
     try {
+      const isInd = isIndiaRegion();
       const saved = localStorage.getItem('lidzen-lang');
+
+      if (isInd) {
+        // In Indian region, prioritize INR and Indian English unless another non-default language was chosen
+        if (!saved || saved === 'in' || saved === 'en') {
+          const inIdx = LG.findIndex((l) => l[2] === 'in');
+          setCurrentLang(inIdx !== -1 ? inIdx : 0);
+          setCurrency('INR');
+          try {
+            localStorage.setItem('lidzen-lang', 'in');
+            localStorage.setItem('lidzen_currency', 'INR');
+          } catch {}
+          return;
+        }
+      }
+
       if (saved) {
         const idx = LG.findIndex((l) => l[2] === saved);
         if (idx !== -1) {
@@ -191,21 +212,13 @@ export default function Home() {
         }
       }
 
-      // Check timezone for initial auto-selection if no saved language
-      const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
-      const isIndiaTz =
-        tz.includes('calcutta') ||
-        tz.includes('kolkata') ||
-        tz.includes('asia/calcutta') ||
-        tz.includes('asia/kolkata');
-
-      if (isIndiaTz) {
+      if (isInd) {
         const inIdx = LG.findIndex((l) => l[2] === 'in');
-        if (inIdx !== -1) {
-          setCurrentLang(inIdx);
-          setCurrency('INR');
-        }
+        setCurrentLang(inIdx !== -1 ? inIdx : 0);
+        setCurrency('INR');
       } else {
+        const usIdx = LG.findIndex((l) => l[2] === 'en');
+        setCurrentLang(usIdx !== -1 ? usIdx : 1);
         setCurrency('USD');
       }
     } catch {}

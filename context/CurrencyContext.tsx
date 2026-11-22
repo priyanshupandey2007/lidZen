@@ -18,15 +18,32 @@ export const CURRENCY_CONFIG: Record<Currency, CurrencyConfig> = {
 };
 
 export const LANG_TO_CURRENCY: Record<string, Currency> = {
-  en: 'USD',
-  us: 'USD',
   in: 'INR',
   'en-in': 'INR',
+  en: 'USD',
+  us: 'USD',
   es: 'EUR',
   fr: 'EUR',
   de: 'EUR',
   ja: 'JPY',
   zh: 'CNY',
+};
+
+export const isIndiaRegion = (): boolean => {
+  try {
+    const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
+    const offset = new Date().getTimezoneOffset();
+    return (
+      offset === -330 ||
+      tz.includes('calcutta') ||
+      tz.includes('kolkata') ||
+      tz.includes('asia/calcutta') ||
+      tz.includes('asia/kolkata') ||
+      tz.includes('ist')
+    );
+  } catch {
+    return false;
+  }
 };
 
 interface CurrencyContextType {
@@ -42,80 +59,48 @@ interface CurrencyContextType {
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
-  const [currency, setCurrencyState] = useState<Currency>('USD');
+  const [currency, setCurrencyState] = useState<Currency>(() => (isIndiaRegion() ? 'INR' : 'USD'));
 
   useEffect(() => {
     try {
-      // 1. If user previously chose a language, align currency to that language
+      const isInd = isIndiaRegion();
+
+      // If user is in Indian region:
+      if (isInd) {
+        const savedLang = localStorage.getItem('lidzen-lang');
+        const storedCur = localStorage.getItem('lidzen_currency');
+
+        // If on default, or language is in/en, prioritize INR
+        if (!savedLang || savedLang === 'in' || savedLang === 'en' || !storedCur || storedCur === 'INR' || storedCur === 'USD') {
+          setCurrencyState('INR');
+          try {
+            localStorage.setItem('lidzen_currency', 'INR');
+          } catch {}
+          return;
+        }
+
+        // If user explicitly chose another language like ja, zh, es, etc.
+        if (savedLang && LANG_TO_CURRENCY[savedLang]) {
+          setCurrencyState(LANG_TO_CURRENCY[savedLang]);
+          return;
+        }
+      }
+
+      // Non-India users:
       const savedLang = localStorage.getItem('lidzen-lang');
       if (savedLang && LANG_TO_CURRENCY[savedLang]) {
         setCurrencyState(LANG_TO_CURRENCY[savedLang]);
         return;
       }
 
-      // 2. Check previously saved currency
       const stored = localStorage.getItem('lidzen_currency');
       if (stored && stored in CURRENCY_CONFIG) {
         setCurrencyState(stored as Currency);
         return;
       }
 
-      // 3. Timezone detection (zero network calls)
-      const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
-      const isIndiaTz =
-        tz.includes('calcutta') ||
-        tz.includes('kolkata') ||
-        tz.includes('asia/calcutta') ||
-        tz.includes('asia/kolkata');
-
-      if (isIndiaTz) {
-        setCurrencyState('INR');
-        try {
-          localStorage.setItem('lidzen_currency', 'INR');
-        } catch {}
-        return;
-      }
+      setCurrencyState('USD');
     } catch {}
-
-    // 4. Secondary fallback: Non-tracking IP geolocation
-    const detectRegion = async () => {
-      try {
-        if (typeof window !== 'undefined') {
-          const params = new URLSearchParams(window.location.search);
-          const forceCur = params.get('currency')?.toUpperCase() as Currency;
-          if (forceCur && forceCur in CURRENCY_CONFIG) {
-            setCurrencyState(forceCur);
-            return;
-          }
-        }
-
-        const res = await Promise.any([
-          fetch('https://api.country.is/').then((r) => {
-            if (!r.ok) throw new Error();
-            return r.json();
-          }),
-          fetch('https://ipwho.is/').then((r) => {
-            if (!r.ok) throw new Error();
-            return r.json();
-          }).then((d) => ({ country: d.country_code })),
-        ]);
-
-        const country = String(res?.country || '').toUpperCase();
-        if (country) {
-          const isIndia = country === 'IN';
-          const detectedCurrency: Currency = isIndia ? 'INR' : 'USD';
-          setCurrencyState(detectedCurrency);
-          try {
-            localStorage.setItem('lidzen_currency', detectedCurrency);
-          } catch {}
-          return;
-        }
-      } catch {
-        setCurrencyState('USD');
-      }
-    };
-
-    detectRegion();
   }, []);
 
   const setCurrency = (c: Currency) => {
@@ -131,7 +116,7 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
     setCurrency(currency === 'INR' ? 'USD' : 'INR');
   };
 
-  const cfg = CURRENCY_CONFIG[currency] || CURRENCY_CONFIG.USD;
+  const cfg = CURRENCY_CONFIG[currency] || (isIndiaRegion() ? CURRENCY_CONFIG.INR : CURRENCY_CONFIG.USD);
   const priceOneMac = cfg.priceOneMac;
   const priceTwoMacs = cfg.priceTwoMacs;
   const buttonLabel = `Get lidZen · ${priceOneMac}`;
