@@ -328,11 +328,11 @@ export default function Home() {
           sessionStorage.setItem(storageKey, 'true');
         }
 
-        // Trigger automatic file download
+        // Trigger automatic file download of the verified macOS app zip
         const triggerDl = () => {
           const a = document.createElement('a');
-          a.href = '/lidZen.dmg';
-          a.setAttribute('download', 'lidZen.dmg');
+          a.href = '/lidZen.zip';
+          a.setAttribute('download', 'lidZen.zip');
           a.style.display = 'none';
           document.body.appendChild(a);
           a.click();
@@ -341,7 +341,7 @@ export default function Home() {
           }, 300);
 
           setTimeout(() => {
-            window.location.assign('/lidZen.dmg');
+            window.location.assign('/lidZen.zip');
           }, 400);
         };
 
@@ -671,29 +671,18 @@ export default function Home() {
               <span className="payment-toast-icon">✓</span>
               <div>
                 <strong>Payment Confirmed!</strong>
-                <p>Thank you for purchasing lidZen. Your macOS app download (<code>lidZen.dmg</code>) has started automatically.</p>
+                <p>Thank you for purchasing lidZen. Your macOS app (<code>lidZen.zip</code>) has started downloading automatically. Double-click to extract and launch <b>lidZen.app</b> directly.</p>
               </div>
               <div style={{ display: 'flex', gap: '8px', marginLeft: 'auto', alignItems: 'center' }}>
-                <a
-                  href="/lidZen.dmg"
-                  download="lidZen.dmg"
-                  className="payment-toast-dl-btn"
-                  onClick={() => {
-                    window.location.assign('/lidZen.dmg');
-                  }}
-                >
-                  Download .dmg
-                </a>
                 <a
                   href="/lidZen.zip"
                   download="lidZen.zip"
                   className="payment-toast-dl-btn"
-                  style={{ background: 'rgba(255, 255, 255, 0.15)', color: '#fff', border: '1px solid rgba(255, 255, 255, 0.2)' }}
                   onClick={() => {
                     window.location.assign('/lidZen.zip');
                   }}
                 >
-                  Download .zip
+                  Download .zip (macOS App)
                 </a>
               </div>
               <button

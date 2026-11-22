@@ -21,15 +21,15 @@ export default function Installation() {
       <section id="download-dmg">
         <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Download & Installation</h2>
         <p>
-          lidZen is distributed as an Apple-notarized universal disk image (<code>.dmg</code>).
+          lidZen is distributed as an instant universal macOS application package (<code>lidZen.zip</code>).
         </p>
 
         <div className="my-5 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-5">
           <ol className="list-decimal pl-5 space-y-3 text-sm text-slate-700 dark:text-zinc-300">
-            <li>Download the latest <code>lidZen.dmg</code> from the official website.</li>
-            <li>Double-click the downloaded <code>.dmg</code> file to mount it.</li>
-            <li>Drag <strong>lidZen.app</strong> into your <strong>/Applications</strong> directory shortcut.</li>
-            <li>Eject the disk image and launch lidZen from your Applications folder.</li>
+            <li>Download <code>lidZen.zip</code> from your post-purchase confirmation or download link.</li>
+            <li>Double-click <code>lidZen.zip</code> to unpack <strong>lidZen.app</strong>.</li>
+            <li>Drag <strong>lidZen.app</strong> into your <strong>/Applications</strong> folder.</li>
+            <li>Launch lidZen from Applications or Spotlight.</li>
           </ol>
         </div>
 
