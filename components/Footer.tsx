@@ -32,6 +32,7 @@ const footerGroups = [
       { href: '/docs/settings', label: 'Settings & Config' },
       { href: '/docs/file-management', label: 'Path Tracing' },
       { href: '/docs/faq', label: 'FAQ' },
+      { href: 'mailto:support@lidzen.com?subject=lidZen%20Support%20%26%20Inquiry', label: 'Support & Queries' },
       { href: 'https://github.com/priyanshupandey2007/lidZen/releases', label: 'Changelog' },
       { href: '/privacy', label: 'Privacy Policy' },
       { href: '/terms', label: 'Terms & Conditions' },
@@ -62,6 +63,12 @@ export default function Footer() {
             <p className="mt-3.5 max-w-sm text-sm leading-relaxed text-slate-600 dark:text-zinc-400">
               Clamshell continuity and deep path diagnostics for Mac power users. Keep AI agents, workflows, and music alive with the lid shut.
             </p>
+            <p className="mt-2 text-xs text-slate-600 dark:text-zinc-400 font-mono">
+              Support &amp; Queries:{' '}
+              <a href="mailto:support@lidzen.com?subject=lidZen%20Support%20%26%20Inquiry" className="text-emerald-600 dark:text-emerald-400 hover:underline">
+                support@lidzen.com
+              </a>
+            </p>
             <div className="mt-5 inline-flex items-center gap-2 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] px-3 py-1.5 text-xs text-slate-700 dark:text-zinc-300 font-mono">
               <AppleLogo size={14} className="text-emerald-600 dark:text-emerald-400" />
               <span>macOS 15+ (Sequoia) · Apple Silicon & Intel</span>
@@ -75,16 +82,30 @@ export default function Footer() {
                 {group.title}
               </h3>
               <ul className="mt-4 space-y-2.5">
-                {group.links.map((link) => (
-                  <li key={link.href + link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-slate-600 dark:text-zinc-400 transition hover:text-slate-900 dark:hover:text-white"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
+                {group.links.map((link) => {
+                  const isExternal = link.href.startsWith('mailto:') || link.href.startsWith('http');
+                  return (
+                    <li key={link.href + link.label}>
+                      {isExternal ? (
+                        <a
+                          href={link.href}
+                          target={link.href.startsWith('http') ? '_blank' : undefined}
+                          rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                          className="text-sm text-slate-600 dark:text-zinc-400 transition hover:text-slate-900 dark:hover:text-white"
+                        >
+                          {link.label}
+                        </a>
+                      ) : (
+                        <Link
+                          href={link.href}
+                          className="text-sm text-slate-600 dark:text-zinc-400 transition hover:text-slate-900 dark:hover:text-white"
+                        >
+                          {link.label}
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}
@@ -93,11 +114,13 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-black/[0.06] dark:border-white/[0.06] pt-8 text-xs text-slate-600 dark:text-zinc-300 sm:flex-row font-mono">
           <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-            <span>© {new Date().getFullYear()} lidZen. {t.footer.rights}</span>
+            <span>© {new Date().getFullYear()} lidZen Systems. {t.footer.rights}</span>
             <span className="text-black/20 dark:text-white/20">·</span>
             <Link href="/privacy" className="hover:text-slate-900 dark:hover:text-white transition">Privacy</Link>
             <span className="text-black/20 dark:text-white/20">·</span>
             <Link href="/terms" className="hover:text-slate-900 dark:hover:text-white transition">Terms</Link>
+            <span className="text-black/20 dark:text-white/20">·</span>
+            <a href="mailto:support@lidzen.com?subject=Grievance%20Redressal" className="hover:text-slate-900 dark:hover:text-white transition">Grievance</a>
             <span className="text-black/20 dark:text-white/20">·</span>
             <LanguageSelector />
           </div>
@@ -115,6 +138,13 @@ export default function Footer() {
               {t.footer.idle}
             </span>
           </div>
+        </div>
+
+        {/* Legal & Trademark Disclaimer */}
+        <div className="mt-6 border-t border-black/[0.04] dark:border-white/[0.04] pt-4 text-[11px] leading-relaxed text-slate-600 dark:text-zinc-400 font-mono">
+          <p>
+            Apple, Mac, MacBook, macOS, Sequoia, Apple Silicon, and IOKit are trademarks of Apple Inc., registered in the U.S. and other countries. lidZen is an independent software utility developed by lidZen Systems and is not affiliated with, sponsored, or endorsed by Apple Inc. All checkout transactions and merchant billing are securely fulfilled by Dodo Payments Inc. as Merchant of Record.
+          </p>
         </div>
       </div>
     </footer>

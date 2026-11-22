@@ -68,7 +68,16 @@ export default function FAQDocs() {
           <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-5">
             <h4 className="font-semibold text-slate-900 dark:text-white text-base">How does licensing work?</h4>
             <p className="mt-2 text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
-              lidZen is a one-time purchase of $29 with a 14-day free trial. A single license can be activated on up to 3 personal Mac machines simultaneously. All minor and major updates within the current generation are included for free.
+              lidZen is available as a one-time lifetime purchase: ₹699 ($6.99) for a Single Mac Lifetime License (1 Mac), or ₹999 ($11.99) for a Two Macs Lifetime License (2 Macs). All purchases include our 14-day money-back guarantee, zero subscriptions, and free lifetime updates for the current major generation.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.03] p-5">
+            <h4 className="font-semibold text-slate-900 dark:text-white text-base">Have more queries or need support?</h4>
+            <p className="mt-2 text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
+              If you have any questions or queries about lidZen, power assertions, or order assistance, write to us directly at{' '}
+              <a href="mailto:support@lidzen.com?subject=lidZen%20Product%20Query" className="font-mono text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
+                support@lidzen.com
+              </a>.
             </p>
           </div>
         </div>

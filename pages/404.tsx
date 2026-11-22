@@ -165,11 +165,11 @@ export default function NotFound() {
               className="mt-8 pt-6 border-t border-black/[0.06] dark:border-white/[0.06]"
             >
               <a
-                href="mailto:support@lidzen.app"
+                href="mailto:support@lidzen.com?subject=lidZen%20Website%20404%20Issue"
                 className="inline-flex items-center gap-1.5 text-[11px] font-mono text-slate-500 dark:text-zinc-500 hover:text-slate-800 dark:hover:text-zinc-300 transition-colors"
               >
                 <MessageCircle size={12} />
-                Think this is a mistake? Contact support
+                Have queries? Contact support@lidzen.com
               </a>
             </motion.div>
           </div>

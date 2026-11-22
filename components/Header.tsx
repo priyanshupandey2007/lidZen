@@ -13,6 +13,13 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const { t } = useLanguage();
   const { buttonLabel } = useCurrency();
+  
+  const startCheckout = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : 'http://localhost:3001';
+    const dynamicReturnUrl = `${origin}/?payment=success`;
+    window.location.href = `https://test.checkout.dodopayments.com/buy/pdt_0NsR03OW6DniKgDV9ETzC?quantity=1&redirect_url=${encodeURIComponent(dynamicReturnUrl)}`;
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,13 +86,14 @@ export default function Header() {
         <div className="hidden lg:flex items-center gap-3 shrink-0">
           <LanguageSelector />
           <ThemeToggle />
-          <Link
-            href="/#pricing"
+          <a
+            href="https://test.checkout.dodopayments.com/buy/pdt_0NsR03OW6DniKgDV9ETzC"
+            onClick={startCheckout}
             className="btn-primary !px-4 !py-2 whitespace-nowrap"
           >
             <AppleLogo size={14} className="fill-current -mt-0.5" />
             <span>{buttonLabel}</span>
-          </Link>
+          </a>
         </div>
 
         {/* Mobile / Tablet menu trigger */}
@@ -116,14 +124,17 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/#pricing"
-              onClick={() => setMobileOpen(false)}
+            <a
+              href="https://test.checkout.dodopayments.com/buy/pdt_0NsR03OW6DniKgDV9ETzC"
+              onClick={(e) => {
+                setMobileOpen(false);
+                startCheckout(e);
+              }}
               className="btn-primary w-full mt-3 !py-2.5 text-xs"
             >
               <AppleLogo size={14} className="fill-current -mt-0.5" />
               <span>{buttonLabel}</span>
-            </Link>
+            </a>
           </nav>
         </div>
       )}

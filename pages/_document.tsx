@@ -38,12 +38,6 @@ export default function Document() {
         <link rel="icon" href="/logo.png" />
         <link rel="apple-touch-icon" href="/logo.png" />
         <link rel="canonical" href="https://lidzenmac.vercel.app/" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap"
-          rel="stylesheet"
-        />
       </Head>
       <body className="min-h-screen bg-slate-50 text-slate-900 dark:bg-surface dark:text-zinc-100 antialiased selection:bg-accent-400/30 selection:text-white" suppressHydrationWarning>
         <Main />

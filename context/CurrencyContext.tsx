@@ -18,10 +18,36 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   const [currency, setCurrencyState] = useState<Currency>('USD');
 
   useEffect(() => {
-    // Primary: Real-time IP geolocation (detects VPN, proxies, and real visitor country)
+    // Check previously saved user preference with strict allowlist
+    try {
+      const stored = localStorage.getItem('lidzen_currency');
+      if (stored === 'USD' || stored === 'INR') {
+        setCurrencyState(stored as Currency);
+        return;
+      }
+    } catch {}
+
+    // Check timezone first (zero network calls, instant on-device detection)
+    try {
+      const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
+      const isIndiaTz =
+        tz.includes('calcutta') ||
+        tz.includes('kolkata') ||
+        tz.includes('asia/calcutta') ||
+        tz.includes('asia/kolkata');
+
+      if (isIndiaTz) {
+        setCurrencyState('INR');
+        try {
+          localStorage.setItem('lidzen_currency', 'INR');
+        } catch {}
+        return;
+      }
+    } catch {}
+
+    // Secondary: Non-tracking IP geolocation fallback
     const detectRegion = async () => {
       try {
-        // Allow URL testing override (e.g. ?currency=USD or ?country=US)
         if (typeof window !== 'undefined') {
           const params = new URLSearchParams(window.location.search);
           const forceCur = params.get('currency')?.toUpperCase();
@@ -36,7 +62,7 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
           }
         }
 
-        // Fetch IP geolocation in real-time
+        // Ephemeral geolocation lookup for localized currency presentation
         const res = await Promise.any([
           fetch('https://api.country.is/').then((r) => {
             if (!r.ok) throw new Error();
@@ -59,20 +85,7 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
           return;
         }
       } catch {
-        // Fallback only if network request fails (e.g. offline)
-      }
-
-      // Offline / Network Failure Fallback:
-      try {
-        const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
-        const isIndiaTz =
-          tz.includes('calcutta') ||
-          tz.includes('kolkata') ||
-          tz.includes('asia/calcutta') ||
-          tz.includes('asia/kolkata');
-
-        setCurrencyState(isIndiaTz ? 'INR' : 'USD');
-      } catch {
+        // Fallback gracefully
         setCurrencyState('USD');
       }
     };
@@ -92,7 +105,7 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   };
 
   const isINR = currency === 'INR';
-  const priceOneMac = isINR ? '₹599' : '$6.99';
+  const priceOneMac = isINR ? '₹699' : '$6.99';
   const priceTwoMacs = isINR ? '₹999' : '$11.99';
   const buttonLabel = `Get lidZen · ${priceOneMac}`;
   const currencySymbol = isINR ? '₹' : '$';

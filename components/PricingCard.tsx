@@ -10,6 +10,14 @@ export default function PricingCard() {
   const [tier, setTier] = useState<'one' | 'two'>('one');
 
   const activePrice = tier === 'one' ? priceOneMac : priceTwoMacs;
+  const selectedProductId = tier === 'one' ? 'pdt_0NsR03OW6DniKgDV9ETzC' : 'pdt_0NsR05Gvs4it4UNUGME50';
+  
+  const startCheckout = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : 'http://localhost:3001';
+    const dynamicReturnUrl = `${origin}/?payment=success`;
+    window.location.href = `https://test.checkout.dodopayments.com/buy/${selectedProductId}?quantity=1&redirect_url=${encodeURIComponent(dynamicReturnUrl)}`;
+  };
 
   const featureCards = [
     {
@@ -148,7 +156,8 @@ export default function PricingCard() {
 
             {/* Primary Purchase Button - Standardized Button System */}
             <a
-              href="#checkout"
+              href={`https://test.checkout.dodopayments.com/buy/${selectedProductId}`}
+              onClick={startCheckout}
               className="btn-primary w-full mt-8"
             >
               <AppleLogo size={16} className="fill-current -mt-0.5" />

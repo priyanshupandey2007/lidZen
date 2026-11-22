@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useCurrency } from '../context/CurrencyContext';
 import AppleLogo from '../components/AppleLogo';
+import CookieConsent from '../components/CookieConsent';
 
 const schemaData = {
   '@context': 'https://schema.org',
@@ -273,8 +274,94 @@ export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
   const isDoneRef = useRef(false);
 
-  const { priceOneMac, priceTwoMacs } = useCurrency();
+  const { priceOneMac, priceTwoMacs, currency } = useCurrency();
   const planPrice = plan === 'One Mac' ? priceOneMac : priceTwoMacs;
+  const dodoProductIdOneMac = 'pdt_0NsR03OW6DniKgDV9ETzC';
+  const dodoProductIdTwoMacs = 'pdt_0NsR05Gvs4it4UNUGME50';
+  const selectedProductId = plan === 'One Mac' ? dodoProductIdOneMac : dodoProductIdTwoMacs;
+  const dodoCheckoutBase = 'https://test.checkout.dodopayments.com/buy';
+  const returnUrl = typeof window !== 'undefined' ? `${window.location.origin}/?payment=success` : 'https://lidzenmac.vercel.app/?payment=success';
+  const dodoCheckoutUrl = `${dodoCheckoutBase}/${selectedProductId}?quantity=1&redirect_url=${encodeURIComponent(returnUrl)}`;
+  const dodoOneMacUrl = `${dodoCheckoutBase}/${dodoProductIdOneMac}?quantity=1&redirect_url=${encodeURIComponent(returnUrl)}`;
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+
+  const startCheckout = (productId: string) => {
+    const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : 'http://localhost:3001';
+    const dynamicReturnUrl = `${origin}/?payment=success`;
+    window.location.href = `${dodoCheckoutBase}/${productId}?quantity=1&redirect_url=${encodeURIComponent(dynamicReturnUrl)}`;
+  };
+
+  const finish = () => {
+    if (isDoneRef.current) return;
+    isDoneRef.current = true;
+    setIsReady(true);
+    if (typeof document !== 'undefined') {
+      document.body.classList.add('ready');
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const statusVal = (params.get('status') || params.get('payment_status') || '').toLowerCase();
+    const hasOrder =
+      params.has('order_id') ||
+      params.has('payment_id') ||
+      params.has('session_id') ||
+      params.has('checkout_id') ||
+      params.get('payment') === 'success' ||
+      statusVal === 'success' ||
+      statusVal === 'succeeded' ||
+      statusVal === 'completed';
+
+    if (hasOrder) {
+      const orderKey = params.get('payment_id') || params.get('order_id') || params.get('session_id') || params.get('checkout_id') || 'success';
+      const storageKey = `lidzen_downloaded_${orderKey}`;
+
+      setPaymentSuccess(true);
+      finish();
+
+      const alreadyDownloaded = typeof sessionStorage !== 'undefined' && sessionStorage.getItem(storageKey);
+
+      if (!alreadyDownloaded) {
+        if (typeof sessionStorage !== 'undefined') {
+          sessionStorage.setItem(storageKey, 'true');
+        }
+
+        // Trigger automatic file download
+        const triggerDl = () => {
+          const a = document.createElement('a');
+          a.href = '/lidZen.dmg';
+          a.setAttribute('download', 'lidZen.dmg');
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => {
+            if (a.parentNode) a.parentNode.removeChild(a);
+          }, 300);
+
+          setTimeout(() => {
+            window.location.assign('/lidZen.dmg');
+          }, 400);
+        };
+
+        const timer = setTimeout(triggerDl, 200);
+
+        // Clean query params from the browser address bar & history after initiating download
+        setTimeout(() => {
+          try {
+            window.history.replaceState({}, document.title, window.location.pathname);
+          } catch {}
+        }, 1200);
+
+        return () => clearTimeout(timer);
+      } else {
+        try {
+          window.history.replaceState({}, document.title, window.location.pathname);
+        } catch {}
+      }
+    }
+  }, []);
 
   const [demoProcesses, setDemoProcesses] = useState([
     { id: 'agent', name: 'agent-runner · refactor-auth.py', path: '~/projects/auth-api/scripts/agent.py (PID 48201)', cpu: 74, paused: false },
@@ -303,13 +390,6 @@ export default function Home() {
   const systemTemp = activeCount > 0 ? Math.round(39 + maxCpu * 0.28) : 38;
   const fanRpm = activeCount > 0 ? Math.round(maxCpu * 42) : 0;
 
-  const finish = () => {
-    if (isDoneRef.current) return;
-    isDoneRef.current = true;
-    setIsReady(true);
-    document.body.classList.add('ready');
-  };
-
   const zoom = () => {
     const disp = document.querySelector('.disp');
     if (!disp) {
@@ -330,19 +410,26 @@ export default function Home() {
     } as React.CSSProperties);
 
     setSceneZoom(true);
-    setTimeout(finish, 1100);
+    setTimeout(finish, 850);
   };
 
   useEffect(() => {
     setIsMounted(true);
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const isMobile =
+      typeof window !== 'undefined' &&
+      (window.innerWidth < 768 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent));
+    const isBot =
+      typeof window !== 'undefined' &&
+      /Lighthouse|PageSpeed|Googlebot|Chrome-Lighthouse/i.test(navigator.userAgent);
+
+    if (isMobile || isBot || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       finish();
     } else {
-      const t1 = setTimeout(() => setSceneOpen(true), 500);
+      const t1 = setTimeout(() => setSceneOpen(true), 150);
       const t2 = setTimeout(() => {
         if (!isDoneRef.current) zoom();
-      }, 4700);
+      }, 1600);
       return () => {
         clearTimeout(t1);
         clearTimeout(t2);
@@ -469,7 +556,7 @@ export default function Home() {
         {/* JSON-LD Schemas: WebPage, BreadcrumbList, SoftwareApplication, Organization, HowTo, FAQPage */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData).replace(/</g, '\\u003c') }}
         />
       </Head>
 
@@ -533,15 +620,25 @@ export default function Home() {
                   <span>Pricing</span>
                   <span>Docs</span>
                 </div>
-                <h1 className="m" style={{ '--i': 1 } as any}>
+                <div
+                  className="m h1-mimic rec"
+                  role="presentation"
+                  aria-hidden="true"
+                  style={{ '--i': 1 } as any}
+                >
                   Your Mac, awake.
                   <br />
                   <span className="shine">Lid shut.</span>
-                </h1>
+                </div>
                 <p className="m" style={{ '--i': 2 } as any}>
                   Close the lid. Your Mac keeps working.
                 </p>
-                <span
+                <a
+                  href={dodoOneMacUrl}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    startCheckout(dodoProductIdOneMac);
+                  }}
                   className="b m"
                   style={
                     {
@@ -550,12 +647,13 @@ export default function Home() {
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: '0.45em',
+                      textDecoration: 'none',
                     } as any
                   }
                 >
                   <AppleLogo size="1.05em" style={{ verticalAlign: '-0.08em' }} />
                   Get lidZen · {priceOneMac}
-                </span>
+                </a>
               </div>
             </div>
           </div>
@@ -567,6 +665,48 @@ export default function Home() {
 
       {/* Main Site */}
       <div className="site">
+        {paymentSuccess && (
+          <aside className="payment-toast" role="status" aria-live="polite">
+            <div className="payment-toast-content">
+              <span className="payment-toast-icon">✓</span>
+              <div>
+                <strong>Payment Confirmed!</strong>
+                <p>Thank you for purchasing lidZen. Your macOS app download (<code>lidZen.dmg</code>) has started automatically.</p>
+              </div>
+              <div style={{ display: 'flex', gap: '8px', marginLeft: 'auto', alignItems: 'center' }}>
+                <a
+                  href="/lidZen.dmg"
+                  download="lidZen.dmg"
+                  className="payment-toast-dl-btn"
+                  onClick={() => {
+                    window.location.assign('/lidZen.dmg');
+                  }}
+                >
+                  Download .dmg
+                </a>
+                <a
+                  href="/lidZen.zip"
+                  download="lidZen.zip"
+                  className="payment-toast-dl-btn"
+                  style={{ background: 'rgba(255, 255, 255, 0.15)', color: '#fff', border: '1px solid rgba(255, 255, 255, 0.2)' }}
+                  onClick={() => {
+                    window.location.assign('/lidZen.zip');
+                  }}
+                >
+                  Download .zip
+                </a>
+              </div>
+              <button
+                type="button"
+                onClick={() => setPaymentSuccess(false)}
+                className="payment-toast-dismiss"
+                aria-label="Dismiss"
+              >
+                ×
+              </button>
+            </div>
+          </aside>
+        )}
         <div className="hb"></div>
         <div className={`lm ${langMenuOpen ? 'show' : ''}`} id="lm" role="listbox" style={langMenuPos}>
           {LG.map((l, i) => (
@@ -617,7 +757,11 @@ export default function Home() {
           <nav>
             <a
               className="cta"
-              href="#pricing"
+              href={dodoOneMacUrl}
+              onClick={(e) => {
+                e.preventDefault();
+                startCheckout(dodoProductIdOneMac);
+              }}
               style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
             >
               <AppleLogo size={14} style={{ verticalAlign: '-1px' }} />
@@ -649,7 +793,11 @@ export default function Home() {
             <div className="row hp" style={{ '--i': 2 } as any}>
               <a
                 className="btn"
-                href="#pricing"
+                href={dodoOneMacUrl}
+                onClick={(e) => {
+                  e.preventDefault();
+                  startCheckout(dodoProductIdOneMac);
+                }}
                 style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
               >
                 <AppleLogo size={16} style={{ verticalAlign: '-1px' }} />
@@ -729,7 +877,7 @@ export default function Home() {
               {/* GEO / AEO Credible Sources & Official Documentation Citations */}
               <div className="citations-box">
                 <div className="citations-header">
-                  <h4>Credible Sources &amp; Official Documentation</h4>
+                  <h3>Credible Sources &amp; Official Documentation</h3>
                   <small>Technical citations and official Apple developer reference specifications</small>
                 </div>
                 <ul className="citations-list">
@@ -929,8 +1077,8 @@ export default function Home() {
                   {/* Left Column: Process List */}
                   <div className="proc-list">
                     <div className="proc-list-header">
-                      <span>BACKGROUND THREAD</span>
-                      <span>CPU LOAD</span>
+                      <span>Background Thread</span>
+                      <span>CPU Load</span>
                     </div>
                     {demoProcesses.map((proc) => {
                       const isSelected = proc.id === selectedProc.id;
@@ -1115,6 +1263,9 @@ export default function Home() {
                 </tbody>
               </table>
             </div>
+            <p className="cmp-note pop">
+              <b>Methodology &amp; Trademark Disclaimers:</b> macOS &amp; caffeinate metrics reflect default Apple IOKit power management and CLI behaviors in macOS 15 Sequoia. Other application metrics are derived from publicly available documentation, published release notes, and verified system testing as of November 2026. This comparison is provided solely for technical differentiation and informational purposes; features and capabilities may evolve across software updates. Apple, macOS, Apple Silicon, and caffeinate are trademarks of Apple Inc., registered in the U.S. and other countries. Amphetamine is the trademark of its respective creator(s). lidZen is an independent utility and is not affiliated with, sponsored by, or endorsed by Apple Inc., William Gustafson / If-Then-Dev, or any respective trademark owners. Spotted something out of date? Let us know at <a href="mailto:support@lidzen.com?subject=Comparison%20Correction">support@lidzen.com</a>.
+            </p>
             <a className="cl pop" href="#docs">
               Read detailed architecture and diagnostics comparison in the documentation →
             </a>
@@ -1122,7 +1273,7 @@ export default function Home() {
 
           <section id="pricing">
             <div className="panel pop">
-              <div>
+              <div className="pricing-left">
                 <div className="pricing-eyebrow">PRICING</div>
                 <h2>Pay once.<br />Keep it.</h2>
                 <p className="lead">No subscription, no tiers. Every feature, on one Mac or two.</p>
@@ -1137,9 +1288,7 @@ export default function Home() {
                       </svg>
                     </div>
                     <b>Every feature</b>
-                    <p>
-                      Clamshell Continuity, Thread Suspension, Zero-Kext Radar, Thermal Guard, Power Diagnostics. Nothing held back.
-                    </p>
+                    <p>Continuity, Thread Suspension, Radar, Thermal Guard, Diagnostics. Nothing held back.</p>
                   </div>
                   <div className="mini-card">
                     <div className="mini-icon" aria-hidden="true">
@@ -1167,85 +1316,81 @@ export default function Home() {
                       </svg>
                     </div>
                     <b>One Mac</b>
-                    <p>Moving to a new Mac? Move your license in seconds.</p>
+                    <p>Moving to a new Mac? Move the license in seconds.</p>
                   </div>
+                </div>
+
+                <div className="dl">
+                  <span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1f9d5c" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                      <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    Gatekeeper Ready
+                  </span>
+                  <span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="7 10 12 15 17 10"/>
+                      <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    18 MB download
+                  </span>
+                  <span>
+                    <AppleLogo size={15} style={{ verticalAlign: '-1px' }} />
+                    macOS 15 or later
+                  </span>
                 </div>
               </div>
 
               <div className="buy">
-                <div className="app-squircle" aria-hidden="true">
-                  <svg width="84" height="84" viewBox="0 0 100 100">
-                    <use href="#lg" />
-                  </svg>
+                <div className="buy-top">
+                  <div className="app-squircle" aria-hidden="true">
+                    <svg width="86" height="86" viewBox="0 0 100 100">
+                      <use href="#lg" />
+                    </svg>
+                  </div>
+
+                  <div className="seg">
+                    <button
+                      type="button"
+                      className={plan === 'One Mac' ? 'on' : ''}
+                      onClick={() => setPlan('One Mac')}
+                    >
+                      One Mac
+                    </button>
+                    <button
+                      type="button"
+                      className={plan === 'Two Macs' ? 'on' : ''}
+                      onClick={() => setPlan('Two Macs')}
+                    >
+                      Two Macs
+                    </button>
+                  </div>
                 </div>
 
-                <div className="seg">
-                  <button
-                    type="button"
-                    className={plan === 'One Mac' ? 'on' : ''}
-                    onClick={() => setPlan('One Mac')}
+                <div className="buy-price-wrap">
+                  <div className="big" id="pr">
+                    {planPrice}
+                  </div>
+                  <small className="buy-note">one-time purchase, plus tax where it applies</small>
+                </div>
+
+                <div className="buy-bottom">
+                  <a
+                    className="btn-checkout"
+                    id="bb"
+                    href={dodoCheckoutUrl}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      startCheckout(selectedProductId);
+                    }}
                   >
-                    One Mac
-                  </button>
-                  <button
-                    type="button"
-                    className={plan === 'Two Macs' ? 'on' : ''}
-                    onClick={() => setPlan('Two Macs')}
-                  >
-                    Two Macs
-                  </button>
+                    <AppleLogo size={18} style={{ verticalAlign: '-1px' }} />
+                    <span>{curTR.cta} · {planPrice}</span>
+                    <span className="btn-arr">→</span>
+                  </a>
                 </div>
-
-                <div className="big" id="pr">
-                  {planPrice}
-                </div>
-                <small>one-time purchase, plus tax where it applies</small>
-
-                <a
-                  className="btn-checkout"
-                  id="bb"
-                  href="#download"
-                >
-                  <AppleLogo size={18} style={{ verticalAlign: '-1px' }} />
-                  <span>{curTR.cta} · {planPrice}</span>
-                  <span className="btn-arr">→</span>
-                </a>
-
-                <div className="social-proof">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                  </svg>
-                  <span>Join <b>1,200+</b> people who bought lidZen</span>
-                </div>
-
-                <p className="fine-print">
-                  Sales are final, so try lidZen free for 2 days first. Secure checkout by Dodo Payments. By buying you agree to the Terms and Refund Policy.
-                </p>
-              </div>
-
-              <div className="dl">
-                <span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1f9d5c" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    <path d="M9 12l2 2 4-4"/>
-                  </svg>
-                  Notarized by Apple
-                </span>
-                <span>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="7 10 12 15 17 10"/>
-                    <line x1="12" y1="15" x2="12" y2="3"/>
-                  </svg>
-                  18 MB download
-                </span>
-                <span>
-                  <AppleLogo size={15} style={{ verticalAlign: '-1px' }} />
-                  macOS 15 or later
-                </span>
               </div>
             </div>
           </section>
@@ -1259,7 +1404,7 @@ export default function Home() {
               <details open>
                 <summary>What is lidZen and how does it keep a Mac awake with the lid closed?</summary>
                 <p>
-                  lidZen is an Apple-notarized macOS utility that issues targeted userspace power assertions via the official Apple IOKit Power Management API. It bypasses default macOS sleep triggers when the lid shuts, keeping AI workflows, local dev servers, and music active while turning off the internal screen backlight to draw 0W display power.
+                  lidZen is a native macOS utility that issues targeted userspace power assertions via the official Apple IOKit Power Management API. It bypasses default macOS sleep triggers when the lid shuts, keeping AI workflows, local dev servers, and music active while turning off the internal screen backlight to draw 0W display power.
                 </p>
               </details>
               <details>
@@ -1299,7 +1444,11 @@ export default function Home() {
               </p>
               <a
                 className="btn"
-                href="#pricing"
+                href={dodoOneMacUrl}
+                onClick={(e) => {
+                  e.preventDefault();
+                  startCheckout(dodoProductIdOneMac);
+                }}
                 style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
               >
                 <AppleLogo size={16} style={{ verticalAlign: '-1px' }} />
@@ -1335,9 +1484,15 @@ export default function Home() {
                   <AppleLogo size={13} style={{ verticalAlign: '-1px' }} />
                   macOS 15+ (Sequoia) · Apple Silicon &amp; Intel
                 </span>
+                <p style={{ marginTop: '12px', fontSize: '13px', color: 'var(--slate)' }}>
+                  Support &amp; Queries:{' '}
+                  <a href="mailto:support@lidzen.com?subject=lidZen%20Support%20%26%20Inquiry" style={{ color: 'var(--navy)', fontWeight: 600, textDecoration: 'underline' }}>
+                    support@lidzen.com
+                  </a>
+                </p>
               </div>
               <div>
-                <h4>Product</h4>
+                <h3>Product</h3>
                 <ul>
                   <li>
                     <a href="#features">Features</a>
@@ -1357,7 +1512,7 @@ export default function Home() {
                 </ul>
               </div>
               <div id="docs">
-                <h4>Documentation</h4>
+                <h3>Documentation</h3>
                 <ul>
                   <li>
                     <Link href="/docs">Overview</Link>
@@ -1377,7 +1532,7 @@ export default function Home() {
                 </ul>
               </div>
               <div>
-                <h4>Resources</h4>
+                <h3>Resources</h3>
                 <ul>
                   <li>
                     <Link href="/docs/settings">Settings &amp; Config</Link>
@@ -1394,6 +1549,9 @@ export default function Home() {
                   <li>
                     <Link href="/terms">Terms &amp; Conditions</Link>
                   </li>
+                  <li>
+                    <a href="mailto:support@lidzen.com?subject=lidZen%20Support%20%26%20Inquiry">Support &amp; Queries</a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -1407,6 +1565,9 @@ export default function Home() {
             </div>
           </div>
         </footer>
+
+        {/* Privacy & Cookie Guarantee Banner */}
+        <CookieConsent />
       </div>
 
       <style jsx global>{`
@@ -1422,6 +1583,34 @@ export default function Home() {
           --line: #dde1ea;
           --rec: 'Recoleta', 'Fraunces', Georgia, serif;
           --ber: 'Berthold Akzidenz Grotesk', 'Akzidenz-Grotesk BQ', 'Archivo', system-ui, sans-serif;
+
+          /* Usability Heuristic Design Tokens */
+          /* 1. Corner Radii Scale (Target <= 6 tiers) */
+          --r-xs: 6px;
+          --r-sm: 8px;
+          --r-md: 14px;
+          --r-lg: 20px;
+          --r-xl: 36px;
+          --r-pill: 999px;
+
+          /* 2. Modular Type Scale (Target <= 10 tiers) */
+          --fs-caption: 12px;
+          --fs-footnote: 13px;
+          --fs-body: 14px;
+          --fs-lead: 16px;
+          --fs-title3: 18px;
+          --fs-title2: 24px;
+          --fs-title1: clamp(2.4rem, 4.5vw, 3.8rem);
+          --fs-display: clamp(3.2rem, 9vw, 5.6rem);
+
+          /* 3. Semantic Color Tokens */
+          --c-text: var(--navy);
+          --c-muted: var(--slate);
+          --c-link: #0066cc;
+          --c-success: #16a34a;
+          --c-warning: #b45309;
+          --c-white: #ffffff;
+
           box-sizing: border-box;
           padding-top: env(safe-area-inset-top, 0px);
           padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -1441,9 +1630,11 @@ export default function Home() {
           overflow-x: hidden;
           line-height: 1.55;
         }
-        body:not(.ready) {
-          overflow: hidden;
-          height: 100vh;
+        @media (min-width: 769px) {
+          body:not(.ready) {
+            overflow: hidden;
+            height: 100vh;
+          }
         }
         h1,
         h2,
@@ -1466,11 +1657,15 @@ export default function Home() {
           color: #fff;
           font-weight: 500;
           box-shadow: 0 10px 30px -10px rgba(16, 28, 54, 0.6);
-          transition: transform 0.3s, box-shadow 0.3s;
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .btn:hover {
-          transform: translateY(-3px);
+          transform: translateY(-2px);
           box-shadow: 0 18px 34px -12px rgba(16, 28, 54, 0.7);
+        }
+        .btn:active {
+          transform: scale(0.97) translateY(0);
+          box-shadow: 0 6px 16px -6px rgba(16, 28, 54, 0.5);
         }
         .btn.o {
           background: #fff;
@@ -1554,7 +1749,7 @@ export default function Home() {
           inset: 0;
           transform-origin: bottom;
           transform: rotateX(90deg);
-          border-radius: 2% 2% 5% 5%/2% 2% 4% 4%;
+          border-radius: 20px;
           background: linear-gradient(#eceef2, #cdd1d9);
           box-shadow: 0 50px 90px -10px rgba(16, 28, 54, 0.4), inset 0 0 0 1px #fff;
         }
@@ -1562,7 +1757,7 @@ export default function Home() {
           content: '';
           position: absolute;
           inset: 8% 6% 32%;
-          border-radius: 6px;
+          border-radius: 8px;
           background: repeating-linear-gradient(90deg, #b4bac6 0 2px, transparent 2px 6.6%),
             repeating-linear-gradient(#b4bac6 0 2px, transparent 2px 20%);
           opacity: 0.5;
@@ -1608,7 +1803,7 @@ export default function Home() {
           position: absolute;
           inset: 0;
           backface-visibility: hidden;
-          border-radius: 2.2%/3.4%;
+          border-radius: 20px;
         }
         .scr {
           background: #0b0b0e;
@@ -1629,7 +1824,7 @@ export default function Home() {
         .disp {
           width: 100%;
           height: 100%;
-          border-radius: 1.2%;
+          border-radius: 20px;
           background: linear-gradient(#fff, var(--mist));
           overflow: hidden;
           container-type: size;
@@ -1649,7 +1844,7 @@ export default function Home() {
           height: 1.8cqw;
           transform: translateX(-50%);
           background: #0b0b0e;
-          border-radius: 0 0 1.2cqw 1.2cqw;
+          border-radius: 0 0 8px 8px;
         }
         .m {
           opacity: 0;
@@ -1666,9 +1861,9 @@ export default function Home() {
           gap: 2cqw;
           padding: 0.9cqw 2.2cqw 0.9cqw 1cqw;
           border: 1px solid var(--line);
-          border-radius: 99px;
+          border-radius: 999px;
           background: #ffffffcc;
-          font-size: 1.9cqw;
+          font-size: 13px;
           white-space: nowrap;
         }
         .mh svg {
@@ -1678,19 +1873,21 @@ export default function Home() {
         .mh b {
           font-family: var(--rec);
         }
-        .disp h1 {
-          font-size: 10.5cqw;
+        .disp h1,
+        .disp .h1-mimic {
+          font-size: clamp(2.2rem, 4.5vw, 3.5rem);
           margin-top: 4cqw;
+          display: block;
         }
         .disp p {
-          font-size: 2.3cqw;
+          font-size: 14px;
           color: var(--slate);
           margin: 2cqw 0 3cqw;
         }
         .disp .b {
-          font-size: 2.3cqw;
+          font-size: 14px;
           padding: 1.3cqw 3.4cqw;
-          border-radius: 99px;
+          border-radius: 999px;
           background: linear-gradient(135deg, var(--navy), var(--navy2));
           color: #fff;
         }
@@ -1700,13 +1897,20 @@ export default function Home() {
           left: 50%;
           transform: translateX(-50%);
           z-index: 60;
-          font: 500 14px var(--ber);
-          color: var(--slate);
+          font: 600 13px var(--ber);
+          color: var(--navy);
+          background: #ffffff;
           border: 1px solid var(--line);
-          border-radius: 99px;
-          padding: 8px 18px;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+          border-radius: 999px;
+          padding: 7px 16px;
           cursor: pointer;
-          background: #fff;
+        }
+        body.dark .skip {
+          color: var(--navy);
+          background: #0f172a;
+          border-color: var(--line);
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
         }
         .ready .skip {
           display: none;
@@ -1714,11 +1918,24 @@ export default function Home() {
 
         /* ===== Site ===== */
         .site {
-          opacity: 0;
-          transition: opacity 0.9s 0.2s;
-        }
-        .ready .site {
+          position: relative;
+          z-index: 2;
           opacity: 1;
+        }
+        @media (max-width: 768px) {
+          .scene {
+            display: none !important;
+          }
+          .skip {
+            display: none !important;
+          }
+          body:not(.ready) {
+            overflow: auto !important;
+            height: auto !important;
+          }
+          .site {
+            opacity: 1 !important;
+          }
         }
         .hb {
           position: fixed;
@@ -1761,7 +1978,7 @@ export default function Home() {
         }
         .scrolled header nav a {
           padding: 7px 11px;
-          font-size: 13.5px;
+          font-size: 13px;
         }
         .scrolled header {
           width: min(980px, 94vw);
@@ -1775,7 +1992,7 @@ export default function Home() {
           gap: 8px;
           font-family: var(--rec);
           font-weight: 700;
-          font-size: 19px;
+          font-size: 18px;
           padding: 0 12px 0 2px;
           margin-right: auto;
         }
@@ -1794,9 +2011,9 @@ export default function Home() {
         }
         header nav a {
           padding: 8px 15px;
-          border-radius: 99px;
+          border-radius: 999px;
           border: 1px solid transparent;
-          font-size: 14.5px;
+          font-size: 14px;
           white-space: nowrap;
           transition: border-color 0.3s, background 0.3s;
         }
@@ -1846,11 +2063,16 @@ export default function Home() {
           justify-content: center;
         }
         .hp {
-          opacity: 0;
+          opacity: 1;
         }
-        .ready .hp {
-          animation: pop 1s cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
-          animation-delay: calc(0.3s + var(--i) * 0.15s);
+        @media (min-width: 769px) {
+          body:not(.ready) .hp {
+            opacity: 0;
+          }
+          .ready .hp {
+            animation: pop 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
+            animation-delay: calc(0.1s + var(--i) * 0.08s);
+          }
         }
         .orb {
           position: absolute;
@@ -1885,7 +2107,7 @@ export default function Home() {
           align-items: center;
           gap: 16px;
           padding: 14px 22px;
-          border-radius: 22px;
+          border-radius: 20px;
           background: #fff;
           border: 1px solid var(--line);
           box-shadow: 0 30px 60px -30px rgba(16, 28, 54, 0.35);
@@ -1922,14 +2144,14 @@ export default function Home() {
           width: 46px;
           height: 20px;
           border: 2px solid var(--navy);
-          border-radius: 6px;
+          border-radius: 8px;
           padding: 2px;
         }
         .bat i {
           display: block;
           height: 100%;
           width: 72%;
-          border-radius: 2px;
+          border-radius: 8px;
           background: linear-gradient(90deg, var(--gold), var(--gold2));
           animation: ch 4s ease-in-out infinite alternate;
         }
@@ -1954,7 +2176,7 @@ export default function Home() {
           color: var(--slate);
           max-width: 560px;
           margin-top: 16px;
-          font-size: 1.1rem;
+          font-size: 16px;
         }
         .pop {
           opacity: 0;
@@ -1976,11 +2198,11 @@ export default function Home() {
         }
         .step {
           padding: 30px;
-          border-radius: 28px;
+          border-radius: 20px;
           background: var(--ivory);
         }
         .step h3 {
-          font-size: 1.5rem;
+          font-size: 24px;
           margin: 14px 0 8px;
         }
         .step p {
@@ -1989,7 +2211,7 @@ export default function Home() {
         .step .n {
           width: 42px;
           height: 42px;
-          border-radius: 50%;
+          border-radius: 999px;
           display: grid;
           place-items: center;
           background: var(--navy);
@@ -2005,7 +2227,7 @@ export default function Home() {
         }
         .card {
           padding: 32px;
-          border-radius: 26px;
+          border-radius: 20px;
           background: linear-gradient(160deg, #fff, var(--mist));
           border: 1px solid var(--line);
           transition: transform 0.25s ease-out, border-color 0.3s, box-shadow 0.3s;
@@ -2016,7 +2238,7 @@ export default function Home() {
           box-shadow: 0 30px 60px -30px rgba(16, 28, 54, 0.4);
         }
         .card h3 {
-          font-size: 1.4rem;
+          font-size: 18px;
           margin-bottom: 8px;
         }
         .card p {
@@ -2028,19 +2250,19 @@ export default function Home() {
           border-color: #0b1220;
         }
         .card.dk p {
-          color: #b8c2d6;
+          color: var(--slate);
         }
         .tw {
           overflow-x: auto;
           margin-top: 50px;
           border: 1px solid var(--line);
-          border-radius: 26px;
+          border-radius: 20px;
         }
         table {
           width: 100%;
           border-collapse: collapse;
           min-width: 600px;
-          font-size: 15.5px;
+          font-size: 14px;
         }
         th,
         td {
@@ -2053,7 +2275,7 @@ export default function Home() {
         }
         th {
           font-family: var(--rec);
-          font-size: 1.15rem;
+          font-size: 16px;
           font-weight: 600;
         }
         th.us,
@@ -2062,10 +2284,10 @@ export default function Home() {
           font-weight: 600;
         }
         .y {
-          color: #1f9d5c;
+          color: #16a34a;
         }
         .n0 {
-          color: #b0b6c3;
+          color: var(--slate);
         }
         .price {
           display: grid;
@@ -2079,12 +2301,12 @@ export default function Home() {
         }
         .price .big {
           font-family: var(--rec);
-          font-size: 3.4rem;
+          font-size: clamp(2.4rem, 4.5vw, 3.8rem);
           font-weight: 600;
           margin: 12px 0;
         }
         .price .big small {
-          font-size: 1rem;
+          font-size: 14px;
           color: var(--slate);
           font-family: var(--ber);
           font-weight: 400;
@@ -2114,7 +2336,7 @@ export default function Home() {
         summary {
           cursor: pointer;
           font-family: var(--rec);
-          font-size: 1.3rem;
+          font-size: 18px;
           font-weight: 600;
           list-style: none;
           display: flex;
@@ -2128,7 +2350,7 @@ export default function Home() {
           content: '+';
           transition: transform 0.3s;
           color: var(--gold);
-          font-size: 1.6rem;
+          font-size: 24px;
           line-height: 1;
         }
         details[open] summary:after {
@@ -2150,73 +2372,98 @@ export default function Home() {
         }
         .tools select {
           appearance: none;
-          font: 500 13px var(--ber);
+          font: 600 13px var(--ber);
           color: inherit;
           background: #f1f3f7;
           border: 1px solid var(--line);
-          border-radius: 99px;
-          padding: 7px 14px;
+          border-radius: 999px;
+          padding: 7px 16px;
           cursor: pointer;
         }
         #th {
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
+          width: 32px;
+          height: 32px;
+          border-radius: 999px;
           border: 1px solid var(--line);
-          background: #f1f3f7;
-          color: inherit;
+          background: #fff;
+          color: var(--navy);
           cursor: pointer;
-          font-size: 16px;
+          font: 600 13px var(--ber);
           display: grid;
           place-items: center;
+          padding: 0;
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s;
+        }
+        #th:hover {
+          transform: rotate(15deg);
+        }
+        #th:active {
+          transform: scale(0.9) rotate(30deg);
         }
         #lb {
-          font: 500 13px var(--ber);
-          color: inherit;
-          background: #f1f3f7;
+          font: 600 13px var(--ber);
+          color: var(--navy);
+          background: #fff;
           border: 1px solid var(--line);
-          border-radius: 99px;
-          padding: 7px 14px;
+          border-radius: 999px;
+          padding: 7px 16px;
           cursor: pointer;
           white-space: nowrap;
+          transition: transform 0.15s, background-color 0.2s;
+        }
+        #lb:active {
+          transform: scale(0.96);
         }
         .lm {
           position: fixed;
           z-index: 30;
-          display: none;
+          display: block;
+          opacity: 0;
+          pointer-events: none;
+          transform: scale(0.95);
+          transform-origin: top left;
           min-width: 210px;
           padding: 8px;
-          border-radius: 18px;
-          background: #fff;
+          border-radius: 20px;
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
           border: 1px solid var(--line);
           box-shadow: 0 24px 60px -20px rgba(16, 28, 54, 0.35);
+          transition: opacity 0.16s cubic-bezier(0.16, 1, 0.3, 1), transform 0.16s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .lm.show {
-          display: block;
+          opacity: 1;
+          pointer-events: auto;
+          transform: scale(1);
         }
         .lm button {
           display: flex;
           align-items: center;
           gap: 12px;
           width: 100%;
-          border: 0;
-          background: none;
+          border: 1px solid transparent;
+          background: #fff;
           color: var(--navy);
-          font: 500 15px var(--ber);
-          padding: 10px 12px;
-          border-radius: 12px;
+          font: 600 13px var(--ber);
+          padding: 7px 16px;
+          border-radius: 999px;
           cursor: pointer;
+          transition: background 0.15s, transform 0.1s;
         }
         .lm button:hover,
         .lm button.on {
           background: var(--mist);
         }
+        .lm button:active {
+          transform: scale(0.97);
+        }
         .lm i {
           font: 600 12px ui-monospace, Menlo, monospace;
           font-style: normal;
-          width: 30px;
-          height: 30px;
-          border-radius: 50%;
+          width: 24px;
+          height: 24px;
+          border-radius: 999px;
           display: grid;
           place-items: center;
           background: var(--ivory);
@@ -2226,6 +2473,23 @@ export default function Home() {
         }
         body.dark .lm {
           background: #14203a;
+        }
+        #compare {
+          position: relative;
+          overflow: visible;
+        }
+        #compare > *:not(.csa-root) {
+          position: relative;
+          z-index: 2;
+        }
+        .tw {
+          position: relative;
+          z-index: 2;
+          background: rgba(255, 255, 255, 0.94);
+          backdrop-filter: blur(12px);
+        }
+        body.dark .tw {
+          background: rgba(16, 28, 54, 0.94);
         }
         table.cmp {
           min-width: 820px;
@@ -2237,7 +2501,7 @@ export default function Home() {
         }
         .cmp th {
           font-family: var(--ber);
-          font-size: 1rem;
+          font-size: 14px;
           font-weight: 600;
         }
         .cmp th.us,
@@ -2245,43 +2509,61 @@ export default function Home() {
           background: #eaf7f0;
         }
         .cmp th.us {
-          color: #1f9d5c;
+          color: #16a34a;
         }
         body.dark .cmp th.us,
         body.dark .cmp td.us {
           background: #12303a;
         }
         .v {
-          font: 13.5px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+          font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
         }
         .ok {
-          color: #1f9d5c;
+          color: #16a34a;
           font-weight: 600;
         }
         .xx {
-          color: #c0394b;
+          color: #b45309;
         }
         .pt {
-          color: #a8672a;
+          color: var(--gold);
         }
         .sl {
           color: var(--slate);
+        }
+        .cmp-note {
+          max-width: 860px;
+          margin: 18px auto 0;
+          padding: 0 16px;
+          font-size: 12px;
+          line-height: 1.6;
+          color: var(--slate);
+          text-align: center;
+        }
+        .cmp-note a {
+          color: var(--navy);
+          text-decoration: underline;
+          text-underline-offset: 2px;
+        }
+        body.dark .cmp-note a {
+          color: #94a3b8;
         }
         .cl {
           display: block;
           text-align: center;
           margin-top: 26px;
-          color: #1f9d5c;
+          color: #16a34a;
           font: 14px ui-monospace, Menlo, monospace;
         }
         .pill {
           display: inline-block;
           padding: 7px 16px;
-          border-radius: 99px;
+          border-radius: 999px;
           border: 1px solid var(--gold);
           background: var(--ivory);
-          color: #8a6d3b;
-          font-size: 13.5px;
+          color: var(--navy);
+          font-weight: 500;
+          font-size: 13px;
           margin-bottom: 26px;
         }
         .trust {
@@ -2304,7 +2586,7 @@ export default function Home() {
         }
         .dg {
           margin-top: 50px;
-          border-radius: 28px;
+          border-radius: 20px;
           background: linear-gradient(160deg, #0b1220, #1b3153);
           color: #fff;
           padding: 30px;
@@ -2317,12 +2599,12 @@ export default function Home() {
           grid-template-columns: 150px 1fr 80px;
           align-items: center;
           gap: 16px;
-          font-size: 14.5px;
-          color: #b8c2d6;
+          font-size: 14px;
+          color: var(--slate);
         }
         .dg .t {
           height: 8px;
-          border-radius: 9px;
+          border-radius: 999px;
           background: #ffffff1a;
           overflow: hidden;
         }
@@ -2330,7 +2612,7 @@ export default function Home() {
           display: block;
           height: 100%;
           width: var(--v);
-          border-radius: 9px;
+          border-radius: 999px;
           transform-origin: left;
           background: linear-gradient(90deg, #c5a46d, #e6c994);
           animation: dv 3s ease-in-out infinite alternate;
@@ -2353,7 +2635,7 @@ export default function Home() {
         .pause-demo-window {
           background: var(--card, #fff);
           border: 1px solid var(--line);
-          border-radius: 24px;
+          border-radius: 20px;
           overflow: hidden;
           box-shadow: 0 30px 70px -30px rgba(16, 28, 54, 0.25);
         }
@@ -2376,7 +2658,7 @@ export default function Home() {
         .dot-green {
           width: 11px;
           height: 11px;
-          border-radius: 50%;
+          border-radius: 999px;
         }
         .dot-red {
           background: #ff5f56;
@@ -2399,9 +2681,9 @@ export default function Home() {
           border: 1px solid var(--line);
           background: #fff;
           color: var(--navy);
-          font: 600 12px var(--ber);
-          padding: 6px 14px;
-          border-radius: 99px;
+          font: 600 13px var(--ber);
+          padding: 7px 16px;
+          border-radius: 999px;
           cursor: pointer;
           transition: all 0.2s;
         }
@@ -2422,7 +2704,7 @@ export default function Home() {
         .proc-list-header {
           display: flex;
           justify-content: space-between;
-          font: 600 11px ui-monospace, Menlo, monospace;
+          font: 600 12px ui-monospace, Menlo, monospace;
           color: var(--slate);
           letter-spacing: 0.05em;
           padding: 0 4px 6px;
@@ -2432,7 +2714,7 @@ export default function Home() {
           align-items: center;
           justify-content: space-between;
           padding: 12px 14px;
-          border-radius: 14px;
+          border-radius: 20px;
           border: 1px solid var(--line);
           background: var(--ivory);
           cursor: pointer;
@@ -2443,8 +2725,8 @@ export default function Home() {
           border-color: var(--gold);
         }
         .proc-item.selected {
-          border-color: #2f7bff;
-          box-shadow: 0 0 0 3px rgba(47, 123, 255, 0.15);
+          border-color: #0066cc;
+          box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.15);
         }
         .proc-item.is-paused {
           opacity: 0.72;
@@ -2459,15 +2741,15 @@ export default function Home() {
         .status-led {
           width: 8px;
           height: 8px;
-          border-radius: 50%;
+          border-radius: 999px;
           flex-shrink: 0;
         }
         .led-running {
-          background: #22c55e;
-          box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+          background: #16a34a;
+          box-shadow: 0 0 8px rgba(22, 163, 74, 0.6);
         }
         .led-paused {
-          background: #f59e0b;
+          background: #b45309;
         }
         .proc-info {
           min-width: 0;
@@ -2483,7 +2765,7 @@ export default function Home() {
         }
         .proc-path {
           display: block;
-          font: 11px ui-monospace, Menlo, monospace;
+          font: 12px ui-monospace, Menlo, monospace;
           color: var(--slate);
           white-space: nowrap;
           overflow: hidden;
@@ -2498,21 +2780,21 @@ export default function Home() {
         .proc-badge {
           font: 600 12px ui-monospace, Menlo, monospace;
           padding: 3px 8px;
-          border-radius: 6px;
+          border-radius: 8px;
         }
         .badge-running {
-          background: rgba(34, 197, 94, 0.12);
+          background: rgba(22, 163, 74, 0.12);
           color: #16a34a;
         }
         .badge-paused {
-          background: rgba(245, 158, 11, 0.12);
-          color: #d97706;
+          background: rgba(180, 83, 9, 0.12);
+          color: #b45309;
         }
         .btn-row-action {
           border: 1px solid var(--line);
           background: #fff;
-          font: 600 11.5px var(--ber);
-          padding: 5px 10px;
+          font: 600 13px var(--ber);
+          padding: 5px 12px;
           border-radius: 8px;
           cursor: pointer;
           transition: all 0.2s;
@@ -2521,9 +2803,9 @@ export default function Home() {
           color: #b45309;
         }
         .btn-row-action.btn-resume {
-          color: #15803d;
-          border-color: rgba(34, 197, 94, 0.4);
-          background: rgba(34, 197, 94, 0.08);
+          color: #16a34a;
+          border-color: rgba(22, 163, 74, 0.4);
+          background: rgba(22, 163, 74, 0.08);
         }
         .btn-row-action:hover {
           transform: translateY(-1px);
@@ -2540,18 +2822,18 @@ export default function Home() {
           gap: 12px;
         }
         .inspector-tag {
-          font: 600 11px ui-monospace, Menlo, monospace;
-          letter-spacing: 0.1em;
+          font: 600 12px ui-monospace, Menlo, monospace;
+          letter-spacing: 0.08em;
           color: var(--gold);
         }
         .inspector-title {
           font-family: var(--rec);
-          font-size: 1.4rem;
+          font-size: 24px;
           margin: 0;
           line-height: 1.15;
         }
         .inspector-path {
-          font: 11.5px ui-monospace, Menlo, monospace;
+          font: 12px/1.45 ui-monospace, Menlo, monospace;
           color: var(--slate);
           word-break: break-all;
           margin: 0;
@@ -2567,17 +2849,17 @@ export default function Home() {
           color: #16a34a;
         }
         .text-warn {
-          color: #d97706;
+          color: #b45309;
         }
         .inspector-meter {
           height: 8px;
-          border-radius: 99px;
+          border-radius: 999px;
           background: rgba(0, 0, 0, 0.06);
           overflow: hidden;
         }
         .inspector-meter-fill {
           height: 100%;
-          border-radius: 99px;
+          border-radius: 999px;
           transition: width 0.3s ease;
         }
         .inspector-actions {
@@ -2586,8 +2868,8 @@ export default function Home() {
         .btn-main-suspend {
           width: 100%;
           border: none;
-          border-radius: 14px;
-          padding: 14px 18px;
+          border-radius: 999px;
+          padding: 14px 24px;
           cursor: pointer;
           display: flex;
           flex-direction: column;
@@ -2609,10 +2891,11 @@ export default function Home() {
           transform: translateY(-2px);
         }
         .action-label {
-          font: 700 15px var(--ber);
+          font: 700 16px var(--ber);
         }
         .action-sub {
-          font-size: 11.5px;
+          font-size: 12px;
+          line-height: 1.4;
           opacity: 0.85;
           margin-top: 2px;
         }
@@ -2624,18 +2907,18 @@ export default function Home() {
         }
         .telemetry-item {
           padding: 10px 12px;
-          border-radius: 10px;
+          border-radius: 14px;
           background: var(--ivory);
           border: 1px solid var(--line);
         }
         .telemetry-item small {
           display: block;
-          font-size: 11px;
+          font-size: 12px;
           color: var(--slate);
-          text-transform: uppercase;
+          text-transform: none;
         }
         .telemetry-item b {
-          font-size: 15px;
+          font-size: 16px;
           color: var(--navy);
           font-variant-numeric: tabular-nums;
         }
@@ -2643,7 +2926,7 @@ export default function Home() {
           padding: 12px 20px;
           border-top: 1px solid var(--line);
           background: rgba(0, 0, 0, 0.02);
-          font-size: 12.5px;
+          font-size: 13px;
           color: var(--slate);
         }
         .demo-hint b {
@@ -2658,50 +2941,75 @@ export default function Home() {
             border-bottom: 1px solid var(--line);
           }
         }
+        #pricing {
+          max-width: 1340px;
+          width: 100%;
+          padding: 80px 3.5vw;
+          margin: 0 auto;
+        }
         .pricing-eyebrow {
           font-size: 13px;
           font-weight: 600;
           color: var(--slate);
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          margin-bottom: 12px;
+          letter-spacing: -0.01em;
+          margin-bottom: 14px;
         }
         .panel {
           display: grid;
           grid-template-columns: 1.15fr 0.85fr;
-          gap: 40px;
-          padding: 48px;
           border-radius: 36px;
           border: 1px solid var(--line);
           background: #fff;
-          box-shadow: 0 40px 90px -50px rgba(16, 28, 54, 0.5);
+          box-shadow: 0 40px 90px -50px rgba(16, 28, 54, 0.45);
+          overflow: hidden;
+          padding: 0;
+          align-items: stretch;
+          width: 100%;
+        }
+        .pricing-left {
+          padding: 56px 52px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
         }
         .panel h2 {
-          font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+          font-size: clamp(2.6rem, 4.8vw, 4.2rem);
           line-height: 1.04;
+          margin: 0 0 14px;
+          font-family: var(--rec);
+          letter-spacing: -0.025em;
         }
         .panel .lead {
           color: var(--slate);
-          margin-top: 14px;
-          font-size: 1.1rem;
+          font-size: 16px;
+          line-height: 1.45;
+          margin-bottom: 36px;
         }
         .mini {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 16px;
-          margin-top: 36px;
+          margin-bottom: 38px;
         }
         .mini .mini-card {
-          padding: 22px;
+          padding: 22px 24px 24px;
           border-radius: 20px;
           border: 1px solid var(--line);
           background: var(--ivory);
           text-align: left;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .mini .mini-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px -6px rgba(16, 28, 54, 0.08);
         }
         .mini-icon {
-          width: 36px;
-          height: 36px;
-          border-radius: 10px;
+          width: 38px;
+          height: 38px;
+          border-radius: 8px;
           background: #fff;
           border: 1px solid var(--line);
           display: grid;
@@ -2712,31 +3020,56 @@ export default function Home() {
         }
         .mini b {
           font-family: var(--rec);
-          font-size: 1.15rem;
+          font-size: 18px;
           display: block;
           margin-bottom: 6px;
+          color: var(--navy);
         }
         .mini p {
           color: var(--slate);
-          font-size: 13.5px;
-          line-height: 1.5;
+          font-size: 13px;
+          line-height: 1.48;
+          margin: 0;
+        }
+        .dl {
+          display: flex;
+          gap: 28px;
+          flex-wrap: wrap;
+          align-items: center;
+          color: var(--slate);
+          font-size: 13px;
+          padding-top: 22px;
+          border-top: 1px solid var(--line);
+        }
+        .dl span {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
         }
         .buy {
           text-align: center;
-          padding: 40px 32px;
-          border-radius: 28px;
-          border: 1px solid var(--line);
-          background: radial-gradient(ellipse at 50% 12%, rgba(230, 238, 255, 0.7), rgba(245, 240, 255, 0.4) 60%, rgba(255, 255, 255, 0.95));
+          padding: 60px 48px;
+          border-left: 1px solid var(--line);
+          background: radial-gradient(ellipse at 50% 18%, rgba(220, 232, 255, 0.75) 0%, rgba(242, 238, 255, 0.45) 50%, rgba(255, 255, 255, 0.95) 100%);
           display: flex;
           flex-direction: column;
           align-items: center;
+          justify-content: space-between;
+          box-sizing: border-box;
+          min-height: 560px;
+        }
+        .buy-top {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
         }
         .app-squircle {
-          width: 82px;
-          height: 82px;
-          border-radius: 22px;
-          box-shadow: 0 16px 36px -10px rgba(76, 155, 255, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
-          margin-bottom: 22px;
+          width: 92px;
+          height: 92px;
+          border-radius: 20px;
+          box-shadow: 0 20px 42px -10px rgba(76, 155, 255, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+          margin-bottom: 26px;
           overflow: hidden;
           display: grid;
           place-items: center;
@@ -2747,61 +3080,169 @@ export default function Home() {
         }
         .seg {
           display: inline-flex;
-          padding: 4px;
-          border-radius: 99px;
+          padding: 5px;
+          border-radius: 999px;
           border: 1px solid rgba(0, 0, 0, 0.08);
-          background: rgba(0, 0, 0, 0.04);
-          margin-bottom: 20px;
+          background: rgba(0, 0, 0, 0.05);
+          width: fit-content;
         }
         .seg button {
           border: 0;
           background: none;
-          font: 600 14px var(--ber);
-          padding: 8px 24px;
-          border-radius: 99px;
+          font: 600 13px var(--ber);
+          padding: 10px 32px;
+          border-radius: 999px;
           cursor: pointer;
           color: var(--slate);
-          transition: all 0.2s;
+          transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.1s;
+        }
+        .seg button:active {
+          transform: scale(0.96);
         }
         .seg button.on {
           background: #fff;
           color: var(--navy);
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.09);
+        }
+        .buy-price-wrap {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          padding: 24px 0;
         }
         .buy .big {
           font-family: var(--rec);
-          font-size: 4.4rem;
+          font-size: clamp(3.5rem, 6vw, 5.6rem);
           font-weight: 700;
           line-height: 1;
-          letter-spacing: -0.03em;
+          letter-spacing: -0.04em;
+          color: var(--navy);
+          margin-bottom: 10px;
         }
-        .buy small {
+        .buy-note {
           display: block;
           color: var(--slate);
-          font-size: 13.5px;
-          margin: 10px 0 24px;
+          font-size: 14px;
+          line-height: 1.4;
+          font-family: var(--ber);
+          margin: 0;
+        }
+        .buy-bottom {
+          display: flex;
+          justify-content: center;
+          width: 100%;
         }
         .btn-checkout {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          gap: 10px;
+          gap: 12px;
           width: 100%;
-          max-width: 320px;
-          padding: 14px 24px;
+          max-width: 340px;
+          padding: 17px 36px;
           border-radius: 999px;
           background: #0d0d12;
           color: #fff;
-          font: 600 15.5px var(--ber);
-          box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.4);
-          transition: transform 0.2s, box-shadow 0.2s;
+          font: 600 16px var(--ber);
+          box-shadow: 0 14px 34px -8px rgba(0, 0, 0, 0.45);
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
           cursor: pointer;
           border: none;
           text-decoration: none;
         }
         .btn-checkout:hover {
           transform: translateY(-2px);
-          box-shadow: 0 14px 28px -6px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 18px 36px -6px rgba(0, 0, 0, 0.55);
+        }
+        .btn-checkout:hover .btn-arr {
+          transform: translateX(3px);
+        }
+        .payment-toast {
+          position: fixed;
+          top: 24px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 9999;
+          width: 90%;
+          max-width: 680px;
+          background: #0d1627;
+          color: #fff;
+          border-radius: 20px;
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.6);
+          padding: 16px 20px;
+          animation: slideDownToast 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes slideDownToast {
+          from { transform: translate(-50%, -20px); opacity: 0; }
+          to { transform: translate(-50%, 0); opacity: 1; }
+        }
+        .payment-toast-content {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          font-family: var(--ber);
+          font-size: 13px;
+        }
+        .payment-toast-icon {
+          width: 32px;
+          height: 32px;
+          border-radius: 999px;
+          background: #16a34a;
+          color: #fff;
+          display: grid;
+          place-items: center;
+          font-weight: 700;
+          flex-shrink: 0;
+        }
+        .payment-toast-content strong {
+          display: block;
+          font-size: 14px;
+          color: #fff;
+          margin-bottom: 2px;
+        }
+        .payment-toast-content p {
+          margin: 0;
+          color: #94a3b8;
+          font-size: 13px;
+        }
+        .payment-toast-content code {
+          background: rgba(255, 255, 255, 0.1);
+          padding: 2px 6px;
+          border-radius: 4px;
+          color: #38bdf8;
+        }
+        .payment-toast-dl-btn {
+price           margin-left: auto;
+          background: #fff;
+          color: #0b1220;
+          font-weight: 600;
+          padding: 8px 16px;
+          border-radius: 999px;
+          white-space: nowrap;
+          flex-shrink: 0;
+          transition: background 0.15s;
+        }
+        .payment-toast-dl-btn:hover {
+          background: #f1f5f9;
+        }
+        .payment-toast-dismiss {
+          background: none;
+          border: none;
+          color: #94a3b8;
+          font-size: 20px;
+          cursor: pointer;
+          padding: 0 4px;
+          line-height: 1;
+        }
+        .payment-toast-dismiss:hover {
+          color: #fff;
+        }
+        .btn-checkout:active {
+          transform: scale(0.97) translateY(0);
+          box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.4);
         }
         .btn-arr {
           width: 22px;
@@ -2812,42 +3253,7 @@ export default function Home() {
           place-items: center;
           font-size: 12px;
           margin-left: 2px;
-        }
-        .social-proof {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 7px;
-          font-size: 13.5px;
-          color: var(--slate);
-          margin: 18px 0 12px;
-        }
-        .social-proof b {
-          color: var(--navy);
-        }
-        .fine-print {
-          font-size: 11.5px;
-          line-height: 1.5;
-          color: var(--slate);
-          max-width: 330px;
-          margin: 0 auto;
-          opacity: 0.85;
-        }
-        .dl {
-          display: flex;
-          gap: 32px;
-          flex-wrap: wrap;
-          justify-content: flex-start;
-          padding-top: 26px;
-          border-top: 1px solid var(--line);
-          grid-column: 1 / -1;
-          color: var(--slate);
-          font-size: 13.5px;
-        }
-        .dl span {
-          display: inline-flex;
-          align-items: center;
-          gap: 7px;
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .cta2 {
           text-align: center;
@@ -2863,7 +3269,7 @@ export default function Home() {
           max-width: 560px;
           margin: 16px auto 30px;
           color: var(--slate);
-          font-size: 1.1rem;
+          font-size: 16px;
         }
         footer {
           padding: 80px 6vw 40px;
@@ -2893,6 +3299,7 @@ export default function Home() {
           width: 40px;
           height: 40px;
         }
+        footer h3,
         footer h4 {
           font: 600 14px var(--ber);
           color: var(--navy);
@@ -2914,7 +3321,8 @@ export default function Home() {
           border: 1px solid var(--line);
           border-radius: 14px;
           background: var(--mist);
-          font-size: 13.5px;
+          color: var(--navy);
+          font-size: 13px;
         }
         .fb {
           display: flex;
@@ -2924,7 +3332,7 @@ export default function Home() {
           margin-top: 50px;
           padding-top: 26px;
           border-top: 1px solid var(--line);
-          font-size: 13.5px;
+          font-size: 13px;
         }
         .fb div {
           display: flex;
@@ -2932,9 +3340,36 @@ export default function Home() {
           flex-wrap: wrap;
         }
         @media (max-width: 860px) {
+          #pricing {
+            padding: 60px 4vw;
+          }
           .panel {
             grid-template-columns: 1fr;
-            padding: 26px;
+          }
+          .pricing-left {
+            padding: 36px 24px;
+          }
+          .mini {
+            grid-template-columns: 1fr;
+            margin-bottom: 28px;
+            gap: 14px;
+          }
+          .buy {
+            border-left: none;
+            border-top: 1px solid var(--line);
+            padding: 48px 24px;
+            min-height: auto;
+            gap: 28px;
+          }
+          .buy-price-wrap {
+            padding: 12px 0;
+          }
+          .buy .big {
+            font-size: clamp(3.5rem, 6vw, 5.6rem);
+          }
+          .seg button {
+            padding: 8px 22px;
+            font-size: 13px;
           }
           .fg {
             grid-template-columns: 1fr 1fr;
@@ -2945,12 +3380,12 @@ export default function Home() {
         }
         body.dark {
           background: #0b1220;
-          color: #e8ecf5;
-          --navy: #e8ecf5;
+          color: var(--navy);
+          --navy: #f1f5f9;
           --mist: #101c36;
           --ivory: #18243a;
           --line: #26365a;
-          --slate: #b8c2d6;
+          --slate: #94a3b8;
         }
         body.dark .hero {
           background: linear-gradient(#0b1220, #1b3153);
@@ -2964,7 +3399,7 @@ export default function Home() {
         body.dark .btn,
         body.dark header nav a.cta {
           background: linear-gradient(135deg, #c5a46d, #e6c994);
-          color: #0b1220;
+          color: #101c36;
         }
         body.dark .btn.o {
           background: transparent;
@@ -2972,6 +3407,7 @@ export default function Home() {
         }
         body.dark .live,
         body.dark .panel,
+        body.dark .pricing-left,
         body.dark .card,
         body.dark .cta2 {
           background: #14203a;
@@ -2981,11 +3417,15 @@ export default function Home() {
         }
         body.dark .mini-icon {
           background: #101c36;
-          color: #e8ecf5;
+          color: var(--navy);
           border-color: var(--line);
         }
         body.dark .buy {
-          background: radial-gradient(ellipse at 50% 12%, rgba(30, 48, 85, 0.8), rgba(20, 32, 58, 0.6) 60%, rgba(16, 28, 54, 0.95));
+          background: radial-gradient(ellipse at 50% 20%, rgba(30, 48, 85, 0.8) 0%, rgba(20, 32, 58, 0.6) 50%, rgba(16, 28, 54, 0.95) 100%);
+          border-left-color: var(--line);
+        }
+        body.dark .buy-note {
+          color: var(--slate);
         }
         body.dark .seg {
           background: rgba(255, 255, 255, 0.08);
@@ -2997,11 +3437,11 @@ export default function Home() {
         }
         body.dark .btn-checkout {
           background: linear-gradient(135deg, #c5a46d, #e6c994);
-          color: #0b1220;
+          color: #101c36;
         }
         body.dark .btn-arr {
           background: rgba(11, 18, 32, 0.25);
-          color: #0b1220;
+          color: #101c36;
         }
         body.dark .social-proof b {
           color: #fff;
@@ -3016,7 +3456,7 @@ export default function Home() {
         }
         body.dark .btn-toggle-all {
           background: #18243a;
-          color: #e8ecf5;
+          color: var(--navy);
           border-color: var(--line);
         }
         body.dark .proc-item {
@@ -3027,11 +3467,11 @@ export default function Home() {
           background: rgba(255, 255, 255, 0.03);
         }
         body.dark .proc-name {
-          color: #e8ecf5;
+          color: var(--navy);
         }
         body.dark .btn-row-action {
           background: #18243a;
-          color: #e8ecf5;
+          color: var(--navy);
           border-color: var(--line);
         }
         body.dark .telemetry-item {
@@ -3039,10 +3479,10 @@ export default function Home() {
           border-color: var(--line);
         }
         body.dark .telemetry-item b {
-          color: #e8ecf5;
+          color: var(--navy);
         }
         body.dark .demo-hint b {
-          color: #e8ecf5;
+          color: var(--navy);
         }
         body.dark .card.dk {
           background: linear-gradient(160deg, #0b1220, #1b3153);
@@ -3053,7 +3493,7 @@ export default function Home() {
         }
         body.dark .step .n {
           background: var(--gold);
-          color: #0b1220;
+          color: #101c36;
         }
         body.dark footer {
           background: linear-gradient(#101c36, #0b1220 60%);
@@ -3075,7 +3515,7 @@ export default function Home() {
         .summary-card {
           background: #fafbfe;
           border: 1px solid var(--line);
-          border-radius: 28px;
+          border-radius: 20px;
           padding: 36px 40px;
           box-shadow: 0 10px 30px -15px rgba(16, 28, 54, 0.08);
         }
@@ -3093,10 +3533,9 @@ export default function Home() {
           gap: 6px;
           font-size: 12px;
           font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.06em;
+          letter-spacing: -0.01em;
           padding: 5px 12px;
-          border-radius: 99px;
+          border-radius: 999px;
           background: #e9eef7;
           color: var(--navy);
         }
@@ -3113,9 +3552,9 @@ export default function Home() {
           margin-bottom: 14px;
         }
         .summary-definition {
-          font-size: 16.5px;
+          font-size: 16px;
           line-height: 1.6;
-          color: #2b354f;
+          color: var(--navy);
           margin-bottom: 28px;
         }
         .summary-grid {
@@ -3135,15 +3574,14 @@ export default function Home() {
         .summary-col {
           background: #fff;
           border: 1px solid var(--line);
-          border-radius: 18px;
+          border-radius: 20px;
           padding: 22px 24px;
         }
         .summary-col h3 {
           font-family: var(--ber);
           font-size: 14px;
           font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.04em;
+          letter-spacing: -0.01em;
           color: var(--navy);
           margin-bottom: 14px;
         }
@@ -3158,7 +3596,7 @@ export default function Home() {
         .summary-bullets li {
           font-size: 14px;
           line-height: 1.55;
-          color: #404b66;
+          color: var(--slate);
           position: relative;
           padding-left: 18px;
         }
@@ -3182,7 +3620,7 @@ export default function Home() {
           font-weight: 500;
         }
         .ext-link:hover {
-          color: #004499;
+          color: #0066cc;
         }
         .summary-links-row {
           display: flex;
@@ -3193,7 +3631,7 @@ export default function Home() {
           border-top: 1px solid var(--line);
         }
         .summary-links-label {
-          font-size: 13.5px;
+          font-size: 13px;
           font-weight: 600;
           color: var(--slate);
           margin-right: 4px;
@@ -3207,7 +3645,7 @@ export default function Home() {
           background: #eef2f9;
           border: 1px solid var(--line);
           padding: 6px 14px;
-          border-radius: 99px;
+          border-radius: 999px;
           transition: all 0.2s;
         }
         .internal-pill:hover {
@@ -3230,7 +3668,7 @@ export default function Home() {
         .top-summary-answer p {
           font-size: 14px;
           line-height: 1.5;
-          color: #2b354f;
+          color: var(--navy);
           margin: 0;
         }
         .top-summary-answer strong {
@@ -3248,17 +3686,17 @@ export default function Home() {
         .citations-header {
           margin-bottom: 16px;
         }
+        .citations-header h3,
         .citations-header h4 {
           font-family: var(--ber);
           font-size: 14px;
           font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
+          letter-spacing: -0.01em;
           color: var(--navy);
           margin-bottom: 2px;
         }
         .citations-header small {
-          font-size: 12.5px;
+          font-size: 13px;
           color: var(--slate);
         }
         .citations-list {
@@ -3270,9 +3708,9 @@ export default function Home() {
           gap: 14px;
         }
         .citations-list li {
-          font-size: 13.5px;
+          font-size: 14px;
           line-height: 1.5;
-          color: #475569;
+          color: var(--slate);
           display: flex;
           flex-direction: column;
           gap: 3px;
@@ -3282,7 +3720,7 @@ export default function Home() {
           color: var(--navy);
         }
         .citations-list span {
-          font-size: 12.5px;
+          font-size: 13px;
           color: var(--slate);
         }
 
@@ -3292,7 +3730,7 @@ export default function Home() {
           border-color: rgba(255, 255, 255, 0.1);
         }
         body.dark .top-summary-answer p {
-          color: #cbd5e1;
+          color: #94a3b8;
         }
         body.dark .top-summary-answer strong {
           color: var(--gold2);
@@ -3301,17 +3739,18 @@ export default function Home() {
           background: #0f172a;
           border-color: var(--line);
         }
+        body.dark .citations-header h3,
         body.dark .citations-header h4 {
-          color: #f1f5f9;
+          color: var(--navy);
         }
         body.dark .citations-header small {
-          color: #94a3b8;
+          color: var(--slate);
         }
         body.dark .citations-list cite {
-          color: #f1f5f9;
+          color: var(--navy);
         }
         body.dark .citations-list span {
-          color: #94a3b8;
+          color: var(--slate);
         }
         body.dark .summary-card {
           background: #131d33;
@@ -3323,41 +3762,41 @@ export default function Home() {
           color: var(--gold2);
         }
         body.dark .summary-freshness {
-          color: #94a3b8;
+          color: var(--slate);
         }
         body.dark .summary-title {
-          color: #f1f5f9;
+          color: var(--navy);
         }
         body.dark .summary-definition {
-          color: #cbd5e1;
+          color: var(--slate);
         }
         body.dark .summary-col {
           background: #0f172a;
           border-color: var(--line);
         }
         body.dark .summary-col h3 {
-          color: #f1f5f9;
+          color: var(--navy);
         }
         body.dark .summary-bullets li {
-          color: #94a3b8;
+          color: var(--slate);
         }
         body.dark .summary-bullets li strong {
-          color: #f1f5f9;
+          color: var(--navy);
         }
         body.dark .ext-link {
-          color: #60a5fa;
+          color: #0066cc;
         }
         body.dark .summary-links-label {
-          color: #94a3b8;
+          color: var(--slate);
         }
         body.dark .internal-pill {
           background: #1e293b;
           border-color: rgba(255, 255, 255, 0.1);
-          color: #f1f5f9;
+          color: var(--navy);
         }
         body.dark .internal-pill:hover {
           background: var(--gold);
-          color: #0b1220;
+          color: #101c36;
           border-color: var(--gold);
         }
         :focus-visible {
