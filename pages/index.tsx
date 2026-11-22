@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useCurrency } from '../context/CurrencyContext';
 import AppleLogo from '../components/AppleLogo';
 import CookieConsent from '../components/CookieConsent';
+import { TR_DATA, TranslationSchema } from '../data/translations';
 
 const schemaData = {
   '@context': 'https://schema.org',
@@ -166,99 +167,6 @@ const LG = [
   ['CN', '简体中文', 'zh'],
 ];
 
-const TR = [
-  {
-    cta: 'Get lidZen',
-    nav: ['Features', 'Diagnostics', 'Clamshell', 'Pricing', 'Docs', 'Download'],
-    h1: ['Your Mac, awake.', 'Lid shut.'],
-    hp: 'Clamshell continuity and deep path diagnostics for Mac power users. Keep AI agents, workflows and music alive with the lid shut.',
-    see: 'See diagnostics',
-    tr: ['No telemetry', '18 MB install', 'macOS 15+ Sequoia'],
-    clam: 'Close the lid. Keep the work.',
-    feat: 'Made for the lid, built around your battery.',
-    diag: 'See what your Mac is really doing.',
-    cmp: 'How lidZen Compares to Default macOS, caffeinate & Amphetamine',
-    sub: 'A technical side-by-side comparison of background power and sleep management capabilities on macOS 15+ Sequoia.',
-    price: 'Pay once. Keep it.',
-    dl: 'Reclaim your Mac’s performance today.',
-  },
-  {
-    cta: 'Obtener lidZen',
-    nav: ['Funciones', 'Diagnóstico', 'Clamshell', 'Precio', 'Docs', 'Descargar'],
-    h1: ['Tu Mac, despierta.', 'Tapa cerrada.'],
-    hp: 'Continuidad con la tapa cerrada y diagnóstico profundo de rutas para usuarios avanzados de Mac. Mantén agentes de IA, flujos de trabajo y música activos con la tapa cerrada.',
-    see: 'Ver diagnóstico',
-    tr: ['Sin telemetría', 'Instalación de 18 MB', 'macOS 15+ Sequoia'],
-    clam: 'Cierra la tapa. Conserva el trabajo.',
-    feat: 'Hecho para la tapa, pensado para tu batería.',
-    diag: 'Mira lo que hace realmente tu Mac.',
-    cmp: 'Cómo se compara lidZen con macOS, caffeinate y Amphetamine',
-    sub: 'Comparación técnica de la gestión de energía en segundo plano y del reposo en macOS 15+ Sequoia.',
-    price: 'Paga una vez. Es tuyo.',
-    dl: 'Recupera hoy el rendimiento de tu Mac.',
-  },
-  {
-    cta: 'Obtenir lidZen',
-    nav: ['Fonctionnalités', 'Diagnostics', 'Clamshell', 'Tarifs', 'Docs', 'Télécharger'],
-    h1: ['Votre Mac, éveillé.', 'Capot fermé.'],
-    hp: 'Continuité capot fermé et diagnostics de chemins approfondis pour les utilisateurs avancés de Mac. Gardez agents IA, workflows et musique actifs, capot fermé.',
-    see: 'Voir les diagnostics',
-    tr: ['Aucune télémétrie', 'Installation de 18 Mo', 'macOS 15+ Sequoia'],
-    clam: 'Fermez le capot. Gardez le travail.',
-    feat: 'Conçu pour le capot, pensé pour votre batterie.',
-    diag: 'Voyez ce que fait vraiment votre Mac.',
-    cmp: 'lidZen face à macOS, caffeinate et Amphetamine',
-    sub: 'Comparaison technique de la gestion de l’énergie en arrière-plan et de la veille sous macOS 15+ Sequoia.',
-    price: 'Payez une fois. Gardez-le.',
-    dl: 'Retrouvez dès aujourd’hui les performances de votre Mac.',
-  },
-  {
-    cta: 'lidZen holen',
-    nav: ['Funktionen', 'Diagnose', 'Clamshell', 'Preis', 'Doku', 'Download'],
-    h1: ['Dein Mac, wach.', 'Deckel zu.'],
-    hp: 'Clamshell-Betrieb und tiefe Pfad-Diagnose für Mac-Power-User. Halte KI-Agenten, Workflows und Musik bei geschlossenem Deckel am Laufen.',
-    see: 'Diagnose ansehen',
-    tr: ['Keine Telemetrie', '18 MB Installation', 'macOS 15+ Sequoia'],
-    clam: 'Deckel zu. Arbeit läuft weiter.',
-    feat: 'Für den Deckel gemacht, auf den Akku abgestimmt.',
-    diag: 'Sieh, was dein Mac wirklich tut.',
-    cmp: 'lidZen im Vergleich zu macOS, caffeinate und Amphetamine',
-    sub: 'Technischer Vergleich der Hintergrund-Energie- und Ruhezustandsverwaltung unter macOS 15+ Sequoia.',
-    price: 'Einmal zahlen. Behalten.',
-    dl: 'Hol dir heute die Leistung deines Mac zurück.',
-  },
-  {
-    cta: 'lidZen を入手',
-    nav: ['機能', '診断', 'クラムシェル', '料金', 'ドキュメント', 'ダウンロード'],
-    h1: ['Macは起きたまま。', 'フタは閉じたまま。'],
-    hp: 'Macを使いこなす人のための、クラムシェル継続と詳細なパス診断。フタを閉じてもAIエージェントやワークフロー、音楽を動かし続けます。',
-    see: '診断を見る',
-    tr: ['テレメトリなし', '18 MBでインストール', 'macOS 15+ Sequoia'],
-    clam: 'フタを閉じても、作業は続く。',
-    feat: 'フタのために、バッテリーのために。',
-    diag: 'Macが本当に何をしているか見える。',
-    cmp: 'lidZen と標準 macOS、caffeinate、Amphetamine の比較',
-    sub: 'macOS 15+ Sequoia における省電力とスリープ管理機能の技術比較。',
-    price: '一度の支払いで、ずっと。',
-    dl: '今日からMacの性能を取り戻そう。',
-  },
-  {
-    cta: '获取 lidZen',
-    nav: ['功能', '诊断', '合盖模式', '价格', '文档', '下载'],
-    h1: ['你的 Mac，保持唤醒。', '合盖也不休眠。'],
-    hp: '为 Mac 高级用户打造的合盖持续运行与深度路径诊断。合上盖子，AI 智能体、工作流和音乐依然运行。',
-    see: '查看诊断',
-    tr: ['无遥测', '18 MB 安装包', 'macOS 15+ Sequoia'],
-    clam: '合上盖子，工作继续。',
-    feat: '为合盖而生，为电池而设计。',
-    diag: '看清你的 Mac 在做什么。',
-    cmp: 'lidZen 与默认 macOS、caffeinate、Amphetamine 的对比',
-    sub: 'macOS 15+ Sequoia 上后台电源与睡眠管理能力的技术对比。',
-    price: '一次付费，永久使用。',
-    dl: '今天就找回 Mac 的性能。',
-  },
-];
-
 export default function Home() {
   const [isReady, setIsReady] = useState(false);
   const [sceneOpen, setSceneOpen] = useState(false);
@@ -266,6 +174,20 @@ export default function Home() {
   const [sceneStyle, setSceneStyle] = useState<React.CSSProperties>({});
   const [isDark, setIsDark] = useState(false);
   const [currentLang, setCurrentLang] = useState(0);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('lidzen-lang');
+      if (saved) {
+        const idx = LG.findIndex((l) => l[2] === saved);
+        if (idx !== -1) setCurrentLang(idx);
+      }
+    } catch {}
+  }, []);
+
+  const curLangCode = LG[currentLang]?.[2] || 'en';
+  const curTR: TranslationSchema = TR_DATA[curLangCode] || TR_DATA.en;
+
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const [langMenuPos, setLangMenuPos] = useState<React.CSSProperties>({});
   const [plan, setPlan] = useState<'One Mac' | 'Two Macs'>('One Mac');
@@ -519,8 +441,6 @@ export default function Home() {
     setLangMenuOpen((prev) => !prev);
   };
 
-  const curTR = TR[currentLang];
-
   return (
     <>
       <Head>
@@ -705,6 +625,9 @@ export default function Home() {
               onClick={() => {
                 setCurrentLang(i);
                 setLangMenuOpen(false);
+                try {
+                  localStorage.setItem('lidzen-lang', l[2]);
+                } catch {}
               }}
             >
               <i>{l[0]}</i>
@@ -721,19 +644,23 @@ export default function Home() {
             lidZen
           </a>
           <nav>
-            {curTR.nav.map((item, idx) => {
-              const hash = ['features', 'diagnostics', 'clamshell', 'pricing', 'docs', 'download'][idx];
-              return (
-                <a
-                  key={item}
-                  href={`#${hash}`}
-                  className={activeNav === item ? 'on' : ''}
-                  onClick={() => setActiveNav(item)}
-                >
-                  {item}
-                </a>
-              );
-            })}
+            {[
+              { key: 'features', label: curTR.nav.features },
+              { key: 'diagnostics', label: curTR.nav.diagnostics },
+              { key: 'clamshell', label: curTR.nav.clamshell },
+              { key: 'pricing', label: curTR.nav.pricing },
+              { key: 'docs', label: curTR.nav.docs },
+              { key: 'download', label: curTR.nav.download },
+            ].map(({ key, label }) => (
+              <a
+                key={key}
+                href={`#${key}`}
+                className={activeNav === label ? 'on' : ''}
+                onClick={() => setActiveNav(label)}
+              >
+                {label}
+              </a>
+            ))}
           </nav>
           <div className="tools">
             <button id="lb" aria-haspopup="listbox" onClick={toggleLangMenu}>
@@ -764,18 +691,18 @@ export default function Home() {
             <div className="orb o1"></div>
             <div className="orb o2"></div>
             <div className="pill hp" style={{ '--i': 0 } as any}>
-              v2.4 · Universal binary for macOS 15+
+              {curTR.hero.pill}
             </div>
             <h1 className="hp" style={{ '--i': 0 } as any}>
-              <span>{curTR.h1[0]}</span>
-              <span className="shine">{curTR.h1[1]}</span>
+              <span>{curTR.hero.h1[0]}</span>
+              <span className="shine">{curTR.hero.h1[1]}</span>
             </h1>
-            <p className="hp" style={{ '--i': 1 } as any}>{curTR.hp}</p>
+            <p className="hp" style={{ '--i': 1 } as any}>{curTR.hero.hp}</p>
 
             {/* AEO / AI Overview Immediate Top Summary Answer */}
             <div className="top-summary-answer hp" style={{ '--i': 1 } as any}>
               <p>
-                <strong>Top Summary Answer:</strong> <b>lidZen</b> is a lightweight macOS utility (18 MB) that keeps your MacBook awake and running AI agents, local servers, or audio with the lid closed—consuming 0W on the display backlight without requiring an external monitor or wall charger.
+                <strong>{curTR.hero.topAnswerLabel}</strong> {curTR.hero.topAnswerBody}
               </p>
             </div>
 
@@ -797,7 +724,7 @@ export default function Home() {
               </a>
             </div>
             <div className="trust hp" style={{ '--i': 4 } as any}>
-              {curTR.tr.map((text) => (
+              {curTR.hero.tr.map((text) => (
                 <span key={text}>{text}</span>
               ))}
             </div>
@@ -805,7 +732,7 @@ export default function Home() {
               <span className="dot"></span>
               <div>
                 <b id="up">{uptime}</b>
-                <small>Awake with the lid closed</small>
+                <small>{curTR.hero.uptimeLabel}</small>
               </div>
               <div className="bat">
                 <i></i>
@@ -817,47 +744,41 @@ export default function Home() {
           <section id="summary" className="summary-section pop" style={{ '--i': 0 } as any}>
             <div className="summary-card">
               <div className="summary-header">
-                <span className="summary-badge">Direct Answer &amp; Overview</span>
-                <span className="summary-freshness">
-                  Verified by <b>lidZen Systems Engineering</b> · Tested on macOS 15.2 Sequoia · Last Updated: November 2026
-                </span>
+                <span className="summary-badge">{curTR.summary.badge}</span>
+                <span className="summary-freshness">{curTR.summary.freshness}</span>
               </div>
 
-              <h2 className="summary-title">
-                What is lidZen and how does it keep a Mac awake with the lid closed?
-              </h2>
+              <h2 className="summary-title">{curTR.summary.title}</h2>
 
-              <p className="summary-definition">
-                <strong>lidZen</strong> is a specialized macOS utility (18 MB, universal binary for Apple Silicon M1–M4 &amp; Intel) that enables MacBooks to execute continuous background tasks, AI agents, local servers, and audio playback with the laptop lid shut—without requiring an external display or power adapter.
-              </p>
+              <p className="summary-definition">{curTR.summary.definition}</p>
 
               <div className="summary-grid">
                 <div className="summary-col">
-                  <h3>Key Takeaways</h3>
+                  <h3>{curTR.summary.takeawaysTitle}</h3>
                   <ul className="summary-bullets">
                     <li>
-                      <strong>Zero-Display Power (0W Backlight):</strong> Shuts off the internal Liquid Retina display backlight completely, eliminating screen battery drain and heat generation while keeping the CPU/GPU active.
+                      <strong>{curTR.summary.takeaway1Title}</strong> {curTR.summary.takeaway1Body}
                     </li>
                     <li>
-                      <strong>Native IOKit Assertions:</strong> Uses official Apple userspace power assertions (<a href="https://developer.apple.com/documentation/iokit" target="_blank" rel="noopener noreferrer" className="ext-link">Apple IOKit Power Management API ↗</a>) instead of risky kernel extensions (kexts).
+                      <strong>{curTR.summary.takeaway2Title}</strong> {curTR.summary.takeaway2Body}
                     </li>
                     <li>
-                      <strong>Autonomous Protection:</strong> Built-in Thermal Guard automatically sleeps before overheating, and Battery Guard pauses at your custom percentage threshold.
+                      <strong>{curTR.summary.takeaway3Title}</strong> {curTR.summary.takeaway3Body}
                     </li>
                   </ul>
                 </div>
 
                 <div className="summary-col">
-                  <h3>Audience &amp; Supported Use Cases</h3>
+                  <h3>{curTR.summary.audienceTitle}</h3>
                   <ul className="summary-bullets">
                     <li>
-                      <strong>Developers &amp; Engineers:</strong> Run Docker containers, Vite dev servers, long builds, and Git workflows with the lid closed on battery.
+                      <strong>{curTR.summary.audience1Title}</strong> {curTR.summary.audience1Body}
                     </li>
                     <li>
-                      <strong>AI Practitioners:</strong> Execute local Ollama models, Claude Code / Cursor agent loops, and ML training scripts uninterrupted.
+                      <strong>{curTR.summary.audience2Title}</strong> {curTR.summary.audience2Body}
                     </li>
                     <li>
-                      <strong>Media &amp; Mobile Pros:</strong> Stream audio, render videos, or maintain persistent SSH and remote connections in transit.
+                      <strong>{curTR.summary.audience3Title}</strong> {curTR.summary.audience3Body}
                     </li>
                   </ul>
                 </div>
@@ -866,8 +787,8 @@ export default function Home() {
               {/* GEO / AEO Credible Sources & Official Documentation Citations */}
               <div className="citations-box">
                 <div className="citations-header">
-                  <h3>Credible Sources &amp; Official Documentation</h3>
-                  <small>Technical citations and official Apple developer reference specifications</small>
+                  <h3>{curTR.summary.citationsTitle}</h3>
+                  <small>{curTR.summary.citationsSub}</small>
                 </div>
                 <ul className="citations-list">
                   <li>
@@ -922,116 +843,116 @@ export default function Home() {
               </div>
 
               <div className="summary-links-row">
-                <span className="summary-links-label">Supporting Guides:</span>
+                <span className="summary-links-label">{curTR.summary.supportingGuides}</span>
                 <Link href="/docs/getting-started" className="internal-pill">
-                  Getting Started Guide →
+                  {curTR.summary.guides[0]} →
                 </Link>
                 <Link href="/docs/features" className="internal-pill">
-                  Core Features →
+                  {curTR.summary.guides[1]} →
                 </Link>
                 <Link href="/docs/installation" className="internal-pill">
-                  Installation Guide →
+                  {curTR.summary.guides[2]} →
                 </Link>
                 <Link href="/docs/faq" className="internal-pill">
-                  Docs &amp; Architecture FAQ →
+                  {curTR.summary.guides[3]} →
                 </Link>
               </div>
             </div>
           </section>
 
           <section id="clamshell">
-            <h2 className="pop">How Do I Keep My Mac Awake with the Lid Closed?</h2>
+            <h2 className="pop">{curTR.clamshell.title}</h2>
             <p className="lead pop" style={{ '--i': 1 } as any}>
-              Three simple steps to enable headless clamshell mode without an external display or charger:
+              {curTR.clamshell.lead}
             </p>
             <div className="steps">
               <div className="step pop" style={{ '--i': 1 } as any}>
                 <div className="n">1</div>
-                <h3>Switch lidZen on</h3>
-                <p>Click the menu bar icon, or let an automated trigger enable it when background tasks begin.</p>
+                <h3>{curTR.clamshell.step1Title}</h3>
+                <p>{curTR.clamshell.step1Desc}</p>
               </div>
               <div className="step pop" style={{ '--i': 2 } as any}>
                 <div className="n">2</div>
-                <h3>Close the lid</h3>
-                <p>The screen turns off completely (0W backlight). Your Mac stays fully awake, executing all threads and network connections.</p>
+                <h3>{curTR.clamshell.step2Title}</h3>
+                <p>{curTR.clamshell.step2Desc}</p>
               </div>
               <div className="step pop" style={{ '--i': 3 } as any}>
                 <div className="n">3</div>
-                <h3>Open it when you are done</h3>
-                <p>lidZen automatically releases its power assertion and your Mac resumes standard macOS sleep behavior.</p>
+                <h3>{curTR.clamshell.step3Title}</h3>
+                <p>{curTR.clamshell.step3Desc}</p>
               </div>
             </div>
           </section>
 
           <section id="features">
-            <h2 className="pop">What Core Features Does lidZen Provide for Mac Power Users?</h2>
+            <h2 className="pop">{curTR.features.title}</h2>
             <p className="lead pop" style={{ '--i': 1 } as any}>
-              Engineered specifically for closed-lid continuity with zero display draw, intelligent thermal mitigation, and deep diagnostic visibility.
+              {curTR.features.lead}
             </p>
             <div className="grid">
               <div className="card dk pop" style={{ '--i': 0 } as any}>
-                <h3>Clamshell Continuity</h3>
-                <p>Your Mac keeps running when you shut the lid. No external display or keyboard needed.</p>
+                <h3>{curTR.features.f1Title}</h3>
+                <p>{curTR.features.f1Desc}</p>
               </div>
               <div className="card pop" style={{ '--i': 1 } as any}>
-                <h3>Thread Suspension</h3>
-                <p>Pause the heavy background threads you pick, so your Mac runs cooler and quieter.</p>
+                <h3>{curTR.features.f2Title}</h3>
+                <p>{curTR.features.f2Desc}</p>
               </div>
               <div className="card pop" style={{ '--i': 2 } as any}>
-                <h3>Zero-Kext Radar</h3>
-                <p>See which kernel extensions are loaded and what each one is doing.</p>
+                <h3>{curTR.features.f3Title}</h3>
+                <p>{curTR.features.f3Desc}</p>
               </div>
               <div className="card pop" style={{ '--i': 3 } as any}>
-                <h3>Thermal Guard</h3>
-                <p>Watch temperatures with the lid closed, and let your Mac rest before it overheats.</p>
+                <h3>{curTR.features.f4Title}</h3>
+                <p>{curTR.features.f4Desc}</p>
               </div>
               <div className="card pop" style={{ '--i': 4 } as any}>
-                <h3>Power Diagnostics</h3>
-                <p>Find what is keeping your Mac awake and why your battery drains.</p>
+                <h3>{curTR.features.f5Title}</h3>
+                <p>{curTR.features.f5Desc}</p>
               </div>
               <div className="card dk pop" style={{ '--i': 5 } as any}>
-                <h3>Path Tracing</h3>
-                <p>Follow a process from launch to the files and ports it touches.</p>
+                <h3>{curTR.features.f6Title}</h3>
+                <p>{curTR.features.f6Desc}</p>
               </div>
             </div>
           </section>
 
           <section id="diagnostics">
-            <h2 className="pop">How Can I Inspect Background Tasks and Freeze Runaway Threads?</h2>
+            <h2 className="pop">{curTR.diagnostics.title}</h2>
             <p className="lead pop" style={{ '--i': 1 } as any}>
-              Live, path-level process attribution with interactive Mach thread suspension (SIGSTOP/SIGCONT) to cool down your Mac immediately.
+              {curTR.diagnostics.lead}
             </p>
             <div className="dg pop">
               <div className="r">
-                Clamshell
+                {curTR.diagnostics.clamshell}
                 <div className="t">
                   <i style={{ '--v': '92%', '--i': 0 } as any}></i>
                 </div>
-                <b>Closed</b>
+                <b>{curTR.diagnostics.closed}</b>
               </div>
               <div className="r">
-                Thermal
+                {curTR.diagnostics.thermal}
                 <div className="t">
                   <i style={{ '--v': '48%', '--i': 1 } as any}></i>
                 </div>
                 <b>41 °C</b>
               </div>
               <div className="r">
-                Wake blockers
+                {curTR.diagnostics.wakeBlockers}
                 <div className="t">
                   <i style={{ '--v': '20%', '--i': 2 } as any}></i>
                 </div>
                 <b>0</b>
               </div>
               <div className="r">
-                Idle CPU
+                {curTR.diagnostics.idleCpu}
                 <div className="t">
                   <i style={{ '--v': '12%', '--i': 3 } as any}></i>
                 </div>
                 <b>0.2%</b>
               </div>
               <div className="r">
-                Kernel extensions
+                {curTR.diagnostics.kexts}
                 <div className="t">
                   <i style={{ '--v': '6%', '--i': 4 } as any}></i>
                 </div>
@@ -1049,7 +970,7 @@ export default function Home() {
                     <span className="dot-green"></span>
                   </div>
                   <div className="window-title">
-                    lidZen · Process Inspector &amp; Thread Suspension (Interactive Example)
+                    {curTR.diagnostics.windowTitle}
                   </div>
                   <div className="window-actions">
                     <button
@@ -1057,7 +978,7 @@ export default function Home() {
                       className="btn-toggle-all"
                       onClick={toggleAll}
                     >
-                      {activeCount > 0 ? '⏸ Pause All (SIGSTOP)' : '▶ Resume All (SIGCONT)'}
+                      {activeCount > 0 ? curTR.diagnostics.pauseAll : curTR.diagnostics.resumeAll}
                     </button>
                   </div>
                 </div>
@@ -1066,8 +987,8 @@ export default function Home() {
                   {/* Left Column: Process List */}
                   <div className="proc-list">
                     <div className="proc-list-header">
-                      <span>Background Thread</span>
-                      <span>CPU Load</span>
+                      <span>{curTR.diagnostics.bgThread}</span>
+                      <span>{curTR.diagnostics.cpuLoad}</span>
                     </div>
                     {demoProcesses.map((proc) => {
                       const isSelected = proc.id === selectedProc.id;
@@ -1086,7 +1007,7 @@ export default function Home() {
                           </div>
                           <div className="proc-right">
                             <span className={`proc-badge ${proc.paused ? 'badge-paused' : 'badge-running'}`}>
-                              {proc.paused ? 'FROZEN' : `${proc.cpu}%`}
+                              {proc.paused ? curTR.diagnostics.frozen : `${proc.cpu}%`}
                             </span>
                             <button
                               type="button"
@@ -1097,7 +1018,7 @@ export default function Home() {
                               }}
                               title={proc.paused ? 'Resume process (SIGCONT)' : 'Pause process (SIGSTOP)'}
                             >
-                              {proc.paused ? '▶ Resume' : '⏸ Pause'}
+                              {proc.paused ? curTR.diagnostics.resumeBtn : curTR.diagnostics.pauseBtn}
                             </button>
                           </div>
                         </div>
@@ -1137,13 +1058,13 @@ export default function Home() {
                         >
                           {selectedProc.paused ? (
                             <>
-                              <span className="action-label">▶ Resume Process (SIGCONT)</span>
-                              <span className="action-sub">Instantly resumes compute with zero data loss</span>
+                              <span className="action-label">{curTR.diagnostics.resumeBtn} (SIGCONT)</span>
+                              <span className="action-sub">{curTR.diagnostics.detailSub}</span>
                             </>
                           ) : (
                             <>
-                              <span className="action-label">⏸ Pause Process (SIGSTOP)</span>
-                              <span className="action-sub">Freezes CPU usage &amp; stops heat immediately</span>
+                              <span className="action-label">{curTR.diagnostics.pauseBtn} (SIGSTOP)</span>
+                              <span className="action-sub">{curTR.diagnostics.detailTitle}</span>
                             </>
                           )}
                         </button>
@@ -1182,72 +1103,68 @@ export default function Home() {
 
           <section id="compare">
             <h2 className="pop" style={{ margin: 'auto', textAlign: 'center' }}>
-              How Does lidZen Compare to macOS Default, caffeinate, and Amphetamine?
+              {curTR.compare.title}
             </h2>
             <p className="lead pop" style={{ margin: '16px auto 0', textAlign: 'center' }}>
-              Direct Answer: lidZen is the only utility that provides native closed-lid clamshell execution on battery without an external display, turns off the display panel completely (0W backlight), and offers non-destructive thread freezing.
+              {curTR.compare.lead}
             </p>
             <div className="tw pop">
               <table className="cmp">
                 <thead>
                   <tr>
-                    <th>Feature / Metric</th>
-                    <th className="us">lidZen</th>
-                    <th>macOS Default</th>
-                    <th>CLI caffeinate</th>
-                    <th>Amphetamine</th>
+                    <th>{curTR.compare.colFeature}</th>
+                    <th className="us">{curTR.compare.colLidzen}</th>
+                    <th>{curTR.compare.colMacos}</th>
+                    <th>{curTR.compare.colCaff}</th>
+                    <th>{curTR.compare.colAmph}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>
-                      Run with Lid Closed
-                      <br />
-                      (No External Display)
+                      {curTR.compare.row1Title}
                     </td>
-                    <td className="us v ok">✓ Supported natively</td>
-                    <td className="v xx">✗ Forces sleep</td>
-                    <td className="v xx">✗ Forces sleep</td>
-                    <td className="v pt">Requires Display Clamshell</td>
+                    <td className="us v ok">{curTR.compare.row1Lidzen}</td>
+                    <td className="v xx">{curTR.compare.row1Macos}</td>
+                    <td className="v xx">{curTR.compare.row1Caff}</td>
+                    <td className="v pt">{curTR.compare.row1Amph}</td>
                   </tr>
                   <tr>
-                    <td>Display Backlight Power Consumption</td>
-                    <td className="us v ok">0W (Display off)</td>
-                    <td className="v sl">0W (System asleep)</td>
-                    <td className="v pt">Display active (~8W)</td>
-                    <td className="v pt">Partial support</td>
+                    <td>{curTR.compare.row2Title}</td>
+                    <td className="us v ok">{curTR.compare.row2Lidzen}</td>
+                    <td className="v sl">{curTR.compare.row2Macos}</td>
+                    <td className="v pt">{curTR.compare.row2Caff}</td>
+                    <td className="v pt">{curTR.compare.row2Amph}</td>
                   </tr>
                   <tr>
-                    <td>Exact Binary File Path Attribution</td>
-                    <td className="us v ok">✓ Full path &amp; PID</td>
-                    <td className="v xx">✗ App name only</td>
-                    <td className="v xx">✗ None</td>
-                    <td className="v xx">✗ None</td>
+                    <td>{curTR.compare.row3Title}</td>
+                    <td className="us v ok">{curTR.compare.row3Lidzen}</td>
+                    <td className="v xx">{curTR.compare.row3Macos}</td>
+                    <td className="v xx">{curTR.compare.row3None}</td>
+                    <td className="v xx">{curTR.compare.row3None}</td>
                   </tr>
                   <tr>
                     <td>
-                      Non-Destructive
-                      <br />
-                      Freeze (SIGSTOP/SIGCONT)
+                      {curTR.compare.row4Title}
                     </td>
-                    <td className="us v ok">✓ Zero data loss</td>
-                    <td className="v xx">✗ Force kill only</td>
-                    <td className="v xx">✗ None</td>
-                    <td className="v xx">✗ None</td>
+                    <td className="us v ok">{curTR.compare.row4Lidzen}</td>
+                    <td className="v xx">{curTR.compare.row4Macos}</td>
+                    <td className="v xx">{curTR.compare.row3None}</td>
+                    <td className="v xx">{curTR.compare.row3None}</td>
                   </tr>
                   <tr>
-                    <td>Apple Silicon &amp; Intel Universal Binary</td>
-                    <td className="us v ok">✓ M1/M2/M3/M4 &amp; Intel</td>
-                    <td className="v ok">✓ Native</td>
-                    <td className="v ok">✓ Native CLI</td>
-                    <td className="v ok">✓ Native</td>
+                    <td>{curTR.compare.row5Title}</td>
+                    <td className="us v ok">{curTR.compare.row5Lidzen}</td>
+                    <td className="v ok">{curTR.compare.row5Native}</td>
+                    <td className="v ok">{curTR.compare.row5NativeCli}</td>
+                    <td className="v ok">{curTR.compare.row5Native}</td>
                   </tr>
                   <tr>
-                    <td>Kernel Extensions (kexts) &amp; Privacy</td>
-                    <td className="us v ok">Zero Kexts · 0 Telemetry</td>
-                    <td className="v sl">Apple Diagnostics</td>
-                    <td className="v sl">No telemetry</td>
-                    <td className="v sl">Zero Kexts</td>
+                    <td>{curTR.compare.row6Title}</td>
+                    <td className="us v ok">{curTR.compare.row6Lidzen}</td>
+                    <td className="v sl">{curTR.compare.row6AppleDiag}</td>
+                    <td className="v sl">{curTR.compare.row6NoTelem}</td>
+                    <td className="v sl">{curTR.compare.row6ZeroKexts}</td>
                   </tr>
                 </tbody>
               </table>
@@ -1256,16 +1173,16 @@ export default function Home() {
               <b>Methodology &amp; Trademark Disclaimers:</b> macOS &amp; caffeinate metrics reflect default Apple IOKit power management and CLI behaviors in macOS 15 Sequoia. Other application metrics are derived from publicly available documentation, published release notes, and verified system testing as of November 2026. This comparison is provided solely for technical differentiation and informational purposes; features and capabilities may evolve across software updates. Apple, macOS, Apple Silicon, and caffeinate are trademarks of Apple Inc., registered in the U.S. and other countries. Amphetamine is the trademark of its respective creator(s). lidZen is an independent utility and is not affiliated with, sponsored by, or endorsed by Apple Inc., William Gustafson / If-Then-Dev, or any respective trademark owners. Spotted something out of date? Let us know at <a href="mailto:support@lidzen.com?subject=Comparison%20Correction">support@lidzen.com</a>.
             </p>
             <a className="cl pop" href="#docs">
-              Read detailed architecture and diagnostics comparison in the documentation →
+              {curTR.compare.docsLink}
             </a>
           </section>
 
           <section id="pricing">
             <div className="panel pop">
               <div className="pricing-left">
-                <div className="pricing-eyebrow">PRICING</div>
-                <h2>Pay once.<br />Keep it.</h2>
-                <p className="lead">No subscription, no tiers. Every feature, on one Mac or two.</p>
+                <div className="pricing-eyebrow">{curTR.pricing.eyebrow}</div>
+                <h2>{curTR.pricing.titleLine1}<br />{curTR.pricing.titleLine2}</h2>
+                <p className="lead">{curTR.pricing.lead}</p>
                 <div className="mini">
                   <div className="mini-card">
                     <div className="mini-icon" aria-hidden="true">
@@ -1276,8 +1193,8 @@ export default function Home() {
                         <rect x="3" y="14" width="7" height="7" rx="1.5" />
                       </svg>
                     </div>
-                    <b>Every feature</b>
-                    <p>Continuity, Thread Suspension, Radar, Thermal Guard, Diagnostics. Nothing held back.</p>
+                    <b>{curTR.pricing.c1Title}</b>
+                    <p>{curTR.pricing.c1Desc}</p>
                   </div>
                   <div className="mini-card">
                     <div className="mini-icon" aria-hidden="true">
@@ -1285,8 +1202,8 @@ export default function Home() {
                         <path d="M18.178 8c5.096 0 5.096 8 0 8-2.688 0-4.408-2.222-6.178-4-1.77-1.778-3.49-4-6.178-4-5.096 0-5.096 8 0 8 2.688 0 4.408-2.222 6.178-4 1.77-1.778 3.49-4 6.178-4z" />
                       </svg>
                     </div>
-                    <b>Yours to keep</b>
-                    <p>One payment. No subscription, no renewals.</p>
+                    <b>{curTR.pricing.c2Title}</b>
+                    <p>{curTR.pricing.c2Desc}</p>
                   </div>
                   <div className="mini-card">
                     <div className="mini-icon" aria-hidden="true">
@@ -1294,8 +1211,8 @@ export default function Home() {
                         <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
                       </svg>
                     </div>
-                    <b>Free updates</b>
-                    <p>Every lidZen 2.x update, installed when you choose.</p>
+                    <b>{curTR.pricing.c3Title}</b>
+                    <p>{curTR.pricing.c3Desc}</p>
                   </div>
                   <div className="mini-card">
                     <div className="mini-icon" aria-hidden="true">
@@ -1304,8 +1221,8 @@ export default function Home() {
                         <line x1="2" y1="20" x2="22" y2="20" />
                       </svg>
                     </div>
-                    <b>One Mac</b>
-                    <p>Moving to a new Mac? Move the license in seconds.</p>
+                    <b>{curTR.pricing.c4Title}</b>
+                    <p>{curTR.pricing.c4Desc}</p>
                   </div>
                 </div>
 
@@ -1315,7 +1232,7 @@ export default function Home() {
                       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                       <path d="M9 12l2 2 4-4"/>
                     </svg>
-                    Gatekeeper Ready
+                    {curTR.pricing.gatekeeper}
                   </span>
                   <span>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -1323,11 +1240,11 @@ export default function Home() {
                       <polyline points="7 10 12 15 17 10"/>
                       <line x1="12" y1="15" x2="12" y2="3"/>
                     </svg>
-                    18 MB download
+                    {curTR.pricing.downloadSize}
                   </span>
                   <span>
                     <AppleLogo size={15} style={{ verticalAlign: '-1px' }} />
-                    macOS 15 or later
+                    {curTR.pricing.osVersion}
                   </span>
                 </div>
               </div>
@@ -1346,14 +1263,14 @@ export default function Home() {
                       className={plan === 'One Mac' ? 'on' : ''}
                       onClick={() => setPlan('One Mac')}
                     >
-                      One Mac
+                      {curTR.pricing.planOne}
                     </button>
                     <button
                       type="button"
                       className={plan === 'Two Macs' ? 'on' : ''}
                       onClick={() => setPlan('Two Macs')}
                     >
-                      Two Macs
+                      {curTR.pricing.planTwo}
                     </button>
                   </div>
                 </div>
@@ -1362,7 +1279,7 @@ export default function Home() {
                   <div className="big" id="pr">
                     {planPrice}
                   </div>
-                  <small className="buy-note">one-time purchase, plus tax where it applies</small>
+                  <small className="buy-note">{curTR.pricing.oneTimeNote}</small>
                 </div>
 
                 <div className="buy-bottom">
@@ -1385,51 +1302,26 @@ export default function Home() {
           </section>
 
           <section id="faq">
-            <h2 className="pop">Frequently Asked Questions About Closed-Lid Clamshell Mode</h2>
+            <h2 className="pop">{curTR.faq.title}</h2>
             <p className="lead pop" style={{ margin: '0 auto 36px', textAlign: 'center' }}>
-              Concise answers to high-intent questions about macOS power assertions, battery consumption, and thermal safety.
+              {curTR.faq.lead}
             </p>
             <div className="faq pop">
-              <details open>
-                <summary>What is lidZen and how does it keep a Mac awake with the lid closed?</summary>
-                <p>
-                  lidZen is a native macOS utility that issues targeted userspace power assertions via the official Apple IOKit Power Management API. It bypasses default macOS sleep triggers when the lid shuts, keeping AI workflows, local dev servers, and music active while turning off the internal screen backlight to draw 0W display power.
-                </p>
-              </details>
-              <details>
-                <summary>Will my Mac overheat when running in a bag with the lid closed?</summary>
-                <p>
-                  lidZen includes an automated Thermal Guard that continuously reads Apple Silicon SoC temperature sensors. If temperatures exceed user-configured limits, it safely allows macOS to enter normal sleep. For active compute workloads, keeping the MacBook in an unzipped sleeve or on a desk is recommended.
-                </p>
-              </details>
-              <details>
-                <summary>Does running with the lid closed drain the MacBook battery?</summary>
-                <p>
-                  Because lidZen turns off the Liquid Retina display backlight completely, it saves approximately 8W compared to keeping the screen on. In addition, Battery Guard automatically halts execution if the battery drops to your chosen threshold (e.g. 20%), preventing unexpected battery depletion.
-                </p>
-              </details>
-              <details>
-                <summary>Do I need an external display or power adapter connected?</summary>
-                <p>
-                  No. macOS standard clamshell mode requires both an external display and AC power. lidZen eliminates both restrictions, allowing true headless clamshell continuity on battery power wherever you are.
-                </p>
-              </details>
-              <details>
-                <summary>How do I turn lidZen off or restore default sleep?</summary>
-                <p>
-                  Simply open your MacBook lid, or click the menu bar icon. lidZen immediately releases its power assertion and your Mac resumes its default energy saver sleep timer.
-                </p>
-              </details>
+              {curTR.faq.items.map((item, idx) => (
+                <details key={item.q} open={idx === 0}>
+                  <summary>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
             </div>
           </section>
 
           <section id="download">
             <div className="cta2 pop">
-              <div className="pill">v2.4 · Universal binary for macOS 15+</div>
-              <h2>{curTR.dl}</h2>
+              <div className="pill">{curTR.download.pill}</div>
+              <h2>{curTR.download.title}</h2>
               <p className="lead">
-                Join thousands of power users running cooler, quieter Macs with the lid closed and full path-level
-                visibility.
+                {curTR.download.lead}
               </p>
               <a
                 className="btn"
@@ -1444,9 +1336,9 @@ export default function Home() {
                 {curTR.cta} · {planPrice}
               </a>
               <div className="trust">
-                <span>No telemetry</span>
-                <span>18 MB install</span>
-                <span>macOS 15+ Sequoia</span>
+                <span>{curTR.hero.tr[0]}</span>
+                <span>{curTR.hero.tr[1]}</span>
+                <span>{curTR.hero.tr[2]}</span>
               </div>
             </div>
           </section>
@@ -1530,13 +1422,13 @@ export default function Home() {
                     <a href="#diagnostics">Process Diagnostics</a>
                   </li>
                   <li>
-                    <Link href="/docs/faq">FAQ</Link>
+                    <Link href="/docs/faq">{curTR.footer.faq}</Link>
                   </li>
                   <li>
-                    <Link href="/privacy">Privacy Policy</Link>
+                    <Link href="/privacy">{curTR.footer.privacy}</Link>
                   </li>
                   <li>
-                    <Link href="/terms">Terms &amp; Conditions</Link>
+                    <Link href="/terms">{curTR.footer.terms}</Link>
                   </li>
                   <li>
                     <a href="mailto:support@lidzen.com?subject=lidZen%20Support%20%26%20Inquiry">Support &amp; Queries</a>
@@ -1545,11 +1437,11 @@ export default function Home() {
               </div>
             </div>
             <div className="fb">
-              <span>© 2026 lidZen. All rights reserved.</span>
+              <span>{curTR.footer.rights}</span>
               <div>
-                <span>Zero telemetry</span>
-                <span>18 MB Universal binary</span>
-                <span>0.2% Idle CPU</span>
+                <span>{curTR.hero.tr[0]}</span>
+                <span>{curTR.hero.tr[1]}</span>
+                <span>{curTR.hero.tr[2]}</span>
               </div>
             </div>
           </div>
