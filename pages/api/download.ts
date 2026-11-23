@@ -9,9 +9,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   const { format } = req.query;
-  const isDmg = format === 'dmg';
-  const fileName = isDmg ? 'lidZen.dmg' : 'lidZen.zip';
-  const contentType = isDmg ? 'application/x-apple-diskimage' : 'application/zip';
+  const isZip = format === 'zip';
+  const fileName = isZip ? 'lidZen.zip' : 'lidZen.dmg';
+  const contentType = isZip ? 'application/zip' : 'application/x-apple-diskimage';
 
   const filePath = path.join(process.cwd(), 'public', fileName);
 
