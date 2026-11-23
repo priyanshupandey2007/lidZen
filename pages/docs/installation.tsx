@@ -33,9 +33,42 @@ export default function Installation() {
           </ol>
         </div>
 
-        <Callout type="tip" title="Apple Notarization Verified">
-          lidZen is signed with an official Apple Developer ID and notarized by Apple Ticket Service. Gatekeeper will recognize it without warnings.
+        <Callout type="tip" title="First Launch — Gatekeeper Bypass">
+          Since lidZen is distributed outside the Mac App Store, macOS Gatekeeper may show <strong>&quot;lidZen can&apos;t be opened&quot;</strong> on first launch. This is normal for independently distributed apps. Use <strong>one</strong> of these methods:
         </Callout>
+
+        <div className="my-5 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-5">
+          <h4 className="font-semibold text-slate-900 dark:text-white text-sm mb-3">Method 1 — Right-click to Open (Easiest)</h4>
+          <ol className="list-decimal pl-5 space-y-2 text-sm text-slate-700 dark:text-zinc-300">
+            <li><strong>Right-click</strong> (or Control-click) <strong>lidZen.app</strong> in Finder.</li>
+            <li>Choose <strong>&quot;Open&quot;</strong> from the context menu.</li>
+            <li>Click <strong>&quot;Open&quot;</strong> in the confirmation dialog.</li>
+            <li>The app will launch and be remembered — double-click works from now on.</li>
+          </ol>
+        </div>
+
+        <div className="my-5 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-5">
+          <h4 className="font-semibold text-slate-900 dark:text-white text-sm mb-3">Method 2 — Terminal (One Command)</h4>
+          <CodeBlock
+            language="bash"
+            fileName="Terminal"
+            code={`# Remove quarantine flag and launch
+xattr -cr ~/Downloads/lidZen.app && open ~/Downloads/lidZen.app`}
+          />
+          <p className="mt-2 text-xs text-slate-600 dark:text-zinc-400">
+            If you moved the app to <code>/Applications</code>, replace <code>~/Downloads</code> with <code>/Applications</code>.
+          </p>
+        </div>
+
+        <div className="my-5 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-5">
+          <h4 className="font-semibold text-slate-900 dark:text-white text-sm mb-3">Method 3 — System Settings</h4>
+          <ol className="list-decimal pl-5 space-y-2 text-sm text-slate-700 dark:text-zinc-300">
+            <li>Try opening lidZen normally (double-click). macOS will block it.</li>
+            <li>Go to <strong>System Settings → Privacy &amp; Security</strong>.</li>
+            <li>Scroll down — you&apos;ll see <em>&quot;lidZen was blocked from use because it is not from an identified developer&quot;</em>.</li>
+            <li>Click <strong>&quot;Open Anyway&quot;</strong> and confirm.</li>
+          </ol>
+        </div>
       </section>
 
       <section id="system-permissions" className="pt-6">

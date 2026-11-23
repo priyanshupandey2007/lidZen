@@ -629,18 +629,32 @@ export default function Home() {
               <span className="payment-toast-icon">✓</span>
               <div>
                 <strong>Payment Confirmed!</strong>
-                <p>Thank you for purchasing lidZen. Your macOS app (<code>lidZen.zip</code>) has started downloading. Double-click the downloaded zip to extract and open <b>lidZen.app</b>.</p>
-                <p style={{ marginTop: '4px', fontSize: '11px', opacity: 0.85, lineHeight: 1.3 }}>
-                  ℹ️ If Chrome prompts <em>&quot;This file isn&apos;t commonly downloaded&quot;</em>, click <b>&quot;Download suspicious file&quot;</b> to allow it.
+                <p>Thank you for purchasing lidZen. Your macOS app (<code>lidZen.zip</code>) has started downloading. Double-click the downloaded zip to extract <b>lidZen.app</b>.</p>
+                <p style={{ marginTop: '4px', fontSize: '12px', opacity: 0.95, lineHeight: 1.4 }}>
+                  ⚠️ <b>First launch:</b> Right-click (or Control-click) <b>lidZen.app</b> → choose <b>&quot;Open&quot;</b> → click <b>&quot;Open&quot;</b> in the dialog. This is only needed once.
+                </p>
+                <p style={{ marginTop: '2px', fontSize: '11px', opacity: 0.75, lineHeight: 1.3 }}>
+                  ℹ️ If Chrome warns <em>&quot;This file isn&apos;t commonly downloaded&quot;</em>, click <b>&quot;Download suspicious file&quot;</b> to allow it.
+                </p>
+                <p style={{ marginTop: '2px', fontSize: '11px', opacity: 0.75, lineHeight: 1.3 }}>
+                  💡 Or run in Terminal: <code style={{ background: 'rgba(0,0,0,0.15)', padding: '1px 5px', borderRadius: '4px', fontSize: '10px' }}>xattr -cr ~/Downloads/lidZen.app && open ~/Downloads/lidZen.app</code>
                 </p>
               </div>
-              <div style={{ display: 'flex', gap: '8px', marginLeft: 'auto', alignItems: 'center' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginLeft: 'auto', alignItems: 'stretch' }}>
                 <a
                   href="/api/download"
                   download="lidZen.zip"
                   className="payment-toast-dl-btn"
                 >
-                  Download .zip (macOS App)
+                  Download .zip
+                </a>
+                <a
+                  href="/api/download?format=dmg"
+                  download="lidZen.dmg"
+                  className="payment-toast-dl-btn"
+                  style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', textAlign: 'center' }}
+                >
+                  Download .dmg
                 </a>
               </div>
               <button
@@ -1368,19 +1382,45 @@ export default function Home() {
               <p className="lead">
                 {curTR.download.lead}
               </p>
-              <a
-                className="btn"
-                href={dodoOneMacUrl}
-                onClick={(e) => {
-                  e.preventDefault();
-                  startCheckout(dodoProductIdOneMac);
-                }}
-                suppressHydrationWarning
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
-              >
-                <AppleLogo size={16} style={{ verticalAlign: '-1px' }} />
-                {curTR.cta} · {planPrice}
-              </a>
+              <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+                <a
+                  className="btn"
+                  href={dodoOneMacUrl}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    startCheckout(dodoProductIdOneMac);
+                  }}
+                  suppressHydrationWarning
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
+                >
+                  <AppleLogo size={16} style={{ verticalAlign: '-1px' }} />
+                  {curTR.cta} · {planPrice}
+                </a>
+                <a
+                  href="/api/download"
+                  download="lidZen.zip"
+                  className="btn"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    background: 'rgba(255, 255, 255, 0.08)',
+                    color: 'var(--fg)',
+                    border: '1px solid rgba(255, 255, 255, 0.18)',
+                    boxShadow: 'none',
+                  }}
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  Download .zip (macOS)
+                </a>
+              </div>
+              <p style={{ marginTop: '14px', fontSize: '13px', color: 'var(--slate)' }}>
+                macOS 14+ (Sonoma &amp; Sequoia) · Universal Binary · Also available as <a href="/api/download?format=dmg" download="lidZen.dmg" style={{ color: 'var(--navy)', fontWeight: 600, textDecoration: 'underline' }}>lidZen.dmg</a>
+              </p>
               <div className="trust">
                 <span>{curTR.hero.tr[0]}</span>
                 <span>{curTR.hero.tr[1]}</span>
