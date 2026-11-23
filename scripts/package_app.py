@@ -124,21 +124,36 @@ zip_path = os.path.join(target_dir, "lidZen.zip")
 if os.path.exists(zip_path):
     os.remove(zip_path)
 
+# Create 1-click launcher script
+launcher_content = """#!/bin/bash
+# 1-Click Launch Helper for lidZen
+DIR="$(cd "$(dirname "$0")" && pwd)"
+echo "Starting lidZen..."
+xattr -cr "$DIR/lidZen.app" 2>/dev/null || true
+open "$DIR/lidZen.app"
+osascript -e 'tell application "Terminal" to close (every window whose name contains "Open lidZen")' 2>/dev/null || true
+"""
+launcher_path = os.path.join(target_dir, "Open lidZen.command")
+with open(launcher_path, "w", newline="\n") as f:
+    f.write(launcher_content)
+
 # Staging into Linux native /home filesystem ensures exact 0755/0644 POSIX permissions
 wsl_script = """#!/bin/bash
 set -e
 rm -rf /home/priyanshu007/pack_stage
 mkdir -p /home/priyanshu007/pack_stage
 cp -r /mnt/c/Users/priya/Desktop/lidzenmac/public/lidZen.app /home/priyanshu007/pack_stage/
+cp "/mnt/c/Users/priya/Desktop/lidzenmac/public/Open lidZen.command" /home/priyanshu007/pack_stage/
 cd /home/priyanshu007/pack_stage
 
 # Set proper directory and file permissions
 find lidZen.app -type d -exec chmod 755 {} +
 find lidZen.app -type f -exec chmod 644 {} +
 chmod 755 lidZen.app/Contents/MacOS/*
+chmod 755 "Open lidZen.command"
 
 # Create ZIP with Info-ZIP preserving symlinks and POSIX attributes
-zip -r -y -9 /mnt/c/Users/priya/Desktop/lidzenmac/public/lidZen.zip lidZen.app
+zip -r -y -9 /mnt/c/Users/priya/Desktop/lidzenmac/public/lidZen.zip lidZen.app "Open lidZen.command"
 rm -rf /home/priyanshu007/pack_stage
 """
 try:
@@ -147,6 +162,8 @@ try:
     res = subprocess.run(["wsl", "bash", "/mnt/c/Users/priya/Desktop/lidzenmac/public/pack.sh"], capture_output=True, text=True)
     if os.path.exists(os.path.join(target_dir, "pack.sh")):
         os.remove(os.path.join(target_dir, "pack.sh"))
+    if os.path.exists(launcher_path):
+        os.remove(launcher_path)
     if res.returncode == 0 and os.path.exists(zip_path):
         print(f"    Generated {zip_path} via Linux Info-ZIP ({os.path.getsize(zip_path)} bytes)")
     else:
