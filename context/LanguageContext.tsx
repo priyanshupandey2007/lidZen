@@ -820,7 +820,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, []);
 
   const currentOption = LANGUAGES.find((l) => l.code === language) || LANGUAGES[0];
-  const t = translations[language] || translations.en;
+  const t = (translations as Record<string, typeof translations.en>)[language] || translations.en;
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t, currentOption }}>

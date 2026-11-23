@@ -234,6 +234,7 @@ export default function Home() {
   const [uptime, setUptime] = useState('02:14:37');
   const [isMounted, setIsMounted] = useState(false);
   const isDoneRef = useRef(false);
+  const downloadTriggeredRef = useRef(false);
   const planPrice = plan === 'One Mac' ? priceOneMac : priceTwoMacs;
   const dodoProductIdOneMac = 'pdt_0NsR03OW6DniKgDV9ETzC';
   const dodoProductIdTwoMacs = 'pdt_0NsR05Gvs4it4UNUGME50';
@@ -282,36 +283,33 @@ export default function Home() {
 
       const alreadyDownloaded = typeof sessionStorage !== 'undefined' && sessionStorage.getItem(storageKey);
 
-      if (!alreadyDownloaded) {
+      if (!alreadyDownloaded && !downloadTriggeredRef.current) {
+        downloadTriggeredRef.current = true;
         if (typeof sessionStorage !== 'undefined') {
           sessionStorage.setItem(storageKey, 'true');
         }
 
-        // Trigger automatic file download of the verified macOS app zip
+        // Trigger automatic file download of the verified macOS app zip via dedicated endpoint
         const triggerDl = () => {
           const a = document.createElement('a');
-          a.href = '/lidZen.zip';
+          a.href = '/api/download';
           a.setAttribute('download', 'lidZen.zip');
           a.style.display = 'none';
           document.body.appendChild(a);
           a.click();
           setTimeout(() => {
             if (a.parentNode) a.parentNode.removeChild(a);
-          }, 300);
-
-          setTimeout(() => {
-            window.location.assign('/lidZen.zip');
-          }, 400);
+          }, 500);
         };
 
-        const timer = setTimeout(triggerDl, 200);
+        const timer = setTimeout(triggerDl, 350);
 
         // Clean query params from the browser address bar & history after initiating download
         setTimeout(() => {
           try {
             window.history.replaceState({}, document.title, window.location.pathname);
           } catch {}
-        }, 1200);
+        }, 1500);
 
         return () => clearTimeout(timer);
       } else {
@@ -628,16 +626,16 @@ export default function Home() {
               <span className="payment-toast-icon">✓</span>
               <div>
                 <strong>Payment Confirmed!</strong>
-                <p>Thank you for purchasing lidZen. Your macOS app (<code>lidZen.zip</code>) has started downloading automatically. Double-click to extract and launch <b>lidZen.app</b> directly.</p>
+                <p>Thank you for purchasing lidZen. Your macOS app (<code>lidZen.zip</code>) has started downloading. Double-click the downloaded zip to extract and open <b>lidZen.app</b>.</p>
+                <p style={{ marginTop: '4px', fontSize: '11px', opacity: 0.85, lineHeight: 1.3 }}>
+                  ℹ️ If Chrome prompts <em>&quot;This file isn&apos;t commonly downloaded&quot;</em>, click <b>&quot;Download suspicious file&quot;</b> to allow it.
+                </p>
               </div>
               <div style={{ display: 'flex', gap: '8px', marginLeft: 'auto', alignItems: 'center' }}>
                 <a
-                  href="/lidZen.zip"
+                  href="/api/download"
                   download="lidZen.zip"
                   className="payment-toast-dl-btn"
-                  onClick={() => {
-                    window.location.assign('/lidZen.zip');
-                  }}
                 >
                   Download .zip (macOS App)
                 </a>
