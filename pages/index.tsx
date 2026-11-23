@@ -174,12 +174,7 @@ export default function Home() {
   const [sceneZoom, setSceneZoom] = useState(false);
   const [sceneStyle, setSceneStyle] = useState<React.CSSProperties>({});
   const [isDark, setIsDark] = useState(false);
-  const [currentLang, setCurrentLang] = useState<number>(() => {
-    if (typeof window !== 'undefined' && isIndiaRegion()) {
-      return 0; // 'in' is index 0
-    }
-    return 1; // 'en' is index 1
-  });
+  const [currentLang, setCurrentLang] = useState<number>(1);
 
   const { priceOneMac, priceTwoMacs, currency, setCurrency } = useCurrency();
 
@@ -240,13 +235,20 @@ export default function Home() {
   const dodoProductIdTwoMacs = 'pdt_0NsR05Gvs4it4UNUGME50';
   const selectedProductId = plan === 'One Mac' ? dodoProductIdOneMac : dodoProductIdTwoMacs;
   const dodoCheckoutBase = 'https://test.checkout.dodopayments.com/buy';
-  const returnUrl = typeof window !== 'undefined' ? `${window.location.origin}/?payment=success` : 'https://lidzenmac.vercel.app/?payment=success';
+  const [returnUrl, setReturnUrl] = useState('https://lidzenmac.vercel.app/?payment=success');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.origin) {
+      setReturnUrl(`${window.location.origin}/?payment=success`);
+    }
+  }, []);
+
   const dodoCheckoutUrl = `${dodoCheckoutBase}/${selectedProductId}?quantity=1&redirect_url=${encodeURIComponent(returnUrl)}`;
   const dodoOneMacUrl = `${dodoCheckoutBase}/${dodoProductIdOneMac}?quantity=1&redirect_url=${encodeURIComponent(returnUrl)}`;
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   const startCheckout = (productId: string) => {
-    const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : 'http://localhost:3001';
+    const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : 'https://lidzenmac.vercel.app';
     const dynamicReturnUrl = `${origin}/?payment=success`;
     window.location.href = `${dodoCheckoutBase}/${productId}?quantity=1&redirect_url=${encodeURIComponent(dynamicReturnUrl)}`;
   };
@@ -595,6 +597,7 @@ export default function Home() {
                     startCheckout(dodoProductIdOneMac);
                   }}
                   className="b m"
+                  suppressHydrationWarning
                   style={
                     {
                       '--i': 3,
@@ -702,7 +705,7 @@ export default function Home() {
             ))}
           </nav>
           <div className="tools">
-            <button id="lb" aria-haspopup="listbox" onClick={toggleLangMenu}>
+            <button id="lb" aria-haspopup="listbox" onClick={toggleLangMenu} suppressHydrationWarning>
               {LG[currentLang][0]} {LG[currentLang][1]}
             </button>
             <button id="th" aria-label="Toggle dark mode" onClick={toggleDark}>
@@ -717,6 +720,7 @@ export default function Home() {
                 e.preventDefault();
                 startCheckout(dodoProductIdOneMac);
               }}
+              suppressHydrationWarning
               style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
             >
               <AppleLogo size={14} style={{ verticalAlign: '-1px' }} />
@@ -753,6 +757,7 @@ export default function Home() {
                   e.preventDefault();
                   startCheckout(dodoProductIdOneMac);
                 }}
+                suppressHydrationWarning
                 style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
               >
                 <AppleLogo size={16} style={{ verticalAlign: '-1px' }} />
@@ -1315,7 +1320,7 @@ export default function Home() {
                 </div>
 
                 <div className="buy-price-wrap">
-                  <div className="big" id="pr">
+                  <div className="big" id="pr" suppressHydrationWarning>
                     {planPrice}
                   </div>
                   <small className="buy-note">{curTR.pricing.oneTimeNote}</small>
@@ -1330,6 +1335,7 @@ export default function Home() {
                       e.preventDefault();
                       startCheckout(selectedProductId);
                     }}
+                    suppressHydrationWarning
                   >
                     <AppleLogo size={18} style={{ verticalAlign: '-1px' }} />
                     <span>{curTR.cta} · {planPrice}</span>
@@ -1369,6 +1375,7 @@ export default function Home() {
                   e.preventDefault();
                   startCheckout(dodoProductIdOneMac);
                 }}
+                suppressHydrationWarning
                 style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
               >
                 <AppleLogo size={16} style={{ verticalAlign: '-1px' }} />

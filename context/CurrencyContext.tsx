@@ -59,7 +59,7 @@ interface CurrencyContextType {
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
-  const [currency, setCurrencyState] = useState<Currency>(() => (isIndiaRegion() ? 'INR' : 'USD'));
+  const [currency, setCurrencyState] = useState<Currency>('USD');
 
   useEffect(() => {
     try {
