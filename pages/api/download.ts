@@ -8,7 +8,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const filePath = path.join(process.cwd(), 'public', 'lidZen.zip');
+  const filePath = path.join(process.cwd(), 'public', 'lidZen.dmg');
 
   if (!fs.existsSync(filePath)) {
     return res.status(404).json({ error: 'Download package not found' });
@@ -16,8 +16,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   const stat = fs.statSync(filePath);
 
-  res.setHeader('Content-Type', 'application/zip');
-  res.setHeader('Content-Disposition', 'attachment; filename="lidZen.zip"');
+  res.setHeader('Content-Type', 'application/x-apple-diskimage');
+  res.setHeader('Content-Disposition', 'attachment; filename="lidZen.dmg"');
   res.setHeader('Content-Length', stat.size);
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Cache-Control', 'public, max-age=3600, must-revalidate');

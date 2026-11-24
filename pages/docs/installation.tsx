@@ -21,15 +21,15 @@ export default function Installation() {
       <section id="download-dmg">
         <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Download & Installation</h2>
         <p>
-          lidZen is distributed as an instant universal macOS application package (<code>lidZen.zip</code>).
+          lidZen is distributed as a native macOS drag-and-drop installer (<code>lidZen.dmg</code>).
         </p>
 
         <div className="my-5 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-5">
           <ol className="list-decimal pl-5 space-y-3 text-sm text-slate-700 dark:text-zinc-300">
-            <li>Download <strong>lidZen.zip</strong> from your post-purchase confirmation or direct download.</li>
-            <li>Double-click <strong>lidZen.zip</strong> to extract <strong>lidZen.app</strong> into your Downloads folder.</li>
-            <li>Drag <strong>lidZen.app</strong> into your <strong>/Applications</strong> folder.</li>
-            <li>Launch lidZen from Applications or Spotlight.</li>
+            <li>Download <strong>lidZen.dmg</strong> from your post-purchase confirmation or direct download.</li>
+            <li>Double-click <strong>lidZen.dmg</strong> to mount the installer disk image.</li>
+            <li>In the window that opens, drag the <strong>lidZen</strong> icon onto the <strong>Applications</strong> folder shortcut.</li>
+            <li>Eject the disk image and launch lidZen from <strong>Applications</strong> or Spotlight.</li>
           </ol>
         </div>
 

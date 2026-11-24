@@ -291,11 +291,11 @@ export default function Home() {
           sessionStorage.setItem(storageKey, 'true');
         }
 
-        // Trigger automatic file download of the verified macOS app zip
+        // Trigger automatic file download of the verified macOS DMG drag-and-drop installer
         const triggerDl = () => {
           const a = document.createElement('a');
           a.href = '/api/download';
-          a.setAttribute('download', 'lidZen.zip');
+          a.setAttribute('download', 'lidZen.dmg');
           a.style.display = 'none';
           document.body.appendChild(a);
           a.click();
@@ -629,9 +629,9 @@ export default function Home() {
               <span className="payment-toast-icon">✓</span>
               <div>
                 <strong>Payment Confirmed!</strong>
-                <p>Thank you for purchasing lidZen. Your macOS app (<code>lidZen.zip</code>) has started downloading. Double-click <b>lidZen.zip</b> to extract and run <b>lidZen.app</b>.</p>
+                <p>Thank you for purchasing lidZen. Your macOS installer (<code>lidZen.dmg</code>) has started downloading. Double-click <b>lidZen.dmg</b> and drag <b>lidZen</b> into your <b>Applications</b> folder.</p>
                 <p style={{ marginTop: '4px', fontSize: '12px', opacity: 0.95, lineHeight: 1.4 }}>
-                  🚀 <b>Quick start:</b> Double-click <b>lidZen.zip</b> → drag <b>lidZen.app</b> to Applications → click to open.
+                  🚀 <b>Ready in seconds:</b> Open <b>lidZen.dmg</b> → drag <b>lidZen</b> to Applications → click to open.
                 </p>
                 <p style={{ marginTop: '2px', fontSize: '11px', opacity: 0.75, lineHeight: 1.3 }}>
                   ℹ️ If Chrome prompts <em>&quot;This file isn&apos;t commonly downloaded&quot;</em>, click <b>&quot;Download suspicious file&quot;</b> to allow it.
@@ -640,10 +640,10 @@ export default function Home() {
               <div style={{ display: 'flex', gap: '8px', marginLeft: 'auto', alignItems: 'center' }}>
                 <a
                   href="/api/download"
-                  download="lidZen.zip"
+                  download="lidZen.dmg"
                   className="payment-toast-dl-btn"
                 >
-                  Download .zip (macOS)
+                  Download .dmg (Installer)
                 </a>
               </div>
               <button
@@ -1387,7 +1387,7 @@ export default function Home() {
                 </a>
                 <a
                   href="/api/download"
-                  download="lidZen.zip"
+                  download="lidZen.dmg"
                   className="btn"
                   style={{
                     display: 'inline-flex',
@@ -1404,11 +1404,11 @@ export default function Home() {
                     <polyline points="7 10 12 15 17 10"/>
                     <line x1="12" y1="15" x2="12" y2="3"/>
                   </svg>
-                  Download .zip (macOS)
+                  Download .dmg (Installer)
                 </a>
               </div>
               <p style={{ marginTop: '14px', fontSize: '13px', color: 'var(--slate)' }}>
-                macOS 14+ (Sonoma &amp; Sequoia) · Universal Binary (Apple Silicon &amp; Intel) · <code>lidZen.zip</code>
+                macOS 14+ (Sonoma &amp; Sequoia) · Native Drag-and-Drop Installer · <code>lidZen.dmg</code>
               </p>
               <div className="trust">
                 <span>{curTR.hero.tr[0]}</span>
